@@ -41,7 +41,7 @@ public class Cube implements VisionPipeline {
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	@Override	public void process(Mat source0) {
+	public void process(Mat source0) {
 		// Step Blur0:
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Gaussian Blur");
