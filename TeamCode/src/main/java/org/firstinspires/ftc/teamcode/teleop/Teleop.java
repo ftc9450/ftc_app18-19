@@ -14,7 +14,8 @@ public class Teleop extends OpMode{
     @Override
     public void init() {
         drivetrain=new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-        subsystemManager.add(drivetrain);
+        subsystemManager = new SubsystemManager();
+        subsystemManager = subsystemManager.add(drivetrain);
     }
     public void loop(){
         Vector2D v = new Vector2D();
