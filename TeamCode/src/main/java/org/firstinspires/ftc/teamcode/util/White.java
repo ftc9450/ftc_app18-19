@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
+import org.opencv.core.Mat;
 
 import org.opencv.core.*;
 import org.opencv.core.Core.*;
