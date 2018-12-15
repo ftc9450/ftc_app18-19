@@ -7,21 +7,24 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Lifter extends Subsystem {
 
-    DcMotor lift;
+    private DcMotor lift;
     double power = 0;
-
-    public void lifter(){
-
-        lift = hardwareMap.dcMotor.get("lift");
-
-        waitForstart();
-
-        while (opModeIsActive()) {
-
-            lift.setPower(gamepad1.left_stick_y);
-            telemetry.addData("joystick", gamepad1.a);
-
-        }
-        stop();
+    private double maxPower;
+    private double[] driveSignal;
+    public void lifter(DcMotor l){
+        lift = l;
     }
+    public void setPower(double power) {
+        lift.setPower(power);
+    }
+    public void setPower(double driveSignal[]) {
+        lift.setPower(driveSignal[0]);
+    }
+    public void loop() {
+        setPower(driveSignal);
+    }
+    public void stop() {
+        lift.setPower(0);
+    }
+
 }
