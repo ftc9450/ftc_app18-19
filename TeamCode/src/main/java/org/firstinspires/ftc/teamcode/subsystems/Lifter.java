@@ -20,11 +20,17 @@ public class Lifter extends Subsystem {
     public void setPower(double driveSignal[]) {
         lift.setPower(driveSignal[0]);
     }
+    public void enableAndResetEncoders() {
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
     public void loop() {
         setPower(driveSignal);
     }
     public void stop() {
         lift.setPower(0);
+    }
+    public void disconnectEncoders() {
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 }

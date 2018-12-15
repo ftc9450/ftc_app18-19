@@ -15,6 +15,8 @@ public class Constants {
         public static final String LB = "backleft";
         public static final String RF = "frontright";
         public static final String RB = "backright";
+        private static final int nevret40 = 28;
+
     }
     public static double floatToDouble(float f) {
         Float d=new Float(f);
