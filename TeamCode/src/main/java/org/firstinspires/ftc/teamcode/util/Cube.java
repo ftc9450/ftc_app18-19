@@ -35,7 +35,7 @@ public class Cube implements VisionPipeline {
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
 	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.loadLibrary("openCV_java");
 	}
 
 	/**

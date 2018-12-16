@@ -1,21 +1,18 @@
 package org.firstinspires.ftc.teamcode.util;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import android.graphics.Rect;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-import org.opencv.core.Mat;
-
-import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.features2d.FeatureDetector;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
 
 /**
 * White class.
@@ -33,7 +30,7 @@ public class White {
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
 	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.loadLibrary("openCV_java");
 	}
 
 	/**
