@@ -4,12 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Lifter;
 import org.firstinspires.ftc.teamcode.subsystems.SubsystemManager;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Vector2D;
 
 public class Teleop extends OpMode{
     Drivetrain drivetrain;
+    Lifter lifter;
     SubsystemManager subsystemManager;
     @Override
     public void init() {
