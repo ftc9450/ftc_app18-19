@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-public class MotionTracking {
+public class MotionTracker {
     public int x;
     public int y;
     private DcMotor xOmni;
     private DcMotor yOmni;
-    public MotionTracking(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel){
+    public MotionTracker(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel){
         x = 0;
         y = 0;
+
         xOmni = forwardOmniWheel;
         yOmni = sidewaysOmniWheel;
 

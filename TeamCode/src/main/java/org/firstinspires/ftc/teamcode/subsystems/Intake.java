@@ -10,7 +10,7 @@ public class Intake extends Subsystem{
     }
     private RollerState rollerState;
     public Intake(DcMotor roller){
-        this.roller=roller;
+        this.roller = roller;
 
         roller.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         roller.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
@@ -21,7 +21,7 @@ public class Intake extends Subsystem{
 
     }
     public void setRollerState(RollerState state){
-        rollerState=state;
+        rollerState = state;
     }
 
     @Override
