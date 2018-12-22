@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Const;
+import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lifter;
@@ -15,11 +16,13 @@ public class Teleop extends OpMode{
     Lifter lifter;
     SubsystemManager subsystemManager;
     Intake intake;
+    Climber climb;
     @Override
     public void init() {
         drivetrain=new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LI));
-        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.RO),hardwareMap.dcMotor.get(Co))
+        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.RO),hardwareMap.dcMotor.get(Constants.Intake.BA));
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
         subsystemManager = new SubsystemManager();
         subsystemManager = subsystemManager.add(drivetrain);
         subsystemManager = subsystemManager.add(lifter);
