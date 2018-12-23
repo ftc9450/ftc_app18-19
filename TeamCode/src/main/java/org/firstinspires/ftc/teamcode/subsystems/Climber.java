@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.util.Constants;
 
-public class Climber {
+public class Climber extends Subsystem{
     private DcMotor climb;
     double power = 0;
     private double maxPower;
