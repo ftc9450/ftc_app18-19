@@ -16,17 +16,16 @@ public class Drivetrain extends Subsystem {
     private DcMotor rightFront;
     private DcMotor rightBack;
     private double maxPower;
-    private double[] driveSignal;
     public Drivetrain(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
         leftFront = lf;
         leftBack = lb;
         rightFront = rf;
         rightBack = rb;
         maxPower=Constants.Drivetrain.HIGH_POWER;
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
@@ -81,7 +80,5 @@ public class Drivetrain extends Subsystem {
     }
 
     @Override
-    public void loop() {
-        setPower(driveSignal);
-    }
+    public void loop() { }
 }
