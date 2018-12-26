@@ -12,4 +12,5 @@
 apply from: '../build.common.gradle'
 dependencies {
     implementation project(':libs:openCV')
+    implementation files('C:/Users/sreek/Documents/ftc_app18-19/libs/util-stream-1.0.18-sources.jar')
 }
