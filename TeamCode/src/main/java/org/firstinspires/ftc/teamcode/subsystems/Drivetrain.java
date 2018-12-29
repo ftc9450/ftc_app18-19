@@ -11,11 +11,17 @@ import org.firstinspires.ftc.teamcode.util.Constants;
  */
 
 public class Drivetrain extends Subsystem {
+    private DrivetrainState state;
     private DcMotor leftFront;
     private DcMotor leftBack;
     private DcMotor rightFront;
     private DcMotor rightBack;
     private double maxPower;
+
+    public enum DrivetrainState{
+        Turning, Linear
+    }
+
     public Drivetrain(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
         leftFront = lf;
         leftBack = lb;
@@ -64,6 +70,12 @@ public class Drivetrain extends Subsystem {
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+    public void setState(DrivetrainState state){
+        this.state = state;
+    }
+    public DrivetrainState getState(){
+        return state;
     }
     public String toString(){
         return String.valueOf((leftFront.getCurrentPosition()+rightFront.getCurrentPosition())/2 );
