@@ -32,8 +32,10 @@ public class Constants {
         public static final String BA = "base";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
-
-
+    }
+    public class MotionTracker{
+        public static final String FB = "forward";
+        public static final String LR = "sideways";
     }
     public class EncoderValue{
         private static final int nevrest40 = 28;
