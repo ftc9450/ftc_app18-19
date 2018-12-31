@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-public class Auto {
+public class AutoCrater {
 
 }

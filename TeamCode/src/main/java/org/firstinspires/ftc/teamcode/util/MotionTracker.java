@@ -51,7 +51,7 @@ public class MotionTracker {
 //      previousAngle = angle;
 //      angle = gyro.getAngle();
         if(drivetrain.getState() == Drivetrain.DrivetrainState.Turning){ // Ensures encoder values while rotating
-            xWhileTurning += x - previousX;                              // will have nob false impact on position
+            xWhileTurning += x - previousX;                              // will have no false impact on position
             yWhileTurning += y - previousY;
             x = previousX;
             y = previousY;
