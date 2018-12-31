@@ -34,6 +34,16 @@ public class Drivetrain extends Subsystem {
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+    public void moveLR(int distance, double power){//positive power and distance is move to right
+        enableAndResetEncoders();
+        distance*=Constants.Drivetrain.STRAFEINCH;
+        leftFront.setTargetPosition(distance);
+        leftBack.setTargetPosition(-1*distance);
+        rightFront.setTargetPosition(-1*distance);
+        rightBack.setTargetPosition(distance);
+        //setPower(DriveSignal.lateralMove(Constants.doubleToFloat(power)));
+        while(isBusy());
+    }
 
     public void setPower(double power) {
         leftFront.setPower(power);
