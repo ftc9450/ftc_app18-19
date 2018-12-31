@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
- * Created by dhruv on 12/24/17.
+ * Created by dhruv on 1/22/18.
  */
 
 public class Gyroscope {
@@ -17,7 +17,7 @@ public class Gyroscope {
 
     public Gyroscope(BNO055IMU imu) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit    = BNO055IMU.AngleUnit.DEGREES;
+        parameters.angleUnit    = BNO055IMU.AngleUnit.RADIANS;
         parameters.calibrationDataFile  = "IMUCalibration.json";
         parameters.loggingEnabled       = true;
         parameters.loggingTag           = "IMU";
@@ -28,18 +28,8 @@ public class Gyroscope {
     }
 
     public float getAngle() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
-    }
-
-    public float getY() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.secondAngle));
-    }
-
-    public float getX() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.thirdAngle));
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        return AngleUnit.RADIANS.normalize(AngleUnit.RADIANS.fromUnit(angles.angleUnit, angles.firstAngle));
     }
 
     public String getSystemStatus() {
