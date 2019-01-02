@@ -9,7 +9,16 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.MotionTracker;
 import org.firstinspires.ftc.teamcode.util.DetectCube;
-
+import org.opencv.core.*;
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.View.OnTouchListener;
+import android.view.SurfaceView;
 public class AutoDepot extends LinearOpMode {
     private Drivetrain drivetrain;
     private Gyroscope imu;
@@ -33,6 +42,8 @@ public class AutoDepot extends LinearOpMode {
     }
     //Straffe method to straffe based on input from vision
     public void cubemove() throws InterruptedException{
+        int x = DetectCube.process(Mat source1);
+
 
     }
 }
