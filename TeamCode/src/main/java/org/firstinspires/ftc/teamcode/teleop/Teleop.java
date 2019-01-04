@@ -37,6 +37,18 @@ public class Teleop extends OpMode{
         driveSignal[2]=-v.x + v.y - z;
         driveSignal[3]=v.x + v.y - z;
         drivetrain.setPower(driveSignal);
+        if (gamepad1.b) {
+            if(lifter.state == "off") {
+                lifter.loop();
+                lifter.state = "on";
+            }
+            else{
+                lifter.stop();
+                lifter.state = "off";
+            }
+
+        }
+
         subsystemManager.loop();
     }
 }
