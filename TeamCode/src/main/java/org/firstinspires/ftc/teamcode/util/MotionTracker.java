@@ -56,9 +56,14 @@ public class MotionTracker {
             previousY = y;
             double xTraveled = xOmni.getCurrentPosition() - xWhileTurning - previousX;
             double yTraveled = yOmni.getCurrentPosition() - yWhileTurning - previousY;
+            // Assuming gyro measures clockwise
+            // Simple clockwise rotation matrix
+            x += Math.cos(angle) * xTraveled + Math.sin(angle) * yTraveled;
+            y += -Math.sin(angle) * xTraveled + Math.cos(angle) * yTraveled;
+            /*
             double euclideanDistance = Math.sqrt(Math.pow(xTraveled, 2) + Math.pow(yTraveled, 2));
             x += euclideanDistance * Math.cos(angle);
-            y += euclideanDistance * Math.sin(angle);
+            y += euclideanDistance * Math.sin(angle);*/
         }
     }
     public void enableAndResetEncoders(){

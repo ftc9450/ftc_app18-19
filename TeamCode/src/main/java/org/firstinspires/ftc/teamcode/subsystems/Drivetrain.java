@@ -3,8 +3,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-//import org.firstinspires.ftc.teamcode.sensors.Gyroscope;
+import org.firstinspires.ftc.teamcode.sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.teamcode.util.MotionTracker;
 
 /**
  * Created by dhruv on 1/20/18.
@@ -56,6 +57,24 @@ public class Drivetrain extends Subsystem {
         leftBack.setPower(driveSignal[1]);
         rightFront.setPower(driveSignal[2]);
         rightBack.setPower(driveSignal[3]);
+    }
+    public void pivotClockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn clockwise given degree angle
+        state = DrivetrainState.Turning;
+        float startAngle = imu.getAngle();
+        double[] driveSignal = new double[]{0.3,0.3,-0.3,-0.3};
+        setPower(driveSignal);
+        while(angle - (imu.getAngle() - startAngle + 360) % 360 > 0.1); // TODO: check value
+        setPower(new double[]{0,0,0,0});
+        tracker.updatePosition();
+    }
+    public void pivotCounterclockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn counterclockwise given degree angle
+        state = DrivetrainState.Turning;
+        float startAngle = imu.getAngle();
+        double[] driveSignal = new double[]{-0.3,-0.3,0.3,0.3};
+        setPower(driveSignal);
+        while(angle - (startAngle - imu.getAngle() + 360) % 360 > 0.1); // TODO: check value
+        setPower(new double[]{0,0,0,0});
+        tracker.updatePosition();
     }
     public void setFWPosition(double pos) {
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

@@ -21,14 +21,14 @@ public class AutoCrater extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        waitForStart();
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain);
+        tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, -45); //TODO: check angle
 
 
         drivetrain.enableAndResetEncoders();
         float angleWhenHanging = imu.getAngle();
+        waitForStart();
         // TODO: lower robot
         tracker.enableAndResetEncoders();
         // TODO: move out of latch
