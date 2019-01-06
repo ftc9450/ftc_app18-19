@@ -11,8 +11,9 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 public class Lifter extends Subsystem {
 
     private DcMotor lift;
-    double power = 0;
+    double power = 1;
     private double maxPower;
+    public String state = "off";
     public Lifter(DcMotor li){
         lift = li;
     }

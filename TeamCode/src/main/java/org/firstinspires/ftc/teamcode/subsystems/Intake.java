@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class Intake extends Subsystem{
     private DcMotor roller;
     private DcMotor move;
+    public String state = "off";
     public enum RollerState{
         IN,OUT,OFF
     }
