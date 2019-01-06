@@ -12,6 +12,10 @@ public class Constants {
         public static final int STRAFEINCH = 135;
         public static final int INCH = 40;//1120 cpr for neverest 40
         public static final int DEGREE = 18;
+        public static final int FB_THRESHOLD = 0; // TODO: check value
+        public static final int LR_THRESHOLD = 0; // TODO: check value
+        public static final double FB_LEFT_POWER = 1.0; // TODO: check value
+        public static final double FB_RIGHT_POWER = 1.0; // TODO: check value
         public static final String LF = "frontleft";
         public static final String LB = "backleft";
         public static final String RF = "frontright";
@@ -36,6 +40,11 @@ public class Constants {
     public class MotionTracker{
         public static final String FB = "forward";
         public static final String LR = "sideways";
+        public static final int CLICKS_PER_INCH = 13; // cpr of 360 // TODO: check value
+    }
+    public class Auto{
+        public static final double PIVOT_POWER = 0.3;
+        public static final double PIVOT_THRESHOLD = 0.1;
     }
     public class EncoderValue{
         private static final int nevrest40 = 28;

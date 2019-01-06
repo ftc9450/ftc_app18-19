@@ -13,7 +13,7 @@ public class MotionTracker {
     public double x;
     public double y;
     private double angle; // In radians for use with Math.sin(), Math.cos().  Gyroscope in Degrees
-    private double offsetAngle; // To make x and y orient correctly and with boundaries, in degrees
+    private float offsetAngle; // To make x and y orient correctly and with boundaries, in degrees
     private double previousX;
     private double previousY;
     private double xWhileTurning;
@@ -22,7 +22,7 @@ public class MotionTracker {
     private DcMotor yOmni;
     private Gyroscope gyro;
     private Drivetrain drivetrain;
-    public MotionTracker(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel, Drivetrain drivetrain, Gyroscope gyro, double initialAngle){
+    public MotionTracker(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel, Drivetrain drivetrain, Gyroscope gyro, float initialAngle){
         this.drivetrain = drivetrain;
         this.gyro = gyro;
 
@@ -51,7 +51,7 @@ public class MotionTracker {
             x = previousX;
             y = previousY;
         } else{
-            angle = Math.toRadians(gyro.getAngle() + offsetAngle);
+            angle = Math.toRadians(getAbsoluteAngle());
             previousX = x;
             previousY = y;
             double xTraveled = xOmni.getCurrentPosition() - xWhileTurning - previousX;
@@ -65,6 +65,15 @@ public class MotionTracker {
             x += euclideanDistance * Math.cos(angle);
             y += euclideanDistance * Math.sin(angle);*/
         }
+    }
+    public float getAbsoluteAngle(){ // returns angle of robot relative to field boundaries
+        return (gyro.getAngle() + offsetAngle) % 360;
+    }
+    public int getXEncoderValue(){
+        return xOmni.getCurrentPosition();
+    }
+    public int getYEncoderValue(){
+        return yOmni.getCurrentPosition();
     }
     public void enableAndResetEncoders(){
         xOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

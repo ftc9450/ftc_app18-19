@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.MotionTracker;
 
@@ -58,6 +57,23 @@ public class Drivetrain extends Subsystem {
         rightFront.setPower(driveSignal[2]);
         rightBack.setPower(driveSignal[3]);
     }
+    public void moveFB(double distance, double power, boolean forwards, MotionTracker tracker){ // distance (in inches) and power will always be positive
+        state = DrivetrainState.Linear;
+        int clicks = (int) (distance * Constants.MotionTracker.CLICKS_PER_INCH);
+        int initialEncoderValue = tracker.getXEncoderValue();
+        double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
+        double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
+        if(forwards){
+            setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
+            try{while(tracker.getXEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.FB_THRESHOLD);}catch(Exception e){}
+        } else{
+            setPower(new double[]{-leftPower,-leftPower,-rightPower,-rightPower});
+            try{while(initialEncoderValue - tracker.getXEncoderValue() < clicks - Constants.Drivetrain.FB_THRESHOLD);}catch(Exception e){}
+        }
+        setPower(new double[]{0,0,0,0});
+        tracker.updatePosition();
+    }
+    /* Now in auto classes
     public void pivotClockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn clockwise given degree angle
         state = DrivetrainState.Turning;
         float startAngle = imu.getAngle();
@@ -76,6 +92,7 @@ public class Drivetrain extends Subsystem {
         setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
     }
+    */
     public void setFWPosition(double pos) {
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
