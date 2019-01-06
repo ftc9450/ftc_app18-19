@@ -18,12 +18,13 @@ public class AutoCrater extends LinearOpMode {
     private Drivetrain drivetrain;
     private Gyroscope imu;
     private MotionTracker tracker;
+    private final double initialAngle = -45;
 
     @Override
     public void runOpMode() throws InterruptedException {
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, -45); //TODO: check angle
+        tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
 
 
         drivetrain.enableAndResetEncoders();
@@ -34,6 +35,12 @@ public class AutoCrater extends LinearOpMode {
         // TODO: move out of latch
         // TODO: lower climber
         float currentAngle = imu.getAngle();
+        float angleDifference = currentAngle - angleWhenHanging;
+        if(angleDifference > 0){
+            drivetrain.pivotCounterclockwise(angleDifference, imu, tracker);
+        } else if(angleDifference < 0){
+            drivetrain.pivotClockwise(-angleDifference, imu, tracker);
+        }
         // TODO: correct for difference in angle
         // TODO: drive forward until in front of samples
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
@@ -51,9 +58,9 @@ public class AutoCrater extends LinearOpMode {
         // TODO: correction strafe (if needbe, may remove)
         // TODO: knock off gold mineral
         // TODO: return to position
-        // TODO: pivot 90 degrees right
+        drivetrain.pivotClockwise(90, imu, tracker); // pivot 90 degrees right
         // TODO: drive backward to waypoint (on safe auto map)
-        // TODO: turn left so back is facing depot
+        drivetrain.pivotCounterclockwise(-initialAngle, imu, tracker); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle
         // TODO: drive backward until depot
         // TODO: deposit team marker (from back of robot)
         // TODO: turn left to face crater
