@@ -11,6 +11,6 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 dependencies {
-    implementation project(':libs:openCV')
-    implementation files(':libs/util-stream-1.0.18-sources.jar')
+    //implementation project(':libs:openCV')
+    //implementation files(':libs/util-stream-1.0.18-sources.jar')
 }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+/*
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -42,8 +43,8 @@ public class AutoDepot extends LinearOpMode {
     }
     //Straffe method to straffe based on input from vision
     public void cubemove() throws InterruptedException{
-        int x = DetectCube.process(Mat source1);
+        //int x = DetectCube.process(Mat source1);
 
 
     }
-}
+}*/
