@@ -32,8 +32,9 @@ public class Constants {
         public static final double LOW_POWER = -1;
     }
     public class Intake{
-        public static final String RO = "roller";
+        public static final String RO = "move";
         public static final String BA = "base";
+        public static final String RI = "roller";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
     }

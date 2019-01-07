@@ -21,7 +21,7 @@ public class Teleop extends OpMode{
     public void init() {
         drivetrain=new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LI));
-        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.RO),hardwareMap.dcMotor.get(Constants.Intake.BA));
+        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.RO),hardwareMap.dcMotor.get(Constants.Intake.BA), hardwareMap.servo.get((Constants.Intake.RI)));
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
         subsystemManager = new SubsystemManager();
         subsystemManager = subsystemManager.add(lifter).add(intake).add(climb);
@@ -37,7 +37,7 @@ public class Teleop extends OpMode{
         driveSignal[2]=-v.x + v.y - z;
         driveSignal[3]=v.x + v.y - z;
         drivetrain.setPower(driveSignal);
-        if (gamepad1.b) {
+        if (gamepad2.x) {
             if(lifter.state == "off") {
                 lifter.loop();
                 lifter.state = "on";
@@ -48,6 +48,37 @@ public class Teleop extends OpMode{
             }
 
         }
+        else if (gamepad1.y){
+            if(climb.state == "up"){
+                climb.changedir();
+                climb.loop();
+                climb.state = "down";
+
+            }
+            else{
+                climb.changedir();
+                climb.loop();
+                climb.state ="up";
+            }
+        }
+        else if (gamepad2.a){
+            if(intake.state == "inside"){
+                intake.move();
+                intake.state = "outside";
+            }
+            else if(intake.state == "outside"){
+                intake.move();
+                intake.state = "inside";
+            }
+
+        }
+        else if (gamepad2.b){
+            intake.loop();
+        }
+        else if (gamepad2.y){
+            intake.vertical();
+        }
+
 
         subsystemManager.loop();
     }

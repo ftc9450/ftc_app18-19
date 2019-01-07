@@ -9,6 +9,7 @@ public class Climber extends Subsystem{
     private DcMotor climb;
     double power = 0;
     private double maxPower;
+    public String state = "up";
     public Climber(DcMotor cl){
         climb = cl;
     }
@@ -17,6 +18,11 @@ public class Climber extends Subsystem{
     }
     public void loop() {
         climb.setPower(Constants.Climber.HIGH_POWER);
+
+    }
+    public void changedir(){
+        climb.setDirection(DcMotor.Direction.REVERSE);
+
     }
     public void stop() {
         climb.setPower(Constants.Climber.LOW_POWER);
