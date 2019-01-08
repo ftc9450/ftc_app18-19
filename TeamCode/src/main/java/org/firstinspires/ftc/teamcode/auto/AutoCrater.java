@@ -32,36 +32,38 @@ public class AutoCrater extends LinearOpMode {
         waitForStart();
         // TODO: lower robot
         tracker.enableAndResetEncoders();
-        // TODO: move out of latch
+        //TODO
+        //TODO: CHECK ALL THE VALUES I WILL DIE
+        //TODO
+        drivetrain.moveLR(5,0.3,false,tracker);// move out of latch //
         // TODO: lower climber
-        pivotTo(angleWhenHanging, imu, tracker);
-        // TODO: correct for difference in angle
-        // TODO: drive forward until in front of samples
+        pivotTo(angleWhenHanging);//correct for difference in angle caused by dropping
+        drivetrain.moveFB(18,.75,true,tracker);// drive forward until in front of samples
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
         switch(mineralPosition){
+            //pivot to face gold mineral
             case 0:
-                // TODO: initial strafe to mineral
+                pivotClockwise(45);
                 break;
             case 1:
-                // TODO: initial strafe to mineral
+                // should be aligned
                 break;
             case 2:
-                // TODO: initial strafe to mineral
+                pivotCounterclockwise(45);
                 break;
         }
-        // TODO: correction strafe (if needbe, may remove)
-        // TODO: knock off gold mineral
-        // TODO: return to position
-        pivotClockwise(90, imu, tracker); // pivot 90 degrees right
-        // TODO: drive backward to waypoint (on safe auto map)
-        pivotCounterclockwise(-initialAngle, imu, tracker); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle
-        // TODO: drive backward until depot
+        drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
+        drivetrain.moveFB(26,.7,false,tracker);// return to position
+        pivotTo(135); // Drive will then drive backwards
+        drivetrain.moveFB(50,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
+        pivotCounterclockwise(Math.abs(initialAngle)); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle
+        drivetrain.moveFB(38,.7,false,tracker);// drive backward until depot
         // TODO: deposit team marker (from back of robot)
-        // TODO: turn left to face crater
-        // TODO: drive forward until parked on crater
+        // (shouldn't need to) turn left to face crater
+        drivetrain.moveFB(80,.7,true,tracker);// drive forward until parked on crater
     }
 
-    public void pivotClockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn clockwise given degree angle
+    public void pivotClockwise(double angle){ // Turn clockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);
         float startAngle = imu.getAngle();
         double power = Constants.Auto.PIVOT_POWER;
@@ -71,7 +73,7 @@ public class AutoCrater extends LinearOpMode {
         drivetrain.setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
     }
-    public void pivotCounterclockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn counterclockwise given degree angle
+    public void pivotCounterclockwise(double angle){ // Turn counterclockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);
         float startAngle = imu.getAngle();
         double power = Constants.Auto.PIVOT_POWER;
@@ -81,19 +83,19 @@ public class AutoCrater extends LinearOpMode {
         drivetrain.setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
     }
-    public void pivotTo(float targetAngle, Gyroscope imu, MotionTracker tracker){ // relative to field boundaries
+    public void pivotTo(float targetAngle){ // relative to field boundaries
         float currentAngle = tracker.getAbsoluteAngle();
         if(Math.abs(currentAngle - targetAngle) > 180){ // must cross the line theta = 0
             if(currentAngle > targetAngle){
-                pivotClockwise(360 - (currentAngle - targetAngle), imu, tracker);
+                pivotClockwise(360 - (currentAngle - targetAngle));
             } else if(targetAngle > currentAngle){
-                pivotCounterclockwise(360 - (targetAngle - currentAngle), imu, tracker);
+                pivotCounterclockwise(360 - (targetAngle - currentAngle));
             }
         } else{
             if(currentAngle > targetAngle){
-                pivotCounterclockwise(currentAngle - targetAngle, imu, tracker);
+                pivotCounterclockwise(currentAngle - targetAngle);
             } else if(targetAngle > currentAngle){
-                pivotClockwise(targetAngle - currentAngle, imu, tracker);
+                pivotClockwise(targetAngle - currentAngle);
             }
         }
     }

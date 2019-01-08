@@ -16,6 +16,8 @@ public class Constants {
         public static final int LR_THRESHOLD = 0; // TODO: check value
         public static final double FB_LEFT_POWER = 1.0; // TODO: check value
         public static final double FB_RIGHT_POWER = 1.0; // TODO: check value
+        public static final double LR_FRONT_POWER = 1.0; // TODO: check value
+        public static final double LR_REAR_POWER = 1.0; // TODO: check value
         public static final String LF = "frontleft";
         public static final String LB = "backleft";
         public static final String RF = "frontright";
