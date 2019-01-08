@@ -56,10 +56,10 @@ public class Drivetrain extends Subsystem {
         double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
         if(forward){
             setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
-            try{while(tracker.getXEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.FB_THRESHOLD);}catch(Exception e){}
+            try{while(tracker.getXEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         } else{
             setPower(new double[]{-leftPower,-leftPower,-rightPower,-rightPower});
-            try{while(initialEncoderValue - tracker.getXEncoderValue() < clicks - Constants.Drivetrain.FB_THRESHOLD);}catch(Exception e){}
+            try{while(initialEncoderValue - tracker.getXEncoderValue() < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         }
         setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
@@ -72,10 +72,10 @@ public class Drivetrain extends Subsystem {
         double rearPower = power * Constants.Drivetrain.LR_REAR_POWER;
         if(right){
             setPower(new double[]{frontPower,rearPower,frontPower,rearPower});
-            try{while(tracker.getYEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.LR_THRESHOLD);}catch(Exception e){}
+            try{while(tracker.getYEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.LR_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         } else{
             setPower(new double[]{-frontPower,-rearPower,-frontPower,-rearPower});
-            try{while(initialEncoderValue - tracker.getYEncoderValue() < clicks - Constants.Drivetrain.LR_THRESHOLD);}catch(Exception e){}
+            try{while(initialEncoderValue - tracker.getYEncoderValue() < clicks - Constants.Drivetrain.LR_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         }
         setPower(new double[]{0,0,0,0});
         tracker.updatePosition();

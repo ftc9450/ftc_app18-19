@@ -27,6 +27,8 @@ public class Constants {
         public static final String LI = "Lifter";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;
+        public static final double PID_THRESHOLD = 10;
+        public static final int UP_POSITION = 1000; // TODO: check value
     }
     public class Climber{
         public static final String CL = "Climber";

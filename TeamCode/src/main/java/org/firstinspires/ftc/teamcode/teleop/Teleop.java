@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -37,6 +36,7 @@ public class Teleop extends OpMode{
         driveSignal[2]=-v.x + v.y - z;
         driveSignal[3]=v.x + v.y - z;
         drivetrain.setPower(driveSignal);
+        // TODO: change all of these to <subsystem>.setState(state)
         if (gamepad2.x) {
             if(lifter.state == "off") {
                 lifter.loop();
