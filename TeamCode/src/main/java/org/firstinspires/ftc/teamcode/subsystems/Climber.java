@@ -14,9 +14,12 @@ public class Climber extends Subsystem{
         climb = cl;
     }
     public void enableAndResetEncoders() {
+
         climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
     public void loop() {
+        changedir();
+        enableAndResetEncoders();
         climb.setPower(Constants.Climber.HIGH_POWER);
 
     }

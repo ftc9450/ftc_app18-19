@@ -59,7 +59,6 @@ public class Intake extends Subsystem{
                 break;
             case OUT:
                 roller.setPosition(-12);
-
                 break;
             case OFF:
             default:
