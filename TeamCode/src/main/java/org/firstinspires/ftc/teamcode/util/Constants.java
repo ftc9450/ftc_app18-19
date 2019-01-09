@@ -41,10 +41,11 @@ public class Constants {
         public static final String RI = "roller";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
+        public static final int IN_POSITION = 100; // TODO: check value
     }
     public class MotionTracker{
-        public static final String FB = "forward";
-        public static final String LR = "sideways";
+        public static final String FB = "frontleft";
+        public static final String LR = "frontright";
         public static final int CLICKS_PER_INCH = 13; // cpr of 360 // TODO: check value
     }
     public class Auto{

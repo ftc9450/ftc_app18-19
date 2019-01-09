@@ -1,17 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Pid;
 
-@TeleOp
 
 public class Lifter extends Subsystem {
 
     private DcMotor lift;
     double power = 1;
+    double secondsElapsed = 0;
     private double maxPower = 0.75;
     public String state = "off";
     private LifterState lifterState;
@@ -54,7 +53,7 @@ public class Lifter extends Subsystem {
         pid = new Pid(kp,ti,td,-1,1,-maxPower,maxPower);
         double power;
         int currentDistance = 0;
-        double secondsElapsed = 0;
+        secondsElapsed = 0;
         double previousTime = System.nanoTime();
         double currentTime;
         while(Math.abs(currentDistance) < Math.abs(targetDistance - Constants.Lifter.PID_THRESHOLD)){
@@ -66,9 +65,13 @@ public class Lifter extends Subsystem {
             secondsElapsed += dt;
             previousTime = currentTime;
         }
+
     }
     public void setLifterState(LifterState state){
         lifterState = state;
+    }
+    public String toString(){
+        return "" + lift.getCurrentPosition();
     }
 
 }

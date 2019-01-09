@@ -1,50 +1,63 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 public class Intake extends Subsystem{
-    private Servo roller;
-    private DcMotor move;
-    private DcMotor vert;
+    private CRServo roller;
+    private DcMotor extender;
+    private DcMotor pivot;
     public String state = "inside";
+    private RollerState rollerState;
+    private ExtenderState extenderState;
+    private PivotState pivotState;
     public enum RollerState{
         IN,OUT,OFF
     }
-    private RollerState rollerState;
-    public Intake(DcMotor vert, DcMotor move, Servo roller){
-        roller = roller;
-        move = move;
-        vert = vert;
-        vert.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        vert.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
-        move.setDirection(DcMotorSimple.Direction.REVERSE);
+    public enum ExtenderState{
+        IN,OUT,OFF
+    }
+    public enum PivotState{
+        UP,DOWN,OFF
+    }
+    public Intake(DcMotor pivot, DcMotor extender, CRServo roller){
+        this.roller = roller;
+        this.extender = extender;
+        this.pivot = pivot;
+
+        enableAndResetEncoders();
+        pivot.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
+        extender.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
-    @Override
     public void stop() {
-        vert.setPower(0);
-        move.setPower(0);
-
+        pivot.setPower(0);
+        extender.setPower(0);
+        roller.setPower(0);
     }
     public void enableAndResetEncoders() {
-        move.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extender.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void disconnectEncoders() {
-
-        move.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void move(){
         enableAndResetEncoders();
-        move.setPower(1);
-        move.setDirection(DcMotorSimple.Direction.REVERSE);
+        extender.setPower(1);
+        extender.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void vertical(){
-        vert.setPower(.5);
-        vert.setDirection(DcMotorSimple.Direction.REVERSE);
+        pivot.setPower(.5);
+        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setRollerState(RollerState state){
@@ -55,13 +68,37 @@ public class Intake extends Subsystem{
     public void loop() {
         switch (rollerState){
             case IN:
-                roller.setPosition(12);
+                roller.setPower(1);
                 break;
             case OUT:
-                roller.setPosition(-12);
+                roller.setPower(-1);
                 break;
             case OFF:
-            default:
+                roller.setPower(0);
+                break;
+        }
+        switch (extenderState){
+            case IN:
+                extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                extender.setTargetPosition(Constants.Intake.IN_POSITION); // TODO: check value
+                extender.setPower(-.5);
+                break;
+            case OUT:
+                extender.setPower(1);
+                break;
+            case OFF:
+                extender.setPower(0);
+                break;
+        }
+        switch (pivotState){
+            case UP:
+                pivot.setPower(.1);
+                break;
+            case DOWN:
+                pivot.setPower(-.1);
+                break;
+            case OFF:
+                pivot.setPower(0);
                 break;
         }
     }
