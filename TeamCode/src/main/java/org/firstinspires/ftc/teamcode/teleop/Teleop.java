@@ -18,14 +18,22 @@ public class Teleop extends OpMode{
     SubsystemManager subsystemManager;
     Intake intake;
     Climber climb;
+    private boolean rollerIn;
+    private boolean rollerInPressed;
+    private boolean rollerOut;
+    private boolean rollerOutPressed;
     @Override
     public void init() {
-        drivetrain=new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
+        drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
         intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI),hardwareMap.dcMotor.get(Constants.Intake.EX), hardwareMap.crservo.get((Constants.Intake.RO)));
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
         subsystemManager = new SubsystemManager();
         subsystemManager = subsystemManager.add(lifter).add(intake).add(climb);
+        rollerIn = false;
+        rollerInPressed = false;
+        rollerOut = false;
+        rollerOutPressed = false;
     }
     public void loop(){
         Vector2D v = new Vector2D();
@@ -56,11 +64,32 @@ public class Teleop extends OpMode{
 
         intake.setExtenderPower(gamepad2.right_trigger / 2 - gamepad2.left_trigger / 2);
 
-        if(gamepad2.b){
-            intake.setRollerState(Intake.RollerState.IN);
+        if(gamepad2.b){ // toggles roller on/off
+            if(!rollerInPressed){
+                if(!rollerIn){
+                    intake.setRollerState(Intake.RollerState.IN);
+                    rollerIn = false;
+                } else{
+                    intake.setRollerState(Intake.RollerState.OFF);
+                    rollerIn = true;
+                }
+                rollerOut = false;
+            }
+            rollerInPressed = true;
         } else if(gamepad2.a){
-            intake.setRollerState(Intake.RollerState.OUT);
+            if(!rollerOutPressed){
+                if(!rollerOut){
+                    intake.setRollerState(Intake.RollerState.OUT);
+                    rollerOut = false;
+                } else{
+                    intake.setRollerState(Intake.RollerState.OFF);
+                    rollerOut = true;
+                }
+                rollerIn = false;
+            }
+            rollerOutPressed = true;
         } else{
+
             intake.setRollerState(Intake.RollerState.OFF);
         }
 
