@@ -4,13 +4,10 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.util.Constants;
-
 public class Intake extends Subsystem{
     private CRServo roller;
     private DcMotor extender;
     private DcMotor pivot;
-    public String state = "inside";
     private RollerState rollerState;
     private ExtenderState extenderState;
     private PivotState pivotState;
@@ -33,6 +30,9 @@ public class Intake extends Subsystem{
         extender.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
+    public void setExtenderPower(float power){
+        extender.setPower(power);
+    }
 
     public void stop() {
         pivot.setPower(0);
@@ -49,6 +49,15 @@ public class Intake extends Subsystem{
         extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+    public void setExtenderState(ExtenderState state){
+        extenderState = state;
+    }
+    public void setRollerState(RollerState state){
+        rollerState = state;
+    }
+    public void setPivotState(PivotState state){
+        pivotState = state;
+    }
 
     public void move(){
         enableAndResetEncoders();
@@ -58,10 +67,6 @@ public class Intake extends Subsystem{
     public void vertical(){
         pivot.setPower(.5);
         pivot.setDirection(DcMotorSimple.Direction.REVERSE);
-    }
-
-    public void setRollerState(RollerState state){
-        rollerState = state;
     }
 
     @Override
@@ -79,12 +84,12 @@ public class Intake extends Subsystem{
         }
         switch (extenderState){
             case IN:
-                extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                extender.setTargetPosition(Constants.Intake.IN_POSITION); // TODO: check value
+                //extender.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                //extender.setTargetPosition(Constants.Intake.IN_POSITION); // TODO: check value
                 extender.setPower(-.5);
                 break;
             case OUT:
-                extender.setPower(1);
+                extender.setPower(.5);
                 break;
             case OFF:
                 extender.setPower(0);

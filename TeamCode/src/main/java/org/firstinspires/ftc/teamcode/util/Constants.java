@@ -24,11 +24,14 @@ public class Constants {
         public static final String RB = "backright";
     }
     public class Lifter{
-        public static final String LI = "Lifter";
+        public static final String LIFT = "Lifter";
+        public static final String LID = "Lid";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;
         public static final double PID_THRESHOLD = 10;
         public static final int UP_POSITION = 1000; // TODO: check value
+        public static final double LID_CLOSED = 0.50; // TODO: check value
+        public static final double LID_OPEN = 0.65; // TODO: check value
     }
     public class Climber{
         public static final String CL = "Climber";
@@ -36,9 +39,9 @@ public class Constants {
         public static final double LOW_POWER = -1;
     }
     public class Intake{
-        public static final String RO = "move";
-        public static final String BA = "base";
-        public static final String RI = "roller";
+        public static final String EX = "extender";
+        public static final String PI = "pivot";
+        public static final String RO = "roller";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
         public static final int IN_POSITION = 100; // TODO: check value

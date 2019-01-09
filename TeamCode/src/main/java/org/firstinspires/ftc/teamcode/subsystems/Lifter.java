@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Pid;
@@ -9,22 +10,26 @@ import org.firstinspires.ftc.teamcode.util.Pid;
 public class Lifter extends Subsystem {
 
     private DcMotor lift;
-    double power = 1;
+    private Servo lid;
     double secondsElapsed = 0;
     private double maxPower = 0.75;
-    public String state = "off";
     private LifterState lifterState;
+    private LidState lidState;
     private Pid pid = null;
     private final double kp = 1.0;
     private final double ti = 0.0;
     private final double td = 0.0;
     public enum LifterState{
-        UP, DOWN
+        UP,DOWN,OFF
     }
-    public Lifter(DcMotor li){
-        lift = li;
+    public enum LidState{
+        OPEN,CLOSED
+    }
+    public Lifter(DcMotor lifter, Servo bucketLid){
+        lift = lifter;
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setDirection(DcMotor.Direction.FORWARD); // TODO: check direction
+        lid = bucketLid;
     }
 
     public void enableAndResetEncoders() {
@@ -34,10 +39,22 @@ public class Lifter extends Subsystem {
     public void loop() {
         switch(lifterState){
             case UP:
-                setPosition(Constants.Lifter.UP_POSITION);
+                lift.setPower(0.75);
+                //setPosition(Constants.Lifter.UP_POSITION);
                 break;
             case DOWN:
-                setPosition(-Constants.Lifter.UP_POSITION);
+                lift.setPower(-0.75);
+                //setPosition(-Constants.Lifter.UP_POSITION);
+                break;
+            case OFF:
+                lift.setPower(0);
+        }
+        switch(lidState){
+            case OPEN:
+                lid.setPosition(Constants.Lifter.LID_OPEN);
+                break;
+            case CLOSED:
+                lid.setPosition(Constants.Lifter.LID_CLOSED);
                 break;
         }
     }
@@ -69,6 +86,9 @@ public class Lifter extends Subsystem {
     }
     public void setLifterState(LifterState state){
         lifterState = state;
+    }
+    public void setLidState(LidState state){
+        lidState = state;
     }
     public String toString(){
         return "" + lift.getCurrentPosition();

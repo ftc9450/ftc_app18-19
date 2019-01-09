@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.SubsystemManager;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Vector2D;
 
+@TeleOp
 public class Teleop extends OpMode{
     Drivetrain drivetrain;
     Lifter lifter;
@@ -19,8 +21,8 @@ public class Teleop extends OpMode{
     @Override
     public void init() {
         drivetrain=new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-        lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LI));
-        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.RO),hardwareMap.dcMotor.get(Constants.Intake.BA), hardwareMap.servo.get((Constants.Intake.RI)));
+        lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
+        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI),hardwareMap.dcMotor.get(Constants.Intake.EX), hardwareMap.crservo.get((Constants.Intake.RO)));
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
         subsystemManager = new SubsystemManager();
         subsystemManager = subsystemManager.add(lifter).add(intake).add(climb);
@@ -36,47 +38,44 @@ public class Teleop extends OpMode{
         driveSignal[2]=-v.x + v.y - z;
         driveSignal[3]=v.x + v.y - z;
         drivetrain.setPower(driveSignal);
-        // TODO: change all of these to <subsystem>.setState(state) //
+        if (gamepad1.x){
+            climb.setClimberState(Climber.ClimberState.UP);
+        } else if(gamepad1.y) {
+            climb.setClimberState(Climber.ClimberState.DOWN);
+        } else{
+            climb.setClimberState(Climber.ClimberState.OFF);
+        }
+
         if (gamepad2.x) {
-            if(lifter.state == "off") {
-                lifter.loop();
-                lifter.state = "on";
-            }
-            else{
-                lifter.stop();
-                lifter.state = "off";
-            }
+            lifter.setLifterState(Lifter.LifterState.UP);
+        } else if(gamepad2.y){
+            lifter.setLifterState(Lifter.LifterState.DOWN);
+        } else{
+            lifter.setLifterState(Lifter.LifterState.OFF);
+        }
 
-        }
-        else if (gamepad1.y){
-            if(climb.state == "up"){
-                climb.changedir();
-                climb.loop();
-                climb.state = "down";
+        intake.setExtenderPower(gamepad2.right_trigger / 2 - gamepad2.left_trigger / 2);
 
-            }
-            else{
-                climb.changedir();
-                climb.loop();
-                climb.state ="up";
-            }
+        if(gamepad2.b){
+            intake.setRollerState(Intake.RollerState.IN);
+        } else if(gamepad2.a){
+            intake.setRollerState(Intake.RollerState.OUT);
+        } else{
+            intake.setRollerState(Intake.RollerState.OFF);
         }
-        else if (gamepad2.a){
-            if(intake.state == "inside"){
-                intake.move();
-                intake.state = "outside";
-            }
-            else if(intake.state == "outside"){
-                intake.move();
-                intake.state = "inside";
-            }
 
+        if (gamepad2.right_bumper){
+            intake.setPivotState(Intake.PivotState.DOWN);
+        } else if(gamepad2.left_bumper){
+            intake.setPivotState(Intake.PivotState.UP);
+        } else{
+            intake.setPivotState(Intake.PivotState.OFF);
         }
-        else if (gamepad2.b){
-            intake.loop();
-        }
-        else if (gamepad2.y){
-            intake.vertical();
+
+        if(gamepad2.dpad_up){
+            lifter.setLidState(Lifter.LidState.OPEN);
+        } else if(gamepad1.dpad_down){
+            lifter.setLidState(Lifter.LidState.CLOSED);
         }
 
 
