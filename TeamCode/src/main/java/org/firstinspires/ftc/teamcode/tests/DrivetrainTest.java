@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.util.Constants;
+
 @TeleOp
 public class DrivetrainTest extends OpMode {
 	private DcMotor lb;
@@ -11,14 +13,17 @@ public class DrivetrainTest extends OpMode {
 	private DcMotor rb;
 	private DcMotor rf;
 	private DcMotor lateral;
+	private DcMotor forward;
 
 	public void init() {
-		lb = hardwareMap.dcmotor.get(Constants.Drivetrain.LB);
-		lf = hardwareMap.dcmotor.get(Constants.Drivetrain.LF);
-		rb = hardwareMap.dcmotor.get(Constants.Drivetrain.RB);
-		rf = hardwareMap.dcmotor.get(Constants.Drivetrain.RF);
-		lateral = hardwareMap.dcmotor.get(Constants.MotionTracker.LR);
-		forward = hardwareMap.dcmotor.get(Constants.MotionTracker.FB);
+		lb = hardwareMap.dcMotor.get(Constants.Drivetrain.LB);
+		lf = hardwareMap.dcMotor.get(Constants.Drivetrain.LF);
+		rb = hardwareMap.dcMotor.get(Constants.Drivetrain.RB);
+		rf = hardwareMap.dcMotor.get(Constants.Drivetrain.RF);
+		lateral = hardwareMap.dcMotor.get(Constants.MotionTracker.LR);
+		forward = hardwareMap.dcMotor.get(Constants.MotionTracker.FB);
+		lateral.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+		forward.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 	}
 
 	public void loop() {
@@ -30,7 +35,7 @@ public class DrivetrainTest extends OpMode {
 		rf.setPower(-x + y - z);
 		rb.setPower(x + y - z);
 
-		telemetry.addData("lateral:", lateral.getPosition());
-		telemetry.addData("forward:", lateral.getPosition());
+		telemetry.addData("lateral:", lateral.getCurrentPosition());
+		telemetry.addData("forward:", forward.getCurrentPosition());
 	}
 }

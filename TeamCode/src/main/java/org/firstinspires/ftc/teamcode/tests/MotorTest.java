@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.util.Constants;
+
 @TeleOp
 public class MotorTest extends OpMode {
     private DcMotor climbMotor;
@@ -21,12 +23,12 @@ public class MotorTest extends OpMode {
     	if (gamepad1.dpad_up) climbMotor.setPower(0.2);
     	else if (gamepad1.dpad_down) climbMotor.setPower(-0.2);
     	else climbMotor.setPower(0);
-    	telemetry.addData("climber:", climbMotor.getPosition());
+    	telemetry.addData("climber:", climbMotor.getCurrentPosition());
 
-    	if (gamepad1.right_trigger) elevator.setPower(0.2);
-    	else if (gamepad1.left_trigger) elevator.setPower(-0.2);
+    	if (gamepad1.right_bumper) elevator.setPower(0.2);
+    	else if (gamepad1.left_bumper) elevator.setPower(-0.2);
     	else elevator.setPower(0);
-    	telemetry.addData("elevator:", elevator.getPosition());
+    	telemetry.addData("elevator:", elevator.getCurrentPosition());
 
     	telemetry.update();
     }
