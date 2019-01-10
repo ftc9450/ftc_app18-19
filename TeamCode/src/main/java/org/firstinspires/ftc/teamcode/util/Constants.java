@@ -47,9 +47,9 @@ public class Constants {
         public static final int IN_POSITION = 100; // TODO: check value
     }
     public class MotionTracker{
-        public static final String FB = "frontleft";
+        public static final String FB = "backleft";
         public static final String LR = "frontright";
-        public static final int CLICKS_PER_INCH = 13; // cpr of 360 // TODO: check value
+        public static final double CLICKS_PER_INCH = 114.59; // cpr of 1440
     }
     public class Auto{
         public static final double PIVOT_POWER = 0.3;

@@ -13,12 +13,13 @@ public class EncoderTest extends OpMode{
         lateral=hardwareMap.dcMotor.get(Constants.MotionTracker.LR);
         lateral.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         straight=hardwareMap.dcMotor.get(Constants.MotionTracker.FB);
-        lateral.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        straight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
     public void loop() {
         telemetry.addData("lateral: ",lateral.getCurrentPosition());
         telemetry.addData("straight: ", straight.getCurrentPosition());
+        telemetry.update();
     }
 }

@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,6 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.MotionTracker;
+
 
 /**
  * Created by Avi on 12/31/2018.
@@ -25,23 +29,46 @@ public class AutoCrater extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
+
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
-
         drivetrain.enableAndResetEncoders();
+
+        // Setup detector
+        SamplingOrderDetector detector = new SamplingOrderDetector(); // Create the detector
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize detector with app context and camera
+        detector.useDefaults(); // Set detector to use default settings
+
+        detector.downscale = 0.4; // How much to downscale the input frames
+
+        // Optional tuning
+        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
+        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
+        detector.maxAreaScorer.weight = 0.001;
+
+        detector.ratioScorer.weight = 15;
+        detector.ratioScorer.perfectRatio = 1.0;
+
+        detector.enable(); // Start detector
+
+
         float angleWhenHanging = tracker.getAbsoluteAngle();
         waitForStart();
+        drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
+
         climb.setClimberState(Climber.ClimberState.UP);
         climb.loop();
         Thread.sleep(5000);
         climb.setClimberState(Climber.ClimberState.OFF);
         climb.loop();
+
         tracker.enableAndResetEncoders();
         //TODO
         //TODO: CHECK ALL THE VALUES I WILL DIE
         //TODO
+
         drivetrain.moveLR(5,0.3,false,tracker);// move out of latch //
         pivotTo(angleWhenHanging);//correct for difference in angle caused by dropping
         drivetrain.moveFB(18,.75,true,tracker);// drive forward until in front of samples
@@ -67,6 +94,7 @@ public class AutoCrater extends LinearOpMode {
         // TODO: deposit team marker (from back of robot)
         // (shouldn't need to) turn left to face crater
         drivetrain.moveFB(80,.7,true,tracker);// drive forward until parked on crater
+
     }
 
     public void pivotClockwise(double angle){ // Turn clockwise given degree angle
