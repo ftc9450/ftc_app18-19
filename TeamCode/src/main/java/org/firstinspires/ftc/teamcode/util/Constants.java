@@ -54,6 +54,7 @@ public class Constants {
     public class Auto{
         public static final double PIVOT_POWER = 0.3;
         public static final double PIVOT_THRESHOLD = 0.1;
+        public static final String MA = "marker";
     }
     public class EncoderValue{
         private static final int nevrest40 = 28;
