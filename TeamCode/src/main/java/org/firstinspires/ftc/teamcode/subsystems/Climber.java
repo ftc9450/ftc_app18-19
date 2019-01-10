@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.util.Constants;
+
 public class Climber extends Subsystem{
     private DcMotor climb;
     private ClimberState climberState;
@@ -10,7 +12,8 @@ public class Climber extends Subsystem{
     }
     public Climber(DcMotor cl){
         climb = cl;
-        climb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        climb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         climb.setDirection(DcMotor.Direction.FORWARD);
         climb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
@@ -18,13 +21,17 @@ public class Climber extends Subsystem{
         climberState = state;
     }
     public void enableAndResetEncoders() {
+        climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        climb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public void loop() {
         switch(climberState){
             case UP:
+                climb.setTargetPosition(Constants.Climber.UP);
                 climb.setPower(1);
                 break;
             case DOWN:
+                climb.setTargetPosition(Constants.Climber.DOWN);
                 climb.setPower(-1);
                 break;
             case OFF:

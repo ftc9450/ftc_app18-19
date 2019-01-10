@@ -9,13 +9,13 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 @TeleOp
 public class MotorTest extends OpMode {
     private DcMotor climbMotor;
-    private DcMotor elevator;
+    private DcMotor lifter;
     @Override
     public void init() {
         climbMotor = hardwareMap.dcMotor.get(Constants.Climber.CL);
 		climbMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-		elevator = hardwareMap.dcMotor.get(Constants.Lifter.LI);
-		elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+		lifter = hardwareMap.dcMotor.get(Constants.Lifter.LIFT);
+		lifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     @Override
@@ -25,10 +25,10 @@ public class MotorTest extends OpMode {
     	else climbMotor.setPower(0);
     	telemetry.addData("climber:", climbMotor.getCurrentPosition());
 
-    	if (gamepad1.right_bumper) elevator.setPower(0.2);
-    	else if (gamepad1.left_bumper) elevator.setPower(-0.2);
-    	else elevator.setPower(0);
-    	telemetry.addData("elevator:", elevator.getCurrentPosition());
+    	if (gamepad1.right_bumper) lifter.setPower(0.2);
+    	else if (gamepad1.left_bumper) lifter.setPower(-0.2);
+    	else lifter.setPower(0);
+    	telemetry.addData("elevator:", lifter.getCurrentPosition());
 
     	telemetry.update();
     }

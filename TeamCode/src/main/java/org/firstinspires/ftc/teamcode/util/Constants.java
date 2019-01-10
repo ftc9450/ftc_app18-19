@@ -35,8 +35,8 @@ public class Constants {
     }
     public class Climber{
         public static final String CL = "Climber";
-        public static final double HIGH_POWER = 1;
-        public static final double LOW_POWER = -1;
+        public static final int UP = 5000;
+        public static final int DOWN = 0;
     }
     public class Intake{
         public static final String EX = "extender";
