@@ -12,8 +12,8 @@ public class Constants {
         public static final int STRAFEINCH = 135;
         public static final int INCH = 40;//1120 cpr for neverest 40
         public static final int DEGREE = 18;
-        public static final int FB_THRESHOLD = 0; // TODO: check value
-        public static final int LR_THRESHOLD = 0; // TODO: check value
+        public static final int FB_THRESHOLD = 500; // TODO: check value
+        public static final int LR_THRESHOLD = 500; // TODO: check value
         public static final double FB_LEFT_POWER = 1.0; // TODO: check value
         public static final double FB_RIGHT_POWER = 1.0; // TODO: check value
         public static final double LR_FRONT_POWER = 1.0; // TODO: check value

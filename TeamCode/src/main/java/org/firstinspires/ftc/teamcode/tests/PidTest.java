@@ -43,58 +43,77 @@ public class PidTest extends OpMode {
             enableAndResetEncoders();
         }
 
-        if(gamepad1.x && !xPressed){
-            switch(mode){
-                case P:
-                    kp += 0.01;
-                    break;
-                case I:
-                    ti += 0.01;
-                    break;
-                case D:
-                    td += 0.01;
-                    break;
+        if(gamepad1.x){
+            if(!xPressed){
+                switch(mode){
+                    case P:
+                        kp += 0.01;
+                        break;
+                    case I:
+                        ti += 0.01;
+                        break;
+                    case D:
+                        td += 0.01;
+                        break;
+                }
             }
             xPressed = true;
+        } else{
+            xPressed = false;
         }
         if(gamepad1.y){
-            switch(mode){
-                case P:
-                    kp -= 0.01;
-                    break;
-                case I:
-                    ti -= 0.01;
-                    break;
-                case D:
-                    td -= 0.01;
-                    break;
+            if(!yPressed) {
+                switch (mode) {
+                    case P:
+                        kp -= 0.01;
+                        break;
+                    case I:
+                        ti -= 0.01;
+                        break;
+                    case D:
+                        td -= 0.01;
+                        break;
+                }
+                yPressed = true;
             }
+        } else{
+            yPressed = false;
         }
         if(gamepad1.b){
-            switch(mode){
-                case P:
-                    kp += 0.001;
-                    break;
-                case I:
-                    ti += 0.001;
-                    break;
-                case D:
-                    td += 0.001;
-                    break;
+            if(!bPressed) {
+                switch (mode) {
+                    case P:
+                        kp += 0.001;
+                        break;
+                    case I:
+                        ti += 0.001;
+                        break;
+                    case D:
+                        td += 0.001;
+                        break;
+                }
+                bPressed = true;
             }
+        } else{
+            bPressed = false;
         }
         if(gamepad1.a){
-            switch(mode){
-                case P:
-                    kp -= 0.001;
-                    break;
-                case I:
-                    ti -= 0.001;
-                    break;
-                case D:
-                    td -= 0.001;
-                    break;
+            if(!aPressed) {
+                switch (mode) {
+                    case P:
+                        kp -= 0.001;
+                        break;
+                    case I:
+                        ti -= 0.001;
+                        break;
+                    case D:
+                        td -= 0.001;
+                        break;
+                }
+                aPressed = true;
             }
+        } else{
+            aPressed = false;
         }
     }
 

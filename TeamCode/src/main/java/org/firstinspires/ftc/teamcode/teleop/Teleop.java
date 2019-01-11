@@ -24,6 +24,7 @@ public class Teleop extends OpMode{
     private boolean rollerOutPressed;
     @Override
     public void init() {
+
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
         intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI),hardwareMap.dcMotor.get(Constants.Intake.EX), hardwareMap.crservo.get((Constants.Intake.RO)));
@@ -41,10 +42,10 @@ public class Teleop extends OpMode{
         v.y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
         float z = gamepad1.right_stick_x + (gamepad1.right_trigger - gamepad1.left_trigger)/2;
         double[] driveSignal = new double[]{0,0,0,0};
-        driveSignal[0]= -(v.x + v.y + z); // up on left stick is -1.
-        driveSignal[1]= -(-v.x + v.y + z);
-        driveSignal[2]= -(-v.x + v.y - z);
-        driveSignal[3]= -(v.x + v.y - z);
+        driveSignal[0]= v.x + v.y + z; // up on left stick is -1.
+        driveSignal[1]= -v.x + v.y + z;
+        driveSignal[2]= -v.x + v.y - z;
+        driveSignal[3]= v.x + v.y - z;
         drivetrain.setPower(driveSignal);
         if (gamepad1.x){
             climb.setClimberState(Climber.ClimberState.UP);

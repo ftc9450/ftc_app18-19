@@ -21,10 +21,10 @@ public class DrivetrainTest extends OpMode {
 		lf = hardwareMap.dcMotor.get(Constants.Drivetrain.LF);
 		rb = hardwareMap.dcMotor.get(Constants.Drivetrain.RB);
 		rf = hardwareMap.dcMotor.get(Constants.Drivetrain.RF);
-        lb.setDirection(DcMotorSimple.Direction.FORWARD);
-        lf.setDirection(DcMotorSimple.Direction.FORWARD);
+        lb.setDirection(DcMotorSimple.Direction.REVERSE);
+        lf.setDirection(DcMotorSimple.Direction.REVERSE);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
-        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rf.setDirection(DcMotorSimple.Direction.FORWARD);
         /*
 		lb = hardwareMap.dcMotor.get(Constants.MotionTracker.LR);
 		rf = hardwareMap.dcMotor.get(Constants.MotionTracker.FB);
@@ -36,13 +36,13 @@ public class DrivetrainTest extends OpMode {
 	}
 
 	public void loop() {
-		float x = gamepad1.left_stick_x;
-		float y = gamepad1.left_stick_y;
+		double x = gamepad1.left_stick_x + (gamepad1.dpad_left? -0.5: gamepad1.dpad_right? 0.5:0);;
+		double y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
 		float z = gamepad1.right_stick_x;
-		lf.setPower(-(x + y + z));
-		lb.setPower(-(-x + y + z));
-		rf.setPower(-(-x + y - z));
-		rb.setPower(-(x + y - z));
+		lf.setPower(x + y + z);
+		lb.setPower(-x + y + z);
+		rf.setPower(-x + y - z);
+		rb.setPower(x + y - z);
         if (gamepad1.x){
             lf.setPower(0.5);
         } else if(gamepad1.y) {
