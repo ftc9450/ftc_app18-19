@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.DogeCV;
-import com.disnodeteam.dogecv.detectors.roverrukus.SamplingOrderDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -35,6 +32,7 @@ public class AutoCrater extends LinearOpMode {
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
         drivetrain.enableAndResetEncoders();
 
+        /*
         // Setup detector
         SamplingOrderDetector detector = new SamplingOrderDetector(); // Create the detector
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize detector with app context and camera
@@ -51,11 +49,12 @@ public class AutoCrater extends LinearOpMode {
         detector.ratioScorer.perfectRatio = 1.0;
 
         detector.enable(); // Start detector
+        */
 
 
         float angleWhenHanging = tracker.getAbsoluteAngle();
         waitForStart();
-        drivetrain.moveFB(24,.3,true,tracker);
+        //drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
 
         climb.setClimberState(Climber.ClimberState.UP);
@@ -70,8 +69,8 @@ public class AutoCrater extends LinearOpMode {
         //TODO
 
         drivetrain.moveLR(5,0.3,false,tracker);// move out of latch //
-        pivotTo(angleWhenHanging);//correct for difference in angle caused by dropping
-        drivetrain.moveFB(18,.75,true,tracker);// drive forward until in front of samples
+        pivotTo(angleWhenHanging + 5);//correct for difference in angle caused by dropping
+        drivetrain.moveFB(18,.75,true,tracker);// drive forward until at corner of mat with samples
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
         switch(mineralPosition){
             //pivot to face gold mineral
