@@ -33,6 +33,7 @@ public class Drivetrain extends Subsystem {
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        maxPower = 1;
     }
 
 
@@ -43,10 +44,15 @@ public class Drivetrain extends Subsystem {
         rightBack.setPower(power);
     }
     public void setPower(double driveSignal[]) {
-        leftFront.setPower(driveSignal[0]);
-        leftBack.setPower(driveSignal[1]);
-        rightFront.setPower(driveSignal[2]);
-        rightBack.setPower(driveSignal[3]);
+        double scale = maxPower;
+        double diff=Math.abs(rightFront.getPower() - (driveSignal[3] * maxPower));
+        if(diff > 1){
+            scale *= 1 - (diff / 4.0);
+        }
+        leftFront.setPower(driveSignal[0] * scale);
+        leftBack.setPower(driveSignal[1] * scale);
+        rightFront.setPower(driveSignal[2] * scale);
+        rightBack.setPower(driveSignal[3] * scale);
     }
     public void moveFB(double distance, double power, boolean forward, MotionTracker tracker){ // distance (in inches) and power will always be positive
         state = DrivetrainState.Linear;

@@ -21,10 +21,10 @@ public class DrivetrainTest extends OpMode {
 		lf = hardwareMap.dcMotor.get(Constants.Drivetrain.LF);
 		rb = hardwareMap.dcMotor.get(Constants.Drivetrain.RB);
 		rf = hardwareMap.dcMotor.get(Constants.Drivetrain.RF);
-        lb.setDirection(DcMotorSimple.Direction.REVERSE);
-        lf.setDirection(DcMotorSimple.Direction.REVERSE);
+        lb.setDirection(DcMotorSimple.Direction.FORWARD);
+        lf.setDirection(DcMotorSimple.Direction.FORWARD);
         rb.setDirection(DcMotorSimple.Direction.REVERSE);
-        rf.setDirection(DcMotorSimple.Direction.FORWARD);
+        rf.setDirection(DcMotorSimple.Direction.REVERSE);
         /*
 		lb = hardwareMap.dcMotor.get(Constants.MotionTracker.LR);
 		rf = hardwareMap.dcMotor.get(Constants.MotionTracker.FB);
