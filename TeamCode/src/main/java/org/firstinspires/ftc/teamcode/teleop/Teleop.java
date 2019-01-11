@@ -41,10 +41,10 @@ public class Teleop extends OpMode{
         v.y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
         float z = gamepad1.right_stick_x + (gamepad1.right_trigger - gamepad1.left_trigger)/2;
         double[] driveSignal = new double[]{0,0,0,0};
-        driveSignal[0]=v.x + v.y + z;
-        driveSignal[1]=-v.x + v.y + z;
-        driveSignal[2]=-v.x + v.y - z;
-        driveSignal[3]=v.x + v.y - z;
+        driveSignal[0]= -(v.x + v.y + z); // up on left stick is -1.
+        driveSignal[1]= -(-v.x + v.y + z);
+        driveSignal[2]= -(-v.x + v.y - z);
+        driveSignal[3]= -(v.x + v.y - z);
         drivetrain.setPower(driveSignal);
         if (gamepad1.x){
             climb.setClimberState(Climber.ClimberState.UP);

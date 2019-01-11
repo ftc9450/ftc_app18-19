@@ -82,7 +82,6 @@ public class Lifter extends Subsystem {
             secondsElapsed += dt;
             previousTime = currentTime;
         }
-
     }
     public void setLifterState(LifterState state){
         lifterState = state;
