@@ -13,6 +13,10 @@ public class DrivetrainTest extends OpMode {
 	private DcMotor lf;
 	private DcMotor rb;
 	private DcMotor rf;
+	private boolean rfForward;
+	private boolean rbForward;
+	private boolean lfForward;
+	private boolean lbForward;
 	//private DcMotor lateral;
 	//private DcMotor forward;
 
@@ -23,8 +27,9 @@ public class DrivetrainTest extends OpMode {
 		rf = hardwareMap.dcMotor.get(Constants.Drivetrain.RF);
         lb.setDirection(DcMotorSimple.Direction.FORWARD);
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
-        rb.setDirection(DcMotorSimple.Direction.REVERSE);
-        rf.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.FORWARD);
+        rf.setDirection(DcMotorSimple.Direction.FORWARD);
+        rfForward = true; rbForward = true; lfForward = true; lbForward = true;
         /*
 		lb = hardwareMap.dcMotor.get(Constants.MotionTracker.LR);
 		rf = hardwareMap.dcMotor.get(Constants.MotionTracker.FB);
@@ -52,6 +57,28 @@ public class DrivetrainTest extends OpMode {
         } else if(gamepad1.b){
             rb.setPower(0.5);
         }
+        if (gamepad1.dpad_up) {
+            if (rfForward) rf.setDirection(DcMotorSimple.Direction.REVERSE);
+            else rf.setDirection(DcMotorSimple.Direction.FORWARD);
+            rfForward = !rfForward;
+        } else if (gamepad1.dpad_right) {
+            if (rbForward) rb.setDirection(DcMotorSimple.Direction.REVERSE);
+            else rf.setDirection(DcMotorSimple.Direction.FORWARD);
+            rbForward = !rbForward;
+        } else if (gamepad1.dpad_left) {
+            if (lfForward) lf.setDirection(DcMotorSimple.Direction.REVERSE);
+            else  lf.setDirection(DcMotorSimple.Direction.FORWARD);
+            lfForward = !lfForward;
+        } else if (gamepad1.dpad_down) {
+            if (lbForward) lb.setDirection(DcMotorSimple.Direction.REVERSE);
+            else lb.setDirection(DcMotorSimple.Direction.FORWARD);
+            lbForward = !lbForward;
+        }
+        telemetry.addData("right front fwd:", rfForward);
+        telemetry.addData("right back fwd:", rbForward);
+        telemetry.addData("left front fwd:", lfForward);
+        telemetry.addData("left back fwd:", lbForward);
+
         /*
 		telemetry.addData("lateral:", rf.getCurrentPosition());
 		telemetry.addData("forward:", lb.getCurrentPosition());
