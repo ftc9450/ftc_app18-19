@@ -24,8 +24,8 @@ public class Constants {
         public static final String RB = "backright";
     }
     public class Lifter{
-        public static final String LIFT = "Lifter";
-        public static final String LID = "Lid";
+        public static final String LIFT = "lifter";
+        public static final String LID = "lid";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;
         public static final double PID_THRESHOLD = 10;
@@ -34,7 +34,7 @@ public class Constants {
         public static final double LID_OPEN = 0.65; // TODO: check value
     }
     public class Climber{
-        public static final String CL = "Climber";
+        public static final String CL = "climber";
         public static final int UP = 5000;
         public static final int DOWN = 0;
     }
