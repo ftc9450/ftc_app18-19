@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.disnodeteam.dogecv.CameraViewDisplay;
-import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -29,12 +26,15 @@ public class AutoCrater extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        /*
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
+        */
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
-        drivetrain.enableAndResetEncoders();
+        //drivetrain.enableAndResetEncoders();
+        /*
 
         // Set up detector
         detector = new GoldAlignDetector(); // Create detector
@@ -57,6 +57,7 @@ public class AutoCrater extends LinearOpMode {
 
 
         float angleWhenHanging = tracker.getAbsoluteAngle();
+        */
         waitForStart();
         //drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
@@ -67,6 +68,7 @@ public class AutoCrater extends LinearOpMode {
         climb.setClimberState(Climber.ClimberState.OFF);
         climb.loop();
 
+        /*
         tracker.enableAndResetEncoders();
         //TODO
         //TODO: CHECK ALL THE VALUES I WILL DIE
@@ -114,7 +116,7 @@ public class AutoCrater extends LinearOpMode {
             case 2:
                 pivotCounterclockwise(45);
                 break;
-        }*/
+        }
         drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
         drivetrain.moveFB(26,.7,false,tracker);// return to position
         pivotTo(135); // Drive will then drive backwards
@@ -124,6 +126,7 @@ public class AutoCrater extends LinearOpMode {
         // TODO: deposit team marker (from back of robot)
         // (shouldn't need to) turn left to face crater
         drivetrain.moveFB(80,.7,true,tracker);// drive forward until parked on crater
+        */
 
     }
 
