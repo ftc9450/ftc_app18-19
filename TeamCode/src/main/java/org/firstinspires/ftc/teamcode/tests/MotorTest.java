@@ -22,30 +22,39 @@ public class MotorTest extends OpMode {
         lifter = hardwareMap.dcMotor.get(Constants.Lifter.LIFT);
         lifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lifter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        /*
+
         climb = hardwareMap.dcMotor.get(Constants.Climber.CL);
 		climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        extend = hardwareMap.dcMotor.get(Constants.Intake.EX);
+		climb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        /*extend = hardwareMap.dcMotor.get(Constants.Intake.EX);
         extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         pivot = hardwareMap.dcMotor.get(Constants.Intake.PI);
         pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         */
-        //roller = hardwareMap.crservo.get(Constants.Intake.RO);
+        roller = hardwareMap.crservo.get(Constants.Intake.RO);
         //lid = hardwareMap.servo.get(Constants.Lifter.LID);
     }
 
     @Override
     public void loop() {
-        /*
+
     	if (gamepad1.dpad_up) climb.setPower(0.2);
     	else if (gamepad1.dpad_down) climb.setPower(-0.2);
     	else climb.setPower(0);
     	telemetry.addData("climber:", climb.getCurrentPosition());
-    	*/
+
     	if (gamepad1.right_bumper) lifter.setPower(0.2);
     	else if (gamepad1.left_bumper) lifter.setPower(-0.2);
     	else lifter.setPower(0);
     	telemetry.addData("elevator:", lifter.getCurrentPosition());
+
+    	if (gamepad1.a) {
+    	    roller.setPower(1);
+        } else if (gamepad1.b) {
+    	    roller.setPower(-1);
+        } else {
+    	    roller.setPower(0);
+        }
 /*
         if (gamepad1.x) extend.setPower(0.2);
         else if (gamepad1.y) extend.setPower(-0.2);

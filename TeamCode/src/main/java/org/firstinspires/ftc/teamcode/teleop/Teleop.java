@@ -65,7 +65,14 @@ public class Teleop extends OpMode{
 
         intake.setExtenderPower(gamepad2.right_trigger / 2 - gamepad2.left_trigger / 2);
 
-        if(gamepad2.b){ // toggles roller on/off
+        if (gamepad2.b) {
+            intake.setRollerState(Intake.RollerState.IN);
+        } else if (gamepad2.a) {
+            intake.setRollerState(Intake.RollerState.OUT);
+        } else {
+            intake.setRollerState(Intake.RollerState.OFF);
+        }
+        /*if(gamepad2.b){ // toggles roller on/off
             if(!rollerInPressed){
                 if(!rollerIn){
                     intake.setRollerState(Intake.RollerState.IN);
@@ -92,7 +99,7 @@ public class Teleop extends OpMode{
         } else{
 
             intake.setRollerState(Intake.RollerState.OFF);
-        }
+        }*/
 
         if (gamepad2.right_bumper){
             intake.setPivotState(Intake.PivotState.DOWN);

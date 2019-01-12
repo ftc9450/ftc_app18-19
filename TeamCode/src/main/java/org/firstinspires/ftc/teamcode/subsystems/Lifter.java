@@ -30,6 +30,8 @@ public class Lifter extends Subsystem {
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setDirection(DcMotor.Direction.FORWARD); // TODO: check direction
         lid = bucketLid;
+        this.setLidState(LidState.CLOSED);
+        this.setLifterState(LifterState.OFF);
     }
 
     public void enableAndResetEncoders() {

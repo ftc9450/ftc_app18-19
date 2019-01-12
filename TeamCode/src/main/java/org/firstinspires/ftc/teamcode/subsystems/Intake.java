@@ -29,6 +29,10 @@ public class Intake extends Subsystem{
         pivot.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
         extender.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        this.setExtenderState(ExtenderState.OFF);
+        this.setPivotState(PivotState.OFF);
+        this.setRollerState(RollerState.OFF);
+
     }
     public void setExtenderPower(float power){
         extender.setPower(power);
