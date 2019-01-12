@@ -16,6 +16,7 @@ public class Climber extends Subsystem{
         //climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         climb.setDirection(DcMotor.Direction.FORWARD);
         climb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.setClimberState(ClimberState.OFF);
     }
     public void setClimberState(ClimberState state){
         climberState = state;
@@ -28,11 +29,11 @@ public class Climber extends Subsystem{
         switch(climberState){
             case UP:
                 climb.setTargetPosition(Constants.Climber.UP);
-                climb.setPower(1);
+                climb.setPower(0.5);
                 break;
             case DOWN:
                 climb.setTargetPosition(Constants.Climber.DOWN);
-                climb.setPower(-1);
+                climb.setPower(-0.5);
                 break;
             case OFF:
                 climb.setPower(0);
