@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -25,12 +24,14 @@ public class AutoDepot extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        /*
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
+        */
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
-        drivetrain.enableAndResetEncoders();
+        //drivetrain.enableAndResetEncoders();
 
         /*
         // Setup detector
@@ -52,17 +53,17 @@ public class AutoDepot extends LinearOpMode {
         */
 
 
-        float angleWhenHanging = tracker.getAbsoluteAngle();
+        //float angleWhenHanging = tracker.getAbsoluteAngle();
         waitForStart();
         //drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
 
         climb.setClimberState(Climber.ClimberState.UP);
         climb.loop();
-        Thread.sleep(5000);
+        Thread.sleep(7000);
         climb.setClimberState(Climber.ClimberState.OFF);
         climb.loop();
-
+        /*
         tracker.enableAndResetEncoders();
         //TODO
         //TODO: CHECK ALL THE VALUES I WILL DIE
@@ -93,6 +94,7 @@ public class AutoDepot extends LinearOpMode {
         // TODO: deposit team marker (from back of robot)
         pivotTo(180); // turn left to face crater
         drivetrain.moveFB(80,.7,true,tracker);// drive forward until parked on crater
+        */
 
     }
 
