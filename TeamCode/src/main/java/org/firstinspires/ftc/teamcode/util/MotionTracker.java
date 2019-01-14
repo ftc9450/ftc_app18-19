@@ -48,8 +48,6 @@ public class MotionTracker {
         if(drivetrain.getState() == Drivetrain.DrivetrainState.Turning){ // Ensures encoder values while rotating
             xWhileTurning += xOmni.getCurrentPosition() - previousX;                              // will have no false impact on position
             yWhileTurning += yOmni.getCurrentPosition() - previousY;
-            x = previousX;
-            y = previousY;
         } else{
             angle = Math.toRadians(getAbsoluteAngle());
             previousX = x;

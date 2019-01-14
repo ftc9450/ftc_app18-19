@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -35,11 +34,11 @@ public class AutoCrater extends LinearOpMode {
 
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
         drivetrain.enableAndResetEncoders();
-        /*
+        /*detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
 
         // Set up detector
         detector = new GoldAlignDetector(); // Create detector
-        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize it with the app context and camera
+         // Initialize it with the app context and camera
         detector.useDefaults(); // Set detector to use default settings
 
         // Optional tuning
