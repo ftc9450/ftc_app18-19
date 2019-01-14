@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
@@ -17,7 +18,7 @@ public class Teleop extends OpMode{
     Lifter lifter;
     SubsystemManager subsystemManager;
     Intake intake;
-    Climber climb;
+    DcMotor climb;
     private boolean rollerIn;
     private boolean rollerInPressed;
     private boolean rollerOut;
@@ -28,9 +29,10 @@ public class Teleop extends OpMode{
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
         intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI),hardwareMap.dcMotor.get(Constants.Intake.EX), hardwareMap.crservo.get((Constants.Intake.RO)));
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
+        //climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
+        climb = hardwareMap.dcMotor.get(Constants.Climber.CL);
         subsystemManager = new SubsystemManager();
-        subsystemManager = subsystemManager.add(lifter).add(intake).add(climb);
+        subsystemManager = subsystemManager.add(lifter).add(intake);//.add(climb);
         rollerIn = false;
         rollerInPressed = false;
         rollerOut = false;
@@ -47,13 +49,21 @@ public class Teleop extends OpMode{
         driveSignal[2]= -v.x + v.y - z;
         driveSignal[3]= v.x + v.y - z;
         drivetrain.setPower(driveSignal);
-        if (gamepad1.x){
+        /*if (gamepad1.x){
             climb.setClimberState(Climber.ClimberState.UP);
         } else if(gamepad1.y) {
             climb.setClimberState(Climber.ClimberState.DOWN);
-        } else{
+        } else {
             climb.setClimberState(Climber.ClimberState.OFF);
+        }*/
+        if (gamepad1.x) {
+            climb.setPower(0.5);
+        } else if (gamepad1.y) {
+            climb.setPower(-0.5);
+        } else {
+            climb.setPower(0);
         }
+
 
         if (gamepad2.x) {
             lifter.setLifterState(Lifter.LifterState.UP);

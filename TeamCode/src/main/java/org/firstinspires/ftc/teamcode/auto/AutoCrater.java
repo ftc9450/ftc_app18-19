@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -21,19 +22,19 @@ public class AutoCrater extends LinearOpMode {
     private Gyroscope imu;
     private MotionTracker tracker;
     private Climber climb;
-    private GoldAlignDetector detector;
+    //private GoldAlignDetector detector;
     private final float initialAngle = -45;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        /*
+
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
-        */
+
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
-        //drivetrain.enableAndResetEncoders();
+        drivetrain.enableAndResetEncoders();
         /*
 
         // Set up detector
@@ -62,11 +63,14 @@ public class AutoCrater extends LinearOpMode {
         //drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
 
-        climb.setClimberState(Climber.ClimberState.UP);
+        /*climb.setClimberState(Climber.ClimberState.UP);
         climb.loop();
-        Thread.sleep(5000);
+        Thread.sleep(7000);
         climb.setClimberState(Climber.ClimberState.OFF);
         climb.loop();
+        drivetrain.moveLR(10, 0.1,false,tracker);*/
+        drivetrain.moveFB(40, 0.5, true, tracker);
+
 
         /*
         tracker.enableAndResetEncoders();

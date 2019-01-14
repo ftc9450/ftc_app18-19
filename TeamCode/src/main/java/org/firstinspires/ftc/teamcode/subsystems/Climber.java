@@ -28,11 +28,11 @@ public class Climber extends Subsystem{
     public void loop() {
         switch(climberState){
             case UP:
-                climb.setTargetPosition(Constants.Climber.UP);
+                //climb.setTargetPosition(Constants.Climber.UP);
                 climb.setPower(0.5);
                 break;
             case DOWN:
-                climb.setTargetPosition(Constants.Climber.DOWN);
+                //climb.setTargetPosition(Constants.Climber.DOWN);
                 climb.setPower(-0.5);
                 break;
             case OFF:
