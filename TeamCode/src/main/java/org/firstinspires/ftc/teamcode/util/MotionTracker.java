@@ -65,7 +65,7 @@ public class MotionTracker {
         }
     }
     public float getAbsoluteAngle(){ // returns angle of robot relative to field boundaries
-        return (gyro.getAngle() + offsetAngle) % 360;
+        return 360 - (((gyro.getAngle() + offsetAngle) % 360) + 360) % 360; // To get mod instead of remainder, since it could be negative.  360 - <angle> to make it increase clockwise
     }
     public int getXEncoderValue(){
         return xOmni.getCurrentPosition();

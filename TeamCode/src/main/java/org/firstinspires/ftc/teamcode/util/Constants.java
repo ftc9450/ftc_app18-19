@@ -16,10 +16,10 @@ public class Constants {
         public static final int LR_THRESHOLD = 500; // TODO: check value
         public static final int FB_PID_THRESHOLD = 500; // TODO: check value
         public static final int LR_PID_THRESHOLD = 500; // TODO: check value
-        public static final double FB_LEFT_POWER = 1.0; // TODO: check value
+        public static final double FB_LEFT_POWER = 0.43; // TODO: check value
         public static final double FB_RIGHT_POWER = 1.0; // TODO: check value
         public static final double LR_FRONT_POWER = 1.0; // TODO: check value
-        public static final double LR_REAR_POWER = 1.0; // TODO: check value
+        public static final double LR_REAR_POWER = 0.9; // TODO: check value
         public static final String LF = "frontleft";
         public static final String LB = "backleft";
         public static final String RF = "frontright";

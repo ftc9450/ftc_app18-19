@@ -55,12 +55,13 @@ public class DrivetrainTest extends OpMode {
 	public void loop() {
 		double x = gamepad1.left_stick_x + (gamepad1.dpad_left? -0.5: gamepad1.dpad_right? 0.5:0);;
 		double y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
-		float z = gamepad1.right_stick_x;
+		float z = gamepad1.right_stick_x + (gamepad1.right_trigger - gamepad1.left_trigger)/2;;
 		lf.setPower(x*LR_FRONT_POWER + y*FB_LEFT_POWER + z);
 		lb.setPower(-x*LR_REAR_POWER + y*FB_LEFT_POWER + z);
 		rf.setPower(-x*LR_FRONT_POWER + y*FB_RIGHT_POWER - z);
 		rb.setPower(x*LR_REAR_POWER + y*FB_RIGHT_POWER - z);
 
+		/*
         if (gamepad1.x){
             lf.setPower(0.5);
         } else if(gamepad1.y) {
@@ -70,8 +71,8 @@ public class DrivetrainTest extends OpMode {
         } else if(gamepad1.b){
             rb.setPower(0.5);
         }
+        */
 
-		/*
         if (gamepad1.x){
             mode = Mode.FB_LEFT;
         } else if(gamepad1.y) {
@@ -81,7 +82,7 @@ public class DrivetrainTest extends OpMode {
         } else if(gamepad1.a){
             mode = Mode.LR_REAR;
         }
-        */
+
         if(gamepad1.right_bumper){
             if(!rbPressed){
                 switch(mode){
