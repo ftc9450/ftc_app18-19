@@ -31,8 +31,8 @@ public class PidTest extends OpMode {
     private boolean firstOvershoot = true;
     private boolean inOvershoot = false;
     private boolean firstDip = false;
-    private double maxPower = 0.75;
-    private double kp = 0.1;
+    private double maxPower = 0.3;
+    private double kp = 0.01;
     private double ti = 0.0;
     private double td = 0.0;
     public enum AdjustMode{
@@ -134,7 +134,7 @@ public class PidTest extends OpMode {
         }
         if(gamepad1.right_bumper){
             if(!rbPressed) {
-                setPosition(3000);
+                setPosition(1440);
                 rbPressed = true;
             }
         } else{
@@ -145,7 +145,7 @@ public class PidTest extends OpMode {
         telemetry.addData("P:", kp);
         telemetry.addData("I:", ti);
         telemetry.addData("D:", td);
-        telemetry.addData("Tu:", Tu);
+        //telemetry.addData("Tu:", Tu);
         telemetry.update();
 
     }
@@ -167,12 +167,13 @@ public class PidTest extends OpMode {
         secondsElapsed = 0;
         double previousTime = System.nanoTime();
         double currentTime;
-        boolean overshoot = false;
+        //boolean overshoot = false;
         while(true){ // to test overshoot amount
         //while(Math.abs(currentDistance) < Math.abs(targetDistance - Constants.Drivetrain.FB_PID_THRESHOLD)){
             currentTime = System.nanoTime();
             currentDistance = tracker.getYEncoderValue();
             double dt = (currentTime - previousTime) / 1000000; // In seconds
+            /*
             double error = currentDistance - targetDistance;
             if(firstOvershoot){ // get period of oscillation
                 if(error > 0) {
@@ -186,6 +187,7 @@ public class PidTest extends OpMode {
                     firstDip = true;
                 }
             }
+            */
             power = pid.update(targetDistance,currentDistance,dt);
             double[] signal = new double[]{power*Constants.Drivetrain.FB_LEFT_POWER,power*Constants.Drivetrain.FB_LEFT_POWER,power*Constants.Drivetrain.FB_RIGHT_POWER,power*Constants.Drivetrain.FB_RIGHT_POWER};
             drivetrain.setPower(signal);

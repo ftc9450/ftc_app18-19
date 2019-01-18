@@ -37,7 +37,7 @@ public class DrivetrainTest extends OpMode {
 		rf = hardwareMap.dcMotor.get(Constants.Drivetrain.RF);
         lb.setDirection(DcMotorSimple.Direction.FORWARD);
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
-        rb.setDirection(DcMotorSimple.Direction.REVERSE);
+        rb.setDirection(DcMotorSimple.Direction.FORWARD);
         rf.setDirection(DcMotorSimple.Direction.REVERSE);
         lb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rf.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

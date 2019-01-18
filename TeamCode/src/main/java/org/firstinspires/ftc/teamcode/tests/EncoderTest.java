@@ -22,12 +22,12 @@ public class EncoderTest extends OpMode{
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, 0);
 
-        /*
+
         lateral=hardwareMap.dcMotor.get(Constants.MotionTracker.LR);
         lateral.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         straight=hardwareMap.dcMotor.get(Constants.MotionTracker.FB);
         straight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        */
+
     }
 
     @Override
