@@ -46,7 +46,7 @@ public class Drivetrain extends Subsystem {
     }
     public void setPower(double driveSignal[]) {
         double scale = maxPower;
-        double diff=Math.abs(rightFront.getPower() - (driveSignal[3] * maxPower));
+        double diff=Math.abs(rightFront.getPower() - (driveSignal[2] * maxPower));
         if(diff > 1){
             scale *= 1 - (diff / 4.0);
         }

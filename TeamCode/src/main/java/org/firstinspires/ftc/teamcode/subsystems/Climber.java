@@ -1,49 +1,76 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.teamcode.util.Constants;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Climber extends Subsystem{
-    private DcMotor climb;
-    private ClimberState climberState;
-    public enum ClimberState{
+    private DcMotor elevator;
+    private DcMotor pivot;
+    private Servo hook;
+    private ElevatorState elevatorState;
+    private PivotState pivotState;
+    public enum ElevatorState{
         UP,DOWN,OFF
     }
-    public Climber(DcMotor cl){
-        climb = cl;
-        climb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        climb.setDirection(DcMotor.Direction.FORWARD);
-        climb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.setClimberState(ClimberState.OFF);
+    public enum PivotState{
+        UP,DOWN,OFF
     }
-    public void setClimberState(ClimberState state){
-        climberState = state;
+    public Climber(DcMotor elevator, DcMotor pivot, Servo hook){
+        this.elevator = elevator;
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        elevator.setDirection(DcMotor.Direction.FORWARD);
+        elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.setElevatorState(ElevatorState.OFF);
+        this.pivot = pivot;
+        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pivot.setDirection(DcMotor.Direction.FORWARD);
+        pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.setPivotState(PivotState.OFF);
+        this.hook = hook;
+        //TODO: servo stuff
+
+    }
+    public void setElevatorState(ElevatorState state){
+        elevatorState = state;
+    }
+    public void setPivotState(PivotState state){
+        pivotState = state;
     }
     public void enableAndResetEncoders() {
-        climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        climb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
     public void loop() {
-        switch(climberState){
+        switch(elevatorState){
             case UP:
                 //climb.setTargetPosition(Constants.Climber.UP);
-                climb.setPower(0.5);
+                elevator.setPower(0.5);
                 break;
             case DOWN:
                 //climb.setTargetPosition(Constants.Climber.DOWN);
-                climb.setPower(-0.5);
+                elevator.setPower(-0.5);
                 break;
             case OFF:
-                climb.setPower(0);
+                elevator.setPower(0);
+                break;
+        }
+        switch(pivotState){
+            case UP:
+                pivot.setPower(0.5);
+                break;
+            case DOWN:
+                pivot.setPower(-0.5);
+                break;
+            case OFF:
+                pivot.setPower(0);
                 break;
         }
     }
     public void stop() {
-        climb.setPower(0);
+        elevator.setPower(0);
     }
     public void disconnectEncoders() {
-        climb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }

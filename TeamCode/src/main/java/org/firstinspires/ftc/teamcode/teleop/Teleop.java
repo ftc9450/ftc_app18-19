@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.Lifter;
 import org.firstinspires.ftc.teamcode.subsystems.SubsystemManager;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Vector2D;
@@ -15,10 +13,11 @@ import org.firstinspires.ftc.teamcode.util.Vector2D;
 @TeleOp
 public class Teleop extends OpMode{
     Drivetrain drivetrain;
-    Lifter lifter;
+    //Lifter lifter;
     SubsystemManager subsystemManager;
     Intake intake;
-    DcMotor climb;
+    Climber climb;
+    //DcMotor climb;
     private boolean rollerIn;
     private boolean rollerInPressed;
     private boolean rollerOut;
@@ -27,12 +26,12 @@ public class Teleop extends OpMode{
     public void init() {
 
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-        lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
-        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI),hardwareMap.dcMotor.get(Constants.Intake.EX), hardwareMap.crservo.get((Constants.Intake.RO)));
-        //climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
-        climb = hardwareMap.dcMotor.get(Constants.Climber.CL);
+        //lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
+        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI), hardwareMap.dcMotor.get((Constants.Intake.RO)));
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL), hardwareMap.dcMotor.get(Constants.Climber.PI), hardwareMap.servo.get(Constants.Climber.HK));
+        //climb = hardwareMap.dcMotor.get(Constants.Climber.EL, Constants.Climber.PI, Constants.Climber.HK);
         subsystemManager = new SubsystemManager();
-        subsystemManager = subsystemManager.add(lifter).add(intake);//.add(climb);
+        subsystemManager = subsystemManager.add(climb).add(intake);//.add(climb);
         rollerIn = false;
         rollerInPressed = false;
         rollerOut = false;
@@ -56,28 +55,27 @@ public class Teleop extends OpMode{
         } else {
             climb.setClimberState(Climber.ClimberState.OFF);
         }*/
-        if (gamepad1.x) {
-            climb.setPower(0.5);
-        } else if (gamepad1.y) {
-            climb.setPower(-0.5);
-        } else {
-            climb.setPower(0);
-        }
 
 
         if (gamepad2.x) {
-            lifter.setLifterState(Lifter.LifterState.UP);
+            climb.setElevatorState(Climber.ElevatorState.UP);
         } else if(gamepad2.y){
-            lifter.setLifterState(Lifter.LifterState.DOWN);
+            climb.setElevatorState(Climber.ElevatorState.DOWN);
         } else{
-            lifter.setLifterState(Lifter.LifterState.OFF);
+            climb.setElevatorState(Climber.ElevatorState.OFF);
         }
 
-        intake.setExtenderPower(gamepad2.right_trigger / 2 - gamepad2.left_trigger / 2);
-
         if (gamepad2.b) {
-            intake.setRollerState(Intake.RollerState.IN);
+            climb.setPivotState(Climber.PivotState.UP);
         } else if (gamepad2.a) {
+            climb.setPivotState(Climber.PivotState.DOWN);
+        } else {
+            climb.setPivotState(Climber.PivotState.OFF);
+        }
+
+        if (gamepad2.right_trigger > 0.15) {
+            intake.setRollerState(Intake.RollerState.IN);
+        } else if (gamepad2.left_trigger > 0.15) {
             intake.setRollerState(Intake.RollerState.OUT);
         } else {
             intake.setRollerState(Intake.RollerState.OFF);
@@ -119,11 +117,6 @@ public class Teleop extends OpMode{
             intake.setPivotState(Intake.PivotState.OFF);
         }
 
-        if(gamepad2.dpad_up){
-            lifter.setLidState(Lifter.LidState.OPEN);
-        } else if(gamepad1.dpad_down){
-            lifter.setLidState(Lifter.LidState.CLOSED);
-        }
 
 
         subsystemManager.loop();

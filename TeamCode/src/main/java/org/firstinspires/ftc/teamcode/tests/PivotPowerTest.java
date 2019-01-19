@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.MotionTracker;
-import org.firstinspires.ftc.teamcode.util.Vector2D;
 
 @TeleOp
 public class PivotPowerTest extends OpMode {
@@ -21,6 +20,12 @@ public class PivotPowerTest extends OpMode {
     private boolean bPressed;
     private boolean xPressed;
     private boolean yPressed;
+    private double MAX_POWER = Constants.Auto.MAX_PIVOT_POWER;
+    private double MIN_POWER = Constants.Auto.MIN_PIVOT_POWER;
+    private Mode mode;
+    public enum Mode{
+        MAX,MIN
+    }
 
     public void init(){
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
@@ -29,54 +34,57 @@ public class PivotPowerTest extends OpMode {
 
     }
     public void loop(){
-        Vector2D v = new Vector2D();
-        v.x = gamepad1.left_stick_x + (gamepad1.dpad_left? -0.5: gamepad1.dpad_right? 0.5:0);
-        v.y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
-        float z = gamepad1.right_stick_x + (gamepad1.right_trigger - gamepad1.left_trigger)/2;
-        double[] driveSignal = new double[]{0,0,0,0};
-        driveSignal[0]= (v.x + v.y + z); // up on left stick is -1.
-        driveSignal[1]= (-v.x + v.y + z);
-        driveSignal[2]= (-v.x + v.y - z);
-        driveSignal[3]= (v.x + v.y - z);
-        drivetrain.setPower(driveSignal);
-        drivetrain.setState(Drivetrain.DrivetrainState.Linear);
 
-        if(gamepad1.a){
-            if(!aPressed) {
-                tracker.enableAndResetEncoders();
-                drivetrain.moveFB(12,0.25,true,tracker);
-                aPressed = true;
-            }
-        } else{
-            aPressed = false;
+        if(gamepad1.dpad_up){
+            mode = Mode.MAX;
+        } else if(gamepad1.dpad_down){
+            mode = Mode.MIN;
         }
-        if(gamepad1.b){
-            if(!bPressed) {
-                tracker.enableAndResetEncoders();
-                drivetrain.moveFB(12,0.25,false,tracker);
-                bPressed = true;
-            }
-        } else{
-            bPressed = false;
-        }
+
         if(gamepad1.x){
-            if(!xPressed) {
-                tracker.enableAndResetEncoders();
-                pivotClockwise(90);
-                xPressed = true;
+            if(!xPressed){
+                switch(mode){
+                    case MAX:
+                        MAX_POWER += 0.01;
+                        break;
+                    case MIN:
+                        MIN_POWER += 0.01;
+                }
             }
+            xPressed = true;
         } else{
             xPressed = false;
         }
         if(gamepad1.y){
             if(!yPressed) {
-                tracker.enableAndResetEncoders();
-                pivotCounterclockwise(90);
+                switch(mode){
+                    case MAX:
+                        MAX_POWER -= 0.01;
+                        break;
+                    case MIN:
+                        MIN_POWER -= 0.01;
+                }
                 yPressed = true;
             }
         } else{
             yPressed = false;
         }
+        if(gamepad1.right_bumper){
+            drivetrain.setState(Drivetrain.DrivetrainState.Turning);
+            float startAngle = tracker.getAbsoluteAngle();
+            double power = mode == Mode.MAX? MAX_POWER: MIN_POWER;
+            double[] driveSignal = new double[]{power,power,-power,-power};
+            drivetrain.setPower(driveSignal);
+        }else if(gamepad1.left_bumper){
+            drivetrain.setState(Drivetrain.DrivetrainState.Turning);
+            float startAngle = tracker.getAbsoluteAngle();
+            double power = mode == Mode.MAX? MAX_POWER: MIN_POWER;
+            double[] driveSignal = new double[]{-power,-power,power,power};
+            drivetrain.setPower(driveSignal);
+        } else{
+            drivetrain.setPower(0);
+        }
+
         telemetry.addData("x: ",tracker.getXEncoderValue());
         telemetry.addData("y: ", tracker.getYEncoderValue());
         telemetry.addData("angle: ", imu.getAngle());
@@ -84,41 +92,5 @@ public class PivotPowerTest extends OpMode {
 
 
 
-    }
-    public void pivotClockwise(double angle){ // Turn clockwise given degree angle
-        drivetrain.setState(Drivetrain.DrivetrainState.Turning);
-        float startAngle = imu.getAngle();
-        double power = Constants.Auto.PIVOT_POWER;
-        double[] signal = new double[]{power,power,-power,-power};
-        drivetrain.setPower(signal);
-        while(angle - (imu.getAngle() - startAngle + 360) % 360 > Constants.Auto.PIVOT_THRESHOLD); // TODO: check value
-        drivetrain.setPower(new double[]{0,0,0,0});
-        tracker.updatePosition();
-    }
-    public void pivotCounterclockwise(double angle){ // Turn counterclockwise given degree angle
-        drivetrain.setState(Drivetrain.DrivetrainState.Turning);
-        float startAngle = imu.getAngle();
-        double power = Constants.Auto.PIVOT_POWER;
-        double[] driveSignal = new double[]{-power,-power,power,power};
-        drivetrain.setPower(driveSignal);
-        while(angle - (startAngle - imu.getAngle() + 360) % 360 > Constants.Auto.PIVOT_THRESHOLD); // TODO: check value
-        drivetrain.setPower(new double[]{0,0,0,0});
-        tracker.updatePosition();
-    }
-    public void pivotTo(float targetAngle){ // relative to field boundaries
-        float currentAngle = tracker.getAbsoluteAngle();
-        if(Math.abs(currentAngle - targetAngle) > 180){ // must cross the line theta = 0
-            if(currentAngle > targetAngle){
-                pivotClockwise(360 - (currentAngle - targetAngle));
-            } else if(targetAngle > currentAngle){
-                pivotCounterclockwise(360 - (targetAngle - currentAngle));
-            }
-        } else{
-            if(currentAngle > targetAngle){
-                pivotCounterclockwise(currentAngle - targetAngle);
-            } else if(targetAngle > currentAngle){
-                pivotClockwise(targetAngle - currentAngle);
-            }
-        }
     }
 }

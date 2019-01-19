@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.DogeCV;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -21,7 +24,7 @@ public class AutoCrater extends LinearOpMode {
     private Gyroscope imu;
     private MotionTracker tracker;
     private Climber climb;
-    //private GoldAlignDetector detector;
+    private GoldAlignDetector detector;
     private final float initialAngle = -45;
 
     @Override
@@ -31,10 +34,9 @@ public class AutoCrater extends LinearOpMode {
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
-
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL), hardwareMap.dcMotor.get(Constants.Climber.PI), hardwareMap.servo.get(Constants.Climber.HK));
         drivetrain.enableAndResetEncoders();
-        /*detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
+        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
 
         // Set up detector
         detector = new GoldAlignDetector(); // Create detector
@@ -57,7 +59,6 @@ public class AutoCrater extends LinearOpMode {
 
 
         float angleWhenHanging = tracker.getAbsoluteAngle();
-        */
         waitForStart();
         //drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
@@ -81,6 +82,7 @@ public class AutoCrater extends LinearOpMode {
         pivotTo(angleWhenHanging + 5);//correct for difference in angle caused by dropping
         drivetrain.moveFB(18,.75,true,tracker);// drive forward until at corner of mat with samples
         //int mineralPosition = -1; // get position of gold sample (0, 1, 2) -> (left, center, right)
+        */
         Thread.sleep(1000);
         if(detector.getAligned()){ // middle
             drivetrain.moveFB(19,.7,true,tracker);// knock off gold mineral
@@ -105,21 +107,9 @@ public class AutoCrater extends LinearOpMode {
                 }
             }
         }
+        /*
         pivotTo(135); // Drive will then drive backwards
         drivetrain.moveFB(50,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
-        /*
-        switch(mineralPosition){
-            //pivot to face gold mineral
-            case 0:
-                pivotClockwise(45);
-                break;
-            case 1:
-                // should be aligned
-                break;
-            case 2:
-                pivotCounterclockwise(45);
-                break;
-        }
         drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
         drivetrain.moveFB(26,.7,false,tracker);// return to position
         pivotTo(135); // Drive will then drive backwards
@@ -136,7 +126,7 @@ public class AutoCrater extends LinearOpMode {
     public void pivotClockwise(double angle){ // Turn clockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);
         float startAngle = imu.getAngle();
-        double power = Constants.Auto.PIVOT_POWER;
+        double power = Constants.Auto.MAX_PIVOT_POWER;
         double[] driveSignal = new double[]{power,power,-power,-power};
         drivetrain.setPower(driveSignal);
         while(opModeIsActive() && angle - (imu.getAngle() - startAngle + 360) % 360 > Constants.Auto.PIVOT_THRESHOLD); // TODO: check value
@@ -146,7 +136,7 @@ public class AutoCrater extends LinearOpMode {
     public void pivotCounterclockwise(double angle){ // Turn counterclockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);
         float startAngle = imu.getAngle();
-        double power = Constants.Auto.PIVOT_POWER;
+        double power = Constants.Auto.MAX_PIVOT_POWER;
         double[] driveSignal = new double[]{-power,-power,power,power};
         drivetrain.setPower(driveSignal);
         while(opModeIsActive() && angle - (startAngle - imu.getAngle() + 360) % 360 > Constants.Auto.PIVOT_THRESHOLD); // TODO: check value

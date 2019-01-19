@@ -36,7 +36,9 @@ public class Constants {
         public static final double LID_OPEN = 0.65; // TODO: check value
     }
     public class Climber{
-        public static final String CL = "climber";
+        public static final String EL = "elevator";
+        public static final String PI = "pivot";
+        public static final String HK = "hook";
         public static final int UP = 5000;
         public static final int DOWN = 0;
     }
@@ -55,7 +57,8 @@ public class Constants {
         public static final double CLICKS_PER_INCH = 114.59; // cpr of 1440
     }
     public class Auto{
-        public static final double PIVOT_POWER = 0.3;
+        public static final double MAX_PIVOT_POWER = 0.3;
+        public static final double MIN_PIVOT_POWER = 0.1;
         public static final double PIVOT_THRESHOLD = 0.1;
         public static final String MA = "marker";
     }

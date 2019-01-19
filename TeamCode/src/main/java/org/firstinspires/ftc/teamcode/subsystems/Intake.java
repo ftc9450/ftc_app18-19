@@ -20,7 +20,7 @@ public class Intake extends Subsystem{
         this.pivot = pivot;
 
         enableAndResetEncoders();
-        roller.setDirection(DcMotorSimple.Direction.FORWARD);
+        roller.setDirection(DcMotorSimple.Direction.REVERSE);
         pivot.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
 
         this.setPivotState(PivotState.OFF);
@@ -69,10 +69,10 @@ public class Intake extends Subsystem{
         }
         switch (pivotState){
             case UP:
-                pivot.setPower(.1);
+                pivot.setPower(.3);
                 break;
             case DOWN:
-                pivot.setPower(-.1);
+                pivot.setPower(-.3);
                 break;
             case OFF:
                 pivot.setPower(0);
