@@ -68,10 +68,10 @@ public class MotionTracker {
         return 360 - (((gyro.getAngle() + offsetAngle) % 360) + 360) % 360; // To get mod instead of remainder, since it could be negative.  360 - <angle> to make it increase clockwise
     }
     public int getXEncoderValue(){ // positive is right
-        return xOmni.getCurrentPosition();
+        return -xOmni.getCurrentPosition();
     }
     public int getYEncoderValue(){ // positive is straight
-        return -yOmni.getCurrentPosition();
+        return yOmni.getCurrentPosition();
     }
     public void enableAndResetEncoders(){
         xOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

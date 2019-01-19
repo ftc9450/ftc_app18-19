@@ -31,7 +31,7 @@ public class PidTest extends OpMode {
     private boolean firstOvershoot = true;
     private boolean inOvershoot = false;
     private boolean firstDip = false;
-    private double maxPower = 0.3;
+    private double maxPower = 0.25;
     private double kp = 0.01;
     private double ti = 0.0;
     private double td = 0.0;
@@ -145,6 +145,7 @@ public class PidTest extends OpMode {
         telemetry.addData("P:", kp);
         telemetry.addData("I:", ti);
         telemetry.addData("D:", td);
+        telemetry.addData("Encoder:", tracker.getYEncoderValue());
         //telemetry.addData("Tu:", Tu);
         telemetry.update();
 

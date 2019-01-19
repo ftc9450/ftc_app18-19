@@ -157,8 +157,7 @@ public class AutoCrater extends LinearOpMode {
         float currentAngle = tracker.getAbsoluteAngle();
         if(Math.abs(currentAngle - targetAngle) > 180){ // must cross the line theta = 0
             if(currentAngle > targetAngle){
-                pivotClockwise(360 - (currentAngle - targetAngle));
-            } else if(targetAngle > currentAngle){
+                pivotClockwise(360 - (currentAngle - targetAngle));            } else if(targetAngle > currentAngle){
                 pivotCounterclockwise(360 - (targetAngle - currentAngle));
             }
         } else{

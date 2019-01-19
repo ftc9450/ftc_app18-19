@@ -13,10 +13,10 @@ public class DrivetrainTest extends OpMode {
 	private DcMotor lf;
 	private DcMotor rb;
 	private DcMotor rf;
-    private double FB_LEFT_POWER = 1.0; // TODO: check value
-    private double FB_RIGHT_POWER = 1.0; // TODO: check value
-    private double LR_FRONT_POWER = 1.0; // TODO: check value
-    private double LR_REAR_POWER = 1.0; // TODO: check value
+    private double FB_LEFT_POWER = Constants.Drivetrain.FB_LEFT_POWER; // TODO: check value
+    private double FB_RIGHT_POWER = Constants.Drivetrain.FB_RIGHT_POWER; // TODO: check value
+    private double LR_FRONT_POWER = Constants.Drivetrain.LR_FRONT_POWER; // TODO: check value
+    private double LR_REAR_POWER = Constants.Drivetrain.LR_REAR_POWER; // TODO: check value
 	private boolean rfForward;
 	private boolean rbForward;
 	private boolean lfForward;

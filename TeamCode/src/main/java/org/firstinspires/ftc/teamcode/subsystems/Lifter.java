@@ -51,8 +51,8 @@ public class Lifter extends Subsystem {
             case OFF:
                 lift.setPower(0);
         }
-        switch(lidState){
-            case OPEN:
+            switch(lidState){
+                case OPEN:
                 lid.setPosition(Constants.Lifter.LID_OPEN);
                 break;
             case CLOSED:

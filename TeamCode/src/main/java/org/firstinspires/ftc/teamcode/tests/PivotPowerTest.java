@@ -11,11 +11,12 @@ import org.firstinspires.ftc.teamcode.util.MotionTracker;
 import org.firstinspires.ftc.teamcode.util.Vector2D;
 
 @TeleOp
-public class DrivetrainClassTest extends OpMode {
+public class PivotPowerTest extends OpMode {
 
     private Drivetrain drivetrain;
     private Gyroscope imu;
     private MotionTracker tracker;
+    private double pivotPower = 0.1;
     private boolean aPressed;
     private boolean bPressed;
     private boolean xPressed;
@@ -43,8 +44,7 @@ public class DrivetrainClassTest extends OpMode {
         if(gamepad1.a){
             if(!aPressed) {
                 tracker.enableAndResetEncoders();
-                //drivetrain.moveFB(12,0.25,true,tracker);
-                testForward(12, 0.25);
+                drivetrain.moveFB(12,0.25,true,tracker);
                 aPressed = true;
             }
         } else{
@@ -53,7 +53,7 @@ public class DrivetrainClassTest extends OpMode {
         if(gamepad1.b){
             if(!bPressed) {
                 tracker.enableAndResetEncoders();
-                drivetrain.moveFB(8,0.25,false,tracker);
+                drivetrain.moveFB(12,0.25,false,tracker);
                 bPressed = true;
             }
         } else{
@@ -84,16 +84,6 @@ public class DrivetrainClassTest extends OpMode {
 
 
 
-    }
-
-    public void testForward(double distance, double power){
-        double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
-        double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
-        double clicks = distance * Constants.MotionTracker.CLICKS_PER_INCH;
-        drivetrain.setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
-        //drivetrain.setPower(0.5);
-        try{while(tracker.getXEncoderValue() - 0 < clicks){}}catch(Exception e){telemetry.update();}// - Constants.Drivetrain.FB_THRESHOLD)
-        drivetrain.setPower(0);
     }
     public void pivotClockwise(double angle){ // Turn clockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);
