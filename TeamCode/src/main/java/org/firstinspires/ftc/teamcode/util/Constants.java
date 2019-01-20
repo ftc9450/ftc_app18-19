@@ -14,10 +14,12 @@ public class Constants {
         public static final int DEGREE = 18;
         public static final int FB_THRESHOLD = 500; // TODO: check value
         public static final int LR_THRESHOLD = 500; // TODO: check value
+        public static final int FB_PID_THRESHOLD = 500; // TODO: check value
+        public static final int LR_PID_THRESHOLD = 500; // TODO: check value
         public static final double FB_LEFT_POWER = 1.0; // TODO: check value
         public static final double FB_RIGHT_POWER = 1.0; // TODO: check value
         public static final double LR_FRONT_POWER = 1.0; // TODO: check value
-        public static final double LR_REAR_POWER = 1.0; // TODO: check value
+        public static final double LR_REAR_POWER = 0.9; // TODO: check value
         public static final String LF = "frontleft";
         public static final String LB = "backleft";
         public static final String RF = "frontright";
@@ -34,25 +36,29 @@ public class Constants {
         public static final double LID_OPEN = 0.65; // TODO: check value
     }
     public class Climber{
-        public static final String CL = "climber";
+        public static final String EL = "elevator";
+        public static final String PI = "pivot";
+        public static final String HK = "hook";
         public static final int UP = 5000;
         public static final int DOWN = 0;
     }
     public class Intake{
-        public static final String EX = "extender";
         public static final String PI = "pivot";
         public static final String RO = "roller";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
-        public static final int IN_POSITION = 100; // TODO: check value
+        public static final int PIVOT_IN = 200; // TODO: check value
+        public static final int PIVOT_LEVEL = 1000; // TODO: check value
+        public static final int PIVOT_OUT = 1500; // TODO: check value
     }
     public class MotionTracker{
         public static final String FB = "backleft";
-        public static final String LR = "frontright";
+        public static final String LR = "frontleft";
         public static final double CLICKS_PER_INCH = 114.59; // cpr of 1440
     }
     public class Auto{
-        public static final double PIVOT_POWER = 0.3;
+        public static final double MAX_PIVOT_POWER = 0.3;
+        public static final double MIN_PIVOT_POWER = 0.1;
         public static final double PIVOT_THRESHOLD = 0.1;
         public static final String MA = "marker";
     }

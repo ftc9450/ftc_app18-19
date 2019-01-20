@@ -29,7 +29,7 @@ public class DrivetrainClassTest extends OpMode {
     }
     public void loop(){
         Vector2D v = new Vector2D();
-        v.x = -gamepad1.left_stick_x + (gamepad1.dpad_left? -0.5: gamepad1.dpad_right? 0.5:0);
+        v.x = gamepad1.left_stick_x + (gamepad1.dpad_left? -0.5: gamepad1.dpad_right? 0.5:0);
         v.y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
         float z = gamepad1.right_stick_x + (gamepad1.right_trigger - gamepad1.left_trigger)/2;
         double[] driveSignal = new double[]{0,0,0,0};
@@ -43,7 +43,8 @@ public class DrivetrainClassTest extends OpMode {
         if(gamepad1.a){
             if(!aPressed) {
                 tracker.enableAndResetEncoders();
-                drivetrain.moveFB(12,0.5,true,tracker);
+                //drivetrain.moveFB(12,0.25,true,tracker);
+                testForward(12, 0.25);
                 aPressed = true;
             }
         } else{
@@ -52,7 +53,7 @@ public class DrivetrainClassTest extends OpMode {
         if(gamepad1.b){
             if(!bPressed) {
                 tracker.enableAndResetEncoders();
-                drivetrain.moveFB(12,0.5,false,tracker);
+                drivetrain.moveFB(8,0.25,false,tracker);
                 bPressed = true;
             }
         } else{
@@ -83,6 +84,16 @@ public class DrivetrainClassTest extends OpMode {
 
 
 
+    }
+
+    public void testForward(double distance, double power){
+        double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
+        double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
+        double clicks = distance * Constants.MotionTracker.CLICKS_PER_INCH;
+        drivetrain.setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
+        //drivetrain.setPower(0.5);
+        try{while(tracker.getXEncoderValue() - 0 < clicks){}}catch(Exception e){telemetry.update();}// - Constants.Drivetrain.FB_THRESHOLD)
+        drivetrain.setPower(0);
     }
     public void pivotClockwise(double angle){ // Turn clockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);

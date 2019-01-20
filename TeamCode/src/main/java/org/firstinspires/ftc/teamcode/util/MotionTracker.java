@@ -22,7 +22,7 @@ public class MotionTracker {
     private DcMotor yOmni;
     private Gyroscope gyro;
     private Drivetrain drivetrain;
-    public MotionTracker(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel, Drivetrain drivetrain, Gyroscope gyro, float initialAngle){
+    public MotionTracker(DcMotor sidewaysOmniWheel, DcMotor forwardOmniWheel, Drivetrain drivetrain, Gyroscope gyro, float initialAngle){
         this.drivetrain = drivetrain;
         this.gyro = gyro;
 
@@ -48,8 +48,6 @@ public class MotionTracker {
         if(drivetrain.getState() == Drivetrain.DrivetrainState.Turning){ // Ensures encoder values while rotating
             xWhileTurning += xOmni.getCurrentPosition() - previousX;                              // will have no false impact on position
             yWhileTurning += yOmni.getCurrentPosition() - previousY;
-            x = previousX;
-            y = previousY;
         } else{
             angle = Math.toRadians(getAbsoluteAngle());
             previousX = x;
@@ -67,12 +65,12 @@ public class MotionTracker {
         }
     }
     public float getAbsoluteAngle(){ // returns angle of robot relative to field boundaries
-        return (gyro.getAngle() + offsetAngle) % 360;
+        return 360 - (((gyro.getAngle() + offsetAngle) % 360) + 360) % 360; // To get mod instead of remainder, since it could be negative.  360 - <angle> to make it increase clockwise
     }
-    public int getXEncoderValue(){
-        return xOmni.getCurrentPosition();
+    public int getXEncoderValue(){ // positive is right
+        return -xOmni.getCurrentPosition();
     }
-    public int getYEncoderValue(){
+    public int getYEncoderValue(){ // positive is straight
         return yOmni.getCurrentPosition();
     }
     public void enableAndResetEncoders(){

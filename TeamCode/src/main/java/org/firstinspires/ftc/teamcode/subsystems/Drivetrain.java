@@ -31,7 +31,7 @@ public class Drivetrain extends Subsystem {
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         maxPower = 1;
         this.setState(DrivetrainState.Linear);
@@ -46,7 +46,7 @@ public class Drivetrain extends Subsystem {
     }
     public void setPower(double driveSignal[]) {
         double scale = maxPower;
-        double diff=Math.abs(rightFront.getPower() - (driveSignal[3] * maxPower));
+        double diff=Math.abs(rightFront.getPower() - (driveSignal[2] * maxPower));
         if(diff > 1){
             scale *= 1 - (diff / 4.0);
         }
@@ -56,20 +56,28 @@ public class Drivetrain extends Subsystem {
         rightBack.setPower(driveSignal[3] * scale);
     }
     public void moveFB(double distance, double power, boolean forward, MotionTracker tracker){ // distance (in inches) and power will always be positive
+        double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
+        double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
+        setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
+        long currentTime = System.nanoTime();
+        while((System.nanoTime() - currentTime)/1000000 < 2.5){}
+        setPower(0);
+        /*
         state = DrivetrainState.Linear;
         int clicks = (int) (distance * Constants.MotionTracker.CLICKS_PER_INCH);
-        int initialEncoderValue = tracker.getXEncoderValue();
+        int initialEncoderValue = tracker.getYEncoderValue();
         double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
         double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
         if(forward){
             setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
-            try{while(tracker.getXEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
+            try{while(tracker.getYEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         } else{
             setPower(new double[]{-leftPower,-leftPower,-rightPower,-rightPower});
-            try{while(initialEncoderValue - tracker.getXEncoderValue() < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
+            try{while(initialEncoderValue - tracker.getYEncoderValue() < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         }
         setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
+        */
     }
     public void moveLR(int distance, double power, boolean right, MotionTracker tracker){//positive power and distance is move to right
         state = DrivetrainState.Linear;

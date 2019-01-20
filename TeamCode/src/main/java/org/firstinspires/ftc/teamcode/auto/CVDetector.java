@@ -4,11 +4,13 @@ import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldDetector;
 import com.disnodeteam.dogecv.detectors.roverrukus.SilverDetector;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
+@Autonomous
 public class CVDetector extends OpMode {
     private GoldDetector gd;
     private SilverDetector sd;
