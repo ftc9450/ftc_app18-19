@@ -30,7 +30,8 @@ public class AutoDepot extends LinearOpMode {
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
         */
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL),hardwareMap.dcMotor.get(Constants.Climber.PI),
+                hardwareMap.servo.get(Constants.Climber.HK), hardwareMap.servo.get(Constants.Climber.PL));
         //drivetrain.enableAndResetEncoders();
 
         /*
@@ -58,10 +59,10 @@ public class AutoDepot extends LinearOpMode {
         //drivetrain.moveFB(24,.3,true,tracker);
         // lower robot
 
-        climb.setClimberState(Climber.ClimberState.UP);
+        climb.setElevatorState(Climber.ElevatorState.UP);
         climb.loop();
         Thread.sleep(7000);
-        climb.setClimberState(Climber.ClimberState.OFF);
+        climb.setElevatorState(Climber.ElevatorState.OFF);
         climb.loop();
         /*
         tracker.enableAndResetEncoders();

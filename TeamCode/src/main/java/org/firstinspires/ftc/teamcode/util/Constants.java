@@ -25,6 +25,7 @@ public class Constants {
         public static final String RF = "frontright";
         public static final String RB = "backright";
     }
+    @Deprecated
     public class Lifter{
         public static final String LIFT = "lifter";
         public static final String LID = "lid";
@@ -36,10 +37,12 @@ public class Constants {
         public static final double LID_OPEN = 0.65; // TODO: check value
     }
     public class Climber{
-        public static final String EL = "elevator";
-        public static final String PI = "pivot";
+        public static final String EL = "climber";
+        public static final String PI = "deposit";
         public static final String HK = "hook";
-        public static final int UP = 5000;
+        public static final String PL="pawl";
+
+        public static final int UP = 21000;
         public static final int DOWN = 0;
     }
     public class Intake{
@@ -52,13 +55,14 @@ public class Constants {
         public static final int PIVOT_OUT = 1500; // TODO: check value
     }
     public class MotionTracker{
-        public static final String FB = "backleft";
+        public static final String FB = "frontright";
         public static final String LR = "frontleft";
         public static final double CLICKS_PER_INCH = 114.59; // cpr of 1440
     }
     public class Auto{
         public static final double MAX_PIVOT_POWER = 0.3;
         public static final double MIN_PIVOT_POWER = 0.1;
+        public static final double PIVOT_POWER=0.2;
         public static final double PIVOT_THRESHOLD = 0.1;
         public static final String MA = "marker";
     }

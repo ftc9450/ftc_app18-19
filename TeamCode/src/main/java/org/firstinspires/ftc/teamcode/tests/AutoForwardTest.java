@@ -27,7 +27,7 @@ public class AutoForwardTest extends LinearOpMode {
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
 
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
+        //climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
         drivetrain.enableAndResetEncoders();
 
         drivetrain.moveFB(23.5, 0.2, true, tracker);

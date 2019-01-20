@@ -7,6 +7,7 @@ public class Climber extends Subsystem{
     private DcMotor elevator;
     private DcMotor pivot;
     private Servo hook;
+    private Servo pawl;
     private ElevatorState elevatorState;
     private PivotState pivotState;
     public enum ElevatorState{
@@ -15,7 +16,7 @@ public class Climber extends Subsystem{
     public enum PivotState{
         UP,DOWN,OFF
     }
-    public Climber(DcMotor elevator, DcMotor pivot, Servo hook){
+    public Climber(DcMotor elevator, DcMotor pivot, Servo hook, Servo pawl){
         this.elevator = elevator;
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -28,6 +29,7 @@ public class Climber extends Subsystem{
         pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.setPivotState(PivotState.OFF);
         this.hook = hook;
+        this.pawl=pawl;
         //TODO: servo stuff
 
     }

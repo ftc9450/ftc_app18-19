@@ -16,7 +16,7 @@ public class Calibration extends OpMode{
     Servo marker;
     public void init() {
         elevator=hardwareMap.dcMotor.get(Constants.Lifter.LIFT);
-        climberWinch=hardwareMap.dcMotor.get(Constants.Climber.CL);
+        climberWinch=hardwareMap.dcMotor.get(Constants.Climber.EL);
         pivot=hardwareMap.dcMotor.get(Constants.Intake.PI);
         intakeWinch=hardwareMap.dcMotor.get(Constants.Intake.RO);
         //marker=hardwareMap.servo.get(Constants.Auto.PIVOT);

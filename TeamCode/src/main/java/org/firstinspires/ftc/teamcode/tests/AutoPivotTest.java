@@ -27,7 +27,8 @@ public class AutoPivotTest extends LinearOpMode {
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
 
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.CL));
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL), hardwareMap.dcMotor.get(Constants.Climber.PI),
+                hardwareMap.servo.get(Constants.Climber.HK),hardwareMap.servo.get(Constants.Climber.PL));
         drivetrain.enableAndResetEncoders();
 
         pivotClockwise(90);
