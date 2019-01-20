@@ -119,6 +119,22 @@ public class Teleop extends OpMode{
             intake.setPivotState(Intake.PivotState.OFF);
         }
 
+        if (gamepad2.dpad_up){
+            climb.setHookState(Climber.HookState.SHUT);
+        } else if(gamepad2.dpad_down){
+            climb.setHookState(Climber.HookState.OPEN);
+        } else{
+            climb.setHookState(Climber.HookState.OFF);
+        }
+
+        if (gamepad2.dpad_right){
+            climb.setPawlState(Climber.PawlState.ENGAGED);
+        } else if(gamepad2.dpad_left){
+            climb.setPawlState(Climber.PawlState.DISENGAGED);
+        } else{
+            climb.setPawlState(Climber.PawlState.OFF);
+        }
+
 
 
         subsystemManager.loop();
