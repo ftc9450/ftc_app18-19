@@ -18,9 +18,10 @@ public class EncoderTest extends OpMode{
     Drivetrain drivetrain;
     MotionTracker tracker;
     public void init() {
-        imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
+        //imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-        tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, 0);
+       //tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, 0);
+        tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, 0); //TODO: check angle
 
 
         lateral=hardwareMap.dcMotor.get(Constants.MotionTracker.LR);

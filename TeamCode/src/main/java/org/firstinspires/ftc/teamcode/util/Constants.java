@@ -41,8 +41,12 @@ public class Constants {
         public static final String PI = "deposit";
         public static final String HK = "hook";
         public static final String PL="pawl";
-
+        public static final double PAWL_IN=0.26;
+        public static final double PAWL_OUT=0.45;
+        public static final double HOOK_OPEN=0.25;
+        public static final double HOOK_CLOSED=0.74;
         public static final int UP = 21000;
+        public static final int CLIMBED=10838;
         public static final int DOWN = 0;
     }
     public class Intake{
@@ -55,7 +59,7 @@ public class Constants {
         public static final int PIVOT_OUT = 1500; // TODO: check value
     }
     public class MotionTracker{
-        public static final String FB = "frontright";
+        public static final String FB = Drivetrain.RB;
         public static final String LR = "frontleft";
         public static final double CLICKS_PER_INCH = 114.59; // cpr of 1440
     }

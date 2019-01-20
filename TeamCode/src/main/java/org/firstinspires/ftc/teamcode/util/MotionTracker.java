@@ -22,9 +22,30 @@ public class MotionTracker {
     private DcMotor yOmni;
     private Gyroscope gyro;
     private Drivetrain drivetrain;
-    public MotionTracker(DcMotor sidewaysOmniWheel, DcMotor forwardOmniWheel, Drivetrain drivetrain, Gyroscope gyro, float initialAngle){
+    public MotionTracker(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel,  Drivetrain drivetrain, Gyroscope gyro, float initialAngle){
         this.drivetrain = drivetrain;
         this.gyro = gyro;
+
+        offsetAngle = initialAngle;
+        angle = 0;
+
+        xOmni = sidewaysOmniWheel;
+        yOmni = forwardOmniWheel;
+
+        enableAndResetEncoders();
+        xOmni.setDirection(DcMotor.Direction.FORWARD);
+        yOmni.setDirection(DcMotor.Direction.FORWARD);
+
+        x = 0;
+        y = 0;
+        previousX = 0;
+        previousY = 0;
+        xWhileTurning = 0;
+        yWhileTurning = 0;
+    }
+    public MotionTracker(DcMotor forwardOmniWheel, DcMotor sidewaysOmniWheel,  Drivetrain drivetrain, float initialAngle){
+        this.drivetrain = drivetrain;
+        this.gyro = null;
 
         offsetAngle = initialAngle;
         angle = 0;

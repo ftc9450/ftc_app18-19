@@ -56,12 +56,18 @@ public class Drivetrain extends Subsystem {
         rightBack.setPower(driveSignal[3] * scale);
     }
     public void moveFB(double distance, double power, boolean forward, MotionTracker tracker){ // distance (in inches) and power will always be positive
+        enableAndResetEncoders();
         double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
         double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
-        setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
-        long currentTime = System.nanoTime();
-        while((System.nanoTime() - currentTime)/1000000 < 2.5){}
-        setPower(0);
+        int clicks = (int) (distance * Constants.MotionTracker.CLICKS_PER_INCH);
+        if(forward){
+            setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
+            while(tracker.getYEncoderValue()<clicks){}
+        }else{
+            setPower(new double[]{-leftPower,-leftPower,-rightPower,-rightPower});
+            while(tracker.getYEncoderValue()>(-clicks)){}
+        }
+        setPower(new double[]{0,0,0,0});
         /*
         state = DrivetrainState.Linear;
         int clicks = (int) (distance * Constants.MotionTracker.CLICKS_PER_INCH);
@@ -76,8 +82,7 @@ public class Drivetrain extends Subsystem {
             try{while(initialEncoderValue - tracker.getYEncoderValue() < clicks - Constants.Drivetrain.FB_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
         }
         setPower(new double[]{0,0,0,0});
-        tracker.updatePosition();
-        */
+        tracker.updatePosition();*/
     }
     public void moveLR(int distance, double power, boolean right, MotionTracker tracker){//positive power and distance is move to right
         state = DrivetrainState.Linear;
