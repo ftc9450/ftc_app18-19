@@ -75,6 +75,7 @@ public class AutoDepot extends LinearOpMode {
         while (opModeIsActive() && tracker.getYEncoderValue() < Constants.MotionTracker.CLICKS_PER_INCH*4) {
             drivetrain.setPower(0.2);
         }
+        drivetrain.setPower(0);
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
         switch(mineralPosition){
             //pivot to face gold mineral
