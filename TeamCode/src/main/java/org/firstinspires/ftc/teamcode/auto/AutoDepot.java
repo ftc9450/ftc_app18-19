@@ -70,7 +70,7 @@ public class AutoDepot extends LinearOpMode {
         climb.setHookState(Climber.HookState.OPEN);
         climb.loop();
         */
-       // pivotTo(angleWhenHanging - 5);//correct for difference in angle caused by dropping
+        // pivotTo(angleWhenHanging - 5);//correct for difference in angle caused by dropping
         drivetrain.moveFB(18,c,true,tracker);// drive forward until at corner of mat with samples
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
         switch(mineralPosition){
