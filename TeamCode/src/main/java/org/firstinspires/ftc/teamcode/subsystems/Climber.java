@@ -27,7 +27,7 @@ public class Climber extends Subsystem{
         ENGAGED, DISENGAGED, OFF
     }
     public Climber(DcMotor elevator, DcMotor pivot, Servo hook, Servo pawl){
-        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setDirection(DcMotor.Direction.FORWARD);
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
