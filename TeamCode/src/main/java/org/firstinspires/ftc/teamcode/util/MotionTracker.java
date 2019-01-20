@@ -92,7 +92,7 @@ public class MotionTracker {
         return -xOmni.getCurrentPosition();
     }
     public int getYEncoderValue(){ // positive is straight
-        return yOmni.getCurrentPosition();
+        return -yOmni.getCurrentPosition();
     }
     public void enableAndResetEncoders(){
         xOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

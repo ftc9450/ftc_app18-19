@@ -33,10 +33,10 @@ public class EncoderTest extends OpMode{
 
     @Override
     public void loop() {
-        telemetry.addData("angle: ", tracker.getAbsoluteAngle());
-        telemetry.addData("x: ", tracker.x);
-        telemetry.addData("y: ", tracker.y);
-        telemetry.addData("lateral: ", tracker.getXEncoderValue());
+        //telemetry.addData("angle: ", tracker.getAbsoluteAngle());
+        //telemetry.addData("x: ", tracker.x);
+        //telemetry.addData("y: ", tracker.y);
+        //telemetry.addData("lateral: ", tracker.getXEncoderValue());
         telemetry.addData("straight: ", tracker.getYEncoderValue());
         telemetry.update();
     }

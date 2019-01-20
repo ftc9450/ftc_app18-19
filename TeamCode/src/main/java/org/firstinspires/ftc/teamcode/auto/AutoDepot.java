@@ -35,7 +35,7 @@ public class AutoDepot extends LinearOpMode {
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL),hardwareMap.dcMotor.get(Constants.Climber.PI),
                 hardwareMap.servo.get(Constants.Climber.HK), hardwareMap.servo.get(Constants.Climber.PL));
         drivetrain.enableAndResetEncoders();
-
+        double c=0.05;
         /*
         // Setup detector
         SamplingOrderDetector detector = new SamplingOrderDetector(); // Create the detector
@@ -71,7 +71,7 @@ public class AutoDepot extends LinearOpMode {
         climb.loop();
         */
        // pivotTo(angleWhenHanging - 5);//correct for difference in angle caused by dropping
-        drivetrain.moveFB(4,.05,true,tracker);// drive forward until at corner of mat with samples
+        drivetrain.moveFB(18,c,true,tracker);// drive forward until at corner of mat with samples
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
         switch(mineralPosition){
             //pivot to face gold mineral
@@ -85,8 +85,11 @@ public class AutoDepot extends LinearOpMode {
                 pivotCounterclockwise(45);
                 break;
         }
-        //drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
-        //drivetrain.moveFB(26,.7,false,tracker);// return to position
+        sleep(500);
+        drivetrain.moveFB(26,c,true,tracker);// knock off gold mineral
+        sleep(500);
+        drivetrain.moveFB(26,c,false,tracker);// return to position
+        pivotCounterclockwise(90);
         /*pivotTo(135); // Drive will then drive backwards
         drivetrain.moveFB(45,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
         pivotClockwise(90 + Math.abs(initialAngle)); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle
@@ -97,14 +100,14 @@ public class AutoDepot extends LinearOpMode {
 */
 
     }
-    public void pivotClockwise(double angle){
+    public void pivotClockwise(int angle){
         drivetrain.setPower(new double[]{0.05,0.05,-0.05,-0.05});
-        sleep(100);
+        sleep(5*angle);
         drivetrain.setPower(new double[]{0,0,0,0});
     }
-    public void pivotCounterclockwise(double angle){
-        drivetrain.setPower(new double[]{0.05,0.05,-0.05,-0.05});
-        sleep(100);
+    public void pivotCounterclockwise(int angle){
+        drivetrain.setPower(new double[]{-0.05,-0.05,0.05,0.05});
+        sleep(5*angle);
         drivetrain.setPower(new double[]{0,0,0,0});
     }
 /*

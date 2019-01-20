@@ -56,16 +56,16 @@ public class Drivetrain extends Subsystem {
         rightBack.setPower(driveSignal[3] * scale);
     }
     public void moveFB(double distance, double power, boolean forward, MotionTracker tracker){ // distance (in inches) and power will always be positive
-        enableAndResetEncoders();
+        tracker.enableAndResetEncoders();
         double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
         double rightPower = power * Constants.Drivetrain.FB_RIGHT_POWER;
         int clicks = (int) (distance * Constants.MotionTracker.CLICKS_PER_INCH);
         if(forward){
             setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
-            while(leftFront.isBusy() && tracker.getYEncoderValue()<-clicks){}
+            while( tracker.getYEncoderValue()<clicks){}
         }else{
             setPower(new double[]{-leftPower,-leftPower,-rightPower,-rightPower});
-            while(leftFront.isBusy() && tracker.getYEncoderValue()>(clicks)){}
+            while( tracker.getYEncoderValue()>(-clicks)){}
         }
         setPower(new double[]{0,0,0,0});
         /*

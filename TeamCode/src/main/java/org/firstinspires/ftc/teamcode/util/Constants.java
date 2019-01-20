@@ -61,7 +61,7 @@ public class Constants {
     public class MotionTracker{
         public static final String FB = Drivetrain.RB;
         public static final String LR = "frontleft";
-        public static final double CLICKS_PER_INCH = 114.59; // cpr of 1440
+        public static final double CLICKS_PER_INCH = 114.59/5; // cpr of 1440
     }
     public class Auto{
         public static final double MAX_PIVOT_POWER = 0.3;
