@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.vuforia.EyewearUserCalibrator;
 
 import org.firstinspires.ftc.teamcode.util.Constants;
 
@@ -60,7 +59,7 @@ public class Climber extends Subsystem{
     public void setPawlState(PawlState state){pawlState=state;}
     public void enableAndResetEncoders() {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public int getPosition(){return elevator.getCurrentPosition();}
     public void loop() {
