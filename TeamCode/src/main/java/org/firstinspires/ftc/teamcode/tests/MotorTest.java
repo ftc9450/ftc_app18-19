@@ -11,28 +11,26 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 @TeleOp
 public class MotorTest extends OpMode {
     private DcMotor climb;
-    private DcMotor lifter;
-    private DcMotor extend;
     private DcMotor pivot;
-    private CRServo roller;
-    private Servo lid;
+    private DcMotor intake;
+    private DcMotor deposit;
 
     @Override
     public void init() {
-        lifter = hardwareMap.dcMotor.get(Constants.Lifter.LIFT);
-        lifter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lifter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        climb = hardwareMap.dcMotor.get(Constants.Climber.CL);
+        climb = hardwareMap.dcMotor.get("climber");
 		climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-		climb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        /*extend = hardwareMap.dcMotor.get(Constants.Intake.EX);
-        extend.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        pivot = hardwareMap.dcMotor.get(Constants.Intake.PI);
-        pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        */
-        roller = hardwareMap.crservo.get(Constants.Intake.RO);
-        //lid = hardwareMap.servo.get(Constants.Lifter.LID);
+		climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+		pivot = hardwareMap.dcMotor.get("pivot");
+		pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+		pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        deposit = hardwareMap.dcMotor.get("deposit");
+        deposit.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        deposit.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        intake = hardwareMap.dcMotor.get("roller");
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override
@@ -43,29 +41,24 @@ public class MotorTest extends OpMode {
     	else climb.setPower(0);
     	telemetry.addData("climber:", climb.getCurrentPosition());
 
-    	if (gamepad1.right_bumper) lifter.setPower(0.2);
-    	else if (gamepad1.left_bumper) lifter.setPower(-0.2);
-    	else lifter.setPower(0);
-    	telemetry.addData("elevator:", lifter.getCurrentPosition());
+    	if (gamepad1.right_trigger > 0.5) pivot.setPower(0.2);
+    	else if (gamepad1.left_trigger > 0.5) pivot.setPower(-0.2);
+    	else pivot.setPower(0);
+    	telemetry.addData("intake pivot", pivot.getCurrentPosition());
+
+    	if (gamepad1.right_bumper) deposit.setPower(0.2);
+    	else if (gamepad1.left_bumper) deposit.setPower(-0.2);
+    	else deposit.setPower(0);
+    	telemetry.addData("deposit", deposit.getCurrentPosition());
 
     	if (gamepad1.a) {
-    	    roller.setPower(1);
+    	    intake.setPower(1);
         } else if (gamepad1.b) {
-    	    roller.setPower(-1);
+    	    intake.setPower(-1);
         } else {
-    	    roller.setPower(0);
+    	    intake.setPower(0);
         }
-/*
-        if (gamepad1.x) extend.setPower(0.2);
-        else if (gamepad1.y) extend.setPower(-0.2);
-        else lifter.setPower(0);
-        telemetry.addData("extender:", lifter.getCurrentPosition());
 
-        if (gamepad1.b) pivot.setPower(0.2);
-        else if (gamepad1.a) pivot.setPower(-0.2);
-        else lifter.setPower(0);
-        telemetry.addData("pivot:", lifter.getCurrentPosition());
-*/
     	telemetry.update();
     }
 }
