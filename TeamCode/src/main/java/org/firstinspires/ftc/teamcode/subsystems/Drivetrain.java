@@ -62,10 +62,10 @@ public class Drivetrain extends Subsystem {
         int clicks = (int) (distance * Constants.MotionTracker.CLICKS_PER_INCH);
         if(forward){
             setPower(new double[]{leftPower,leftPower,rightPower,rightPower});
-            while(leftFront.isBusy() && tracker.getYEncoderValue()<-clicks){}
+            while(leftFront.isBusy() && tracker.getYEncoderValue()<clicks){}
         }else{
             setPower(new double[]{-leftPower,-leftPower,-rightPower,-rightPower});
-            while(leftFront.isBusy() && tracker.getYEncoderValue()>(clicks)){}
+            while(leftFront.isBusy() && tracker.getYEncoderValue()>(-clicks)){}
         }
         setPower(new double[]{0,0,0,0});
         /*
