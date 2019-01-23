@@ -71,7 +71,7 @@ public class AutoDepot extends LinearOpMode {
         climb.loop();
         */
         // pivotTo(angleWhenHanging - 5);//correct for difference in angle caused by dropping
-        drivetrain.moveFB(18,c,true,tracker);// drive forward until at corner of mat with samples
+        drivetrain.moveFB(23,c,true,tracker);// drive forward until at corner of mat with samples
         int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
         switch(mineralPosition){
             //pivot to face gold mineral
@@ -85,11 +85,11 @@ public class AutoDepot extends LinearOpMode {
                 pivotCounterclockwise(45);
                 break;
         }
-        sleep(500);
-        drivetrain.moveFB(26,c,true,tracker);// knock off gold mineral
-        sleep(500);
-        drivetrain.moveFB(26,c,false,tracker);// return to position
-        pivotCounterclockwise(90);
+        //sleep(500);
+        //drivetrain.moveFB(26,c,true,tracker);// knock off gold mineral
+        //sleep(500);
+        //drivetrain.moveFB(26,c,false,tracker);// return to position
+      //  pivotCounterclockwise(90);
         /*pivotTo(135); // Drive will then drive backwards
         drivetrain.moveFB(45,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
         pivotClockwise(90 + Math.abs(initialAngle)); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle

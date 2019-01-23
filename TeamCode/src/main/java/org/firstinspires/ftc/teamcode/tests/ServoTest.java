@@ -23,10 +23,12 @@ public class ServoTest extends OpMode{
         telemetry.addData("hook",hook.getPosition());
         telemetry.addData("pawl", pawl.getPosition());
         if(gamepad1.a){
-            hook.setPosition(hook.getPosition()+0.01);
+            //hook.setPosition(hook.getPosition()+0.01);
+            hook.setPosition(Constants.Climber.HOOK_CLOSED);
         }
         if(gamepad1.b){
-            hook.setPosition(hook.getPosition()-0.01);
+            //hook.setPosition(hook.getPosition()-0.01);
+            hook.setPosition(Constants.Climber.HOOK_OPEN);
         }
         if(gamepad1.x){
             pawl.setPosition(pawl.getPosition()+0.01);

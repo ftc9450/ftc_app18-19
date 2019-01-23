@@ -43,10 +43,10 @@ public class Constants {
         public static final String PL="pawl";
         public static final double PAWL_IN=0.26;
         public static final double PAWL_OUT=0.45;
-        public static final double HOOK_OPEN=0.25;
+        public static final double HOOK_OPEN=0.2;
         public static final double HOOK_CLOSED=0.74;
-        public static final int UP = 21000;
-        public static final int CLIMBED=10838;
+        public static final int UP = 22000;
+        public static final int CLIMBED=12000;
         public static final int DOWN = 0;
     }
     public class Intake{
@@ -54,9 +54,9 @@ public class Constants {
         public static final String RO = "roller";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
-        public static final int PIVOT_IN = 200; // TODO: check value
-        public static final int PIVOT_LEVEL = 1000; // TODO: check value
-        public static final int PIVOT_OUT = 1500; // TODO: check value
+        public static final int PIVOT_IN = 0; // TODO: check value
+        public static final int PIVOT_LEVEL = -535; // TODO: check value
+        public static final int PIVOT_OUT = -1880; // TODO: check value
     }
     public class MotionTracker{
         public static final String FB = Drivetrain.RB;

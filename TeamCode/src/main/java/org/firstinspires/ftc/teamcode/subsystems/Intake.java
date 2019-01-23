@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.util.Constants;
+
 public class Intake extends Subsystem{
     private DcMotor roller;
     private DcMotor pivot;
@@ -12,7 +14,7 @@ public class Intake extends Subsystem{
         IN,OUT,OFF
     }
     public enum PivotState{
-        UP,DOWN,OFF
+        UP,DOWN,LEVEL
     }
 
     public Intake(DcMotor pivot, DcMotor roller){
@@ -21,9 +23,10 @@ public class Intake extends Subsystem{
 
         enableAndResetEncoders();
         roller.setDirection(DcMotorSimple.Direction.REVERSE);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
+        pivot.setDirection(DcMotorSimple.Direction.FORWARD); //TODO: check direction
+        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        this.setPivotState(PivotState.OFF);
+        this.setPivotState(PivotState.LEVEL);
         this.setRollerState(RollerState.OFF);
 
     }
@@ -74,7 +77,7 @@ public class Intake extends Subsystem{
             case DOWN:
                 pivot.setPower(-.3);
                 break;
-            case OFF:
+            case LEVEL:
                 pivot.setPower(0);
                 break;
         }

@@ -27,6 +27,7 @@ public class Climber extends Subsystem{
         ENGAGED, DISENGAGED, OFF
     }
     public Climber(DcMotor elevator, DcMotor pivot, Servo hook, Servo pawl){
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         elevator.setDirection(DcMotor.Direction.FORWARD);
@@ -66,11 +67,15 @@ public class Climber extends Subsystem{
         switch(elevatorState){
             case UP:
                 //climb.setTargetPosition(Constants.Climber.UP);
-                elevator.setPower(0.5);
+                if(elevator.getCurrentPosition()<Constants.Climber.UP-500){
+                    elevator.setPower(1);
+                }else{
+                    elevator.setPower(0);
+                }
                 break;
             case DOWN:
                 //climb.setTargetPosition(Constants.Climber.DOWN);
-                elevator.setPower(-0.5);
+                elevator.setPower(-1);
                 break;
             case OFF:
                 elevator.setPower(0);
@@ -78,10 +83,10 @@ public class Climber extends Subsystem{
         }
         switch(pivotState){
             case UP:
-                pivot.setPower(0.5);
+                pivot.setPower(0.2);
                 break;
             case DOWN:
-                pivot.setPower(-0.5);
+                pivot.setPower(-0.2);
                 break;
             case OFF:
                 pivot.setPower(0);
