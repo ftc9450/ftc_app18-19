@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.util;
+package org.firstinspires.ftc.team9450.util;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.sensors.Gyroscope;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.team9450.sensors.Gyroscope;
+import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 
 /**
  * Created by Avi Trost on 12/15/18.
