@@ -28,6 +28,7 @@ public class MotorTest extends OpMode {
         deposit = hardwareMap.dcMotor.get("deposit");
         deposit.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         deposit.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        deposit.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         intake = hardwareMap.dcMotor.get("roller");
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
