@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.team9450.auto;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.sensors.Gyroscope;
-import org.firstinspires.ftc.teamcode.subsystems.Climber;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.util.Constants;
-import org.firstinspires.ftc.teamcode.util.MotionTracker;
+import org.firstinspires.ftc.team9450.sensors.Gyroscope;
+import org.firstinspires.ftc.team9450.subsystems.Climber;
+import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
+import org.firstinspires.ftc.team9450.util.Constants;
+import org.firstinspires.ftc.team9450.util.MotionTracker;
 
 
 /**

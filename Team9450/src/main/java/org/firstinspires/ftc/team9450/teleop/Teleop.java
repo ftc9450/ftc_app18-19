@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.team9450.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystems.Climber;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.SubsystemManager;
-import org.firstinspires.ftc.teamcode.util.Constants;
-import org.firstinspires.ftc.teamcode.util.Vector2D;
+import org.firstinspires.ftc.team9450.subsystems.Climber;
+import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
+import org.firstinspires.ftc.team9450.subsystems.Intake;
+import org.firstinspires.ftc.team9450.subsystems.SubsystemManager;
+import org.firstinspires.ftc.team9450.util.Constants;
+import org.firstinspires.ftc.team9450.util.Vector2D;
 
 @TeleOp
 public class Teleop extends OpMode{

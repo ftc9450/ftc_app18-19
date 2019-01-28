@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.team9450.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.util.Constants;
-import org.firstinspires.ftc.teamcode.util.Pid;
+import org.firstinspires.ftc.team9450.util.Constants;
 
 
 public class Lifter extends Subsystem {
@@ -15,7 +14,6 @@ public class Lifter extends Subsystem {
     private double maxPower = 0.75;
     private LifterState lifterState;
     private LidState lidState;
-    private Pid pid = null;
     private final double kp = 1.0;
     private final double ti = 0.0;
     private final double td = 0.0;
@@ -69,7 +67,6 @@ public class Lifter extends Subsystem {
 
     private void setPosition(int targetDistance){
         enableAndResetEncoders();
-        pid = new Pid(kp,ti,td,-1,1,-maxPower,maxPower);
         double power;
         int currentDistance = 0;
         secondsElapsed = 0;
@@ -79,8 +76,6 @@ public class Lifter extends Subsystem {
             currentTime = System.nanoTime();
             currentDistance = lift.getCurrentPosition();
             double dt = (currentTime - previousTime) / 1000000; // In seconds
-            power = pid.update(targetDistance,currentDistance,dt);
-            lift.setPower(power);
             secondsElapsed += dt;
             previousTime = currentTime;
         }
