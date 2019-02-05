@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.team9450.util.Constants;
 
 import java.util.List;
 
@@ -22,17 +22,13 @@ public class ObjectDetection extends OpMode {
         parameters.vuforiaLicenseKey = Constants.Vuforia.KEY;
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
-        telemetry.addLine("1");
         telemetry.update();
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        telemetry.addLine("2");
         telemetry.update();
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        telemetry.addLine("3");
         telemetry.update();
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        telemetry.addLine("4");
         telemetry.update();
         tfod.loadModelFromAsset("RoverRuckus.tflite", "Gold Mineral", "Silver Mineral");
     }
