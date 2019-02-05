@@ -3,7 +3,7 @@ package org.firstinspires.ftc.team9450.tests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.util.Pid;
+import org.firstinspires.ftc.team9450.util.Pid;
 
 public class PIDTest extends OpMode {
     private DcMotor motor;

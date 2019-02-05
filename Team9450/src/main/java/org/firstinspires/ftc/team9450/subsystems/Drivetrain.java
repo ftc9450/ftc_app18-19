@@ -161,8 +161,8 @@ public class Drivetrain extends Subsystem {
         rightFront.setPower(0);
         rightBack.setPower(0);
     }
-    public int getPosition() {
-        return (leftFront.getCurrentPosition() + rightFront.getCurrentPosition())/2;
+    public int[] getPosition() {
+        return new int[]{leftFront.getCurrentPosition(), rightFront.getCurrentPosition()};
     }
 
     @Override
