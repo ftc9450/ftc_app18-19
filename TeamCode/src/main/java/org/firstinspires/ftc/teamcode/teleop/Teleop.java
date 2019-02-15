@@ -67,21 +67,41 @@ public class Teleop extends OpMode{
             climb.setElevatorState(Climber.ElevatorState.OFF);
         }
 
-        if (gamepad2.b) {
-            climb.setPivotState(Climber.PivotState.UP);
-        } else if (gamepad2.a) {
-            climb.setPivotState(Climber.PivotState.DOWN);
+
+        if (gamepad2.dpad_up) {
+            intake.setSlideState(Intake.SlideState.IN);
+        } else if (gamepad2.dpad_down) {
+            intake.setSlideState(Intake.SlideState.OUT);
         } else {
-            climb.setPivotState(Climber.PivotState.OFF);
+            intake.setSlideState(Intake.SlideState.OFF);
         }
 
-        if (gamepad2.right_trigger > 0.15) {
-            intake.setRollerState(Intake.RollerState.IN);
-        } else if (gamepad2.left_trigger > 0.15) {
-            intake.setRollerState(Intake.RollerState.OUT);
+
+        if (gamepad2.a) {
+            intake.setPivotState(Intake.PivotState.UP);
+        } else if (gamepad2.b) {
+            intake.setPivotState(Intake.PivotState.DOWN);
         } else {
-            intake.setRollerState(Intake.RollerState.OFF);
+            intake.setPivotState(Intake.PivotState.OFF);
         }
+
+        if (gamepad2.left_stick_y >= 1) {
+            intake.setPivotState(Intake.PivotState.UP);
+        } else if (gamepad2.left.stick_y <= -1) {
+            intake.setPivotState(Intake.PivotState.DOWN);
+        } else {
+            intake.setPivotState(Intake.PivotState.OFF);
+        }
+        if (gamepad2.right_stick_y >= 1) {
+            climb.setElevatorState(Climber.ElevatorState.UP);
+        } else if (gamepad2.right.stick_y <= -1) {
+            climb.setElevatorState(Climber.ElevatorState.DOWN);
+        } else {
+            climb.setElevatorState(Climber.ElevatorState.OFF);
+        }
+
+
+
         /*if(gamepad2.b){ // toggles roller on/off
             if(!rollerInPressed){
                 if(!rollerIn){

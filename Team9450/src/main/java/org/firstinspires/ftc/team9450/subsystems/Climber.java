@@ -9,12 +9,10 @@ import org.firstinspires.ftc.team9450.util.Constants;
 public class Climber extends Subsystem{
     private DcMotor elevator;
     private DcMotor pivot;
-    private Servo hook;
-    private Servo pawl;
+
     private ElevatorState elevatorState;
     private PivotState pivotState;
     private HookState hookState;
-    private PawlState pawlState;
     public enum ElevatorState{
         UP,DOWN,OFF
     }
@@ -42,12 +40,12 @@ public class Climber extends Subsystem{
         this.setPivotState(PivotState.OFF);
 
         hook.setDirection(Servo.Direction.FORWARD);
-        this.hook = hook;
-        this.setHookState(HookState.OFF);
+        //this.hook = hook;
+        //this.setHookState(HookState.OFF);
 
-        pawl.setDirection(Servo.Direction.FORWARD);
-        this.pawl=pawl;
-        this.setPawlState(PawlState.OFF);
+        //pawl.setDirection(Servo.Direction.FORWARD);
+        //this.pawl=pawl;
+        //this.setPawlState(PawlState.OFF);
 
     }
     public void setElevatorState(ElevatorState state){

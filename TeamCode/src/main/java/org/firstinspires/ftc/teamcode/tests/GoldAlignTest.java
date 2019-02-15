@@ -64,10 +64,8 @@ public class GoldAlignTest extends OpMode
 
         detector.ratioScorer.weight = 5; //
         detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
-
         detector.enable(); // Start the detector!
-
-
+        detector.disable(time.delay(3));
     }
 
     /*
