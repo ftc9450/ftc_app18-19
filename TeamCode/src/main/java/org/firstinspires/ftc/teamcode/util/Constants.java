@@ -27,8 +27,8 @@ public class Constants {
     }
     @Deprecated
     public class Lifter{
-        public static final String LIFT = "lifter";
-        public static final String LID = "lid";
+        public static final String EXT = "extender";
+        public static final String DUMP = "dumper";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;
         public static final double PID_THRESHOLD = 10;
