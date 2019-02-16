@@ -3,34 +3,42 @@ package org.firstinspires.ftc.team9450.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.team9450.util.Constants;
+
 public class Intake extends Subsystem{
-    private DcMotor roller;
-    private DcMotor pivot;
+    private DcMotor slider;
+    private Servo pivot;
+    private Servo roller;
     private RollerState rollerState;
     private PivotState pivotState;
+    private SlideState slideState;
     public enum RollerState{
         IN,OUT,OFF
     }
     public enum PivotState{
         UP,DOWN,OFF
     }
+    public enum SlideState{
+        IN,OUT,OFF
+    }
 
-    public Intake(DcMotor pivot, DcMotor roller){
+    public Intake(Servo pivot, Servo roller, DcMotor slider){
         this.roller = roller;
         this.pivot = pivot;
+        this.slider = slider;
 
         enableAndResetEncoders();
-        roller.setDirection(DcMotorSimple.Direction.REVERSE);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
+        slider.setDirection(DcMotorSimple.Direction.FORWARD);
 
         this.setPivotState(PivotState.OFF);
         this.setRollerState(RollerState.OFF);
+        this.setSliderState(SlideState.OFF);
+
 
     }
 
     public void stop() {
-        pivot.setPower(0);
-        roller.setPower(0);
+        slider.setPower(0);
     }
     public void enableAndResetEncoders() {
         pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -45,37 +53,51 @@ public class Intake extends Subsystem{
     public void setPivotState(PivotState state){
         pivotState = state;
     }
+    public void setSliderState(SlideState state){
+        slideState = state;
+    }
+
 
     public void move(){
         enableAndResetEncoders();
     }
     public void vertical(){
-        pivot.setPower(.5);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
+        pivot.setPosition(Constants.Intake.PIVOT_UP);
     }
 
     @Override
     public void loop() {
         switch (rollerState){
             case IN:
-                roller.setPower(1);
+                roller.setPower(Constants.Intake.ROLLER_IN);
                 break;
             case OUT:
-                roller.setPower(-1);
+                roller.setPower(Constants.Intake.ROLLER_OUT);
                 break;
             case OFF:
-                roller.setPower(0);
+                roller.setPower(Constants.Intake.ROLLER_OFF);
                 break;
         }
         switch (pivotState){
             case UP:
-                pivot.setPower(.3);
+                pivot.setPosition(Constants.Intake.PIVOT_UP);
                 break;
             case DOWN:
-                pivot.setPower(-.3);
+                pivot.setPosition(Constants.Intake.PIVOT_DOWN);
                 break;
             case OFF:
-                pivot.setPower(0);
+                pivot.setPosition(Constants.Intake.PIVOT_OFF);
+                break;
+        }
+        switch (slideState){
+            case IN:
+                slider.setPower(Constants.Intake.SlIDER_IN);
+                break;
+            case OUT:
+                slider.setPower(Constants.Intake.SLIDER_OUT);
+                break;
+            case OFF:
+                slider.setPower(Constants.Intake.SLIDER_OFF);
                 break;
         }
     }

@@ -3,38 +3,50 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.util.Constants;
+
 public class Intake extends Subsystem{
-    private DcMotor roller;
-    private DcMotor pivot;
+    private Servo roller;
+    private DcMotor slide;
+    private Servo pivot;
     private RollerState rollerState;
     private PivotState pivotState;
+    private SlideState slideState;
     public enum RollerState{
         IN,OUT,OFF
     }
     public enum PivotState{
         UP,DOWN,OFF
     }
+    public enum SlideState{
+        IN,OUT,OFF
+    }
 
-    public Intake(DcMotor pivot, DcMotor roller){
+    public Intake(DcMotor slide, Servo roller, Servo pivot){
         this.roller = roller;
         this.pivot = pivot;
+        this.slide = slide;
 
         enableAndResetEncoders();
-        roller.setDirection(DcMotorSimple.Direction.REVERSE);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE); //TODO: check direction
+
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        slide.setDirection(DcMotor.Direction.FORWARD); // TODO: check direction
 
         this.setPivotState(PivotState.OFF);
         this.setRollerState(RollerState.OFF);
+        this.setSlideState(SlideState.OFF);
 
     }
 
     public void stop() {
-        pivot.setPower(0);
-        roller.setPower(0);
+        pivot.setPosition(0);
+        roller.setPosition(0);
+        slide.setPower(0);
     }
     public void enableAndResetEncoders() {
-        pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void disconnectEncoders() {
         pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -45,37 +57,51 @@ public class Intake extends Subsystem{
     public void setPivotState(PivotState state){
         pivotState = state;
     }
+    public void setSlideState(SlideState state){
+        slideState = state;
+    }
 
     public void move(){
         enableAndResetEncoders();
     }
     public void vertical(){
-        pivot.setPower(.5);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
+        pivot.setPosition(Constants.Intake.PIVOT_UP);
     }
+
 
     @Override
     public void loop() {
         switch (rollerState){
             case IN:
-                roller.setPower(1);
+                roller.setPosition(Constants.Intake.ROllER_IN);
                 break;
             case OUT:
-                roller.setPower(-1);
+                roller.setPosition(Constants.Intake.ROLLER_OUT);
                 break;
             case OFF:
-                roller.setPower(0);
+                roller.setPosition(Constants.Intake.ROLLER_OFF);
                 break;
         }
         switch (pivotState){
             case UP:
-                pivot.setPower(.3);
+                pivot.setPosition(Constants.Intake.PIVOT_UP);
                 break;
             case DOWN:
-                pivot.setPower(-.3);
+                pivot.setPosition(Constants.Intake.PIVOT_DOWN);
                 break;
             case OFF:
-                pivot.setPower(0);
+                pivot.setPosition(Constants.Intake.PIVOT_OFF);
+                break;
+        }
+        switch (slideState){
+            case IN:
+                pivot.setPower(Constants.Intake.SLIDE_IN);
+                break;
+            case OUT:
+                pivot.setPower(Constants.Intake.SLIDE_OUT);
+                break;
+            case OFF:
+                pivot.setPower(Constants.Intake.SLIDE_OFF);
                 break;
         }
     }

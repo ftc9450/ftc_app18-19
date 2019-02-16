@@ -29,13 +29,13 @@ public class Constants {
     @Deprecated
     public class Lifter{
         public static final String LIFT = "lifter";
-        public static final String LID = "lid";
+        public static final String DUMP = "dump";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;
         public static final double PID_THRESHOLD = 10;
         public static final int UP_POSITION = 1000; // TODO: check value
-        public static final double LID_CLOSED = 0.50; // TODO: check value
-        public static final double LID_OPEN = 0.65; // TODO: check value
+        public static final double DUMP_CLOSED = 0.50; // TODO: check value
+        public static final double DUMP_OPEN = 0.65; // TODO: check value
     }
     public class Climber{
         public static final String EL = "climber";
@@ -53,11 +53,18 @@ public class Constants {
     public class Intake{
         public static final String PI = "pivot";
         public static final String RO = "roller";
+        public static final String SL = "slider";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = -1;
-        public static final int PIVOT_IN = 200; // TODO: check value
-        public static final int PIVOT_LEVEL = 1000; // TODO: check value
-        public static final int PIVOT_OUT = 1500; // TODO: check value
+        public static final int SlIDER_IN = 200; // TODO: check value
+        public static final int SLIDER_OUT = 1000; // TODO: check value
+        public static final int SLIDER_OFF = 1500; // TODO: check value
+        public static final double ROLLER_IN = .5; // TODO: check value
+        public static final double ROLLER_OUT = .5; // TODO: check value
+        public static final double ROLLER_OFF = .5; // TODO: check value
+        public static final double PIVOT_UP = .5; // TODO: check value
+        public static final double PIVOT_DOWN = .5; // TODO: check value
+        public static final double PIVOT_OFF = .5; // TODO: check value
     }
     public class MotionTracker{
         public static final String FB = Drivetrain.RB;
