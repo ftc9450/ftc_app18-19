@@ -25,7 +25,6 @@ public class Constants {
         public static final String RF = "frontright";
         public static final String RB = "backright";
     }
-    @Deprecated
     public class Lifter{
         public static final String LIFT = "lifter";
         public static final String DUMP = "dump";
@@ -38,8 +37,7 @@ public class Constants {
     }
     public class Climber{
         public static final String EL = "climber";
-        public static final String PI = "deposit";
-        public static final String HK = "hook";
+
         public static final String PL="pawl";
         public static final double PAWL_IN=0.26;
         public static final double PAWL_OUT=0.45;
