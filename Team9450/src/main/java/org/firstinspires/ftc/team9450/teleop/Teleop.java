@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.team9450.subsystems.Climber;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.subsystems.Intake;
+import org.firstinspires.ftc.team9450.subsystems.Lifter;
+
 import org.firstinspires.ftc.team9450.subsystems.SubsystemManager;
 import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.Vector2D;
@@ -17,6 +19,7 @@ public class Teleop extends OpMode{
     SubsystemManager subsystemManager;
     Intake intake;
     Climber climb;
+    Lifter lifter;
     //DcMotor climb;
     private boolean rollerIn;
     private boolean rollerInPressed;
@@ -27,10 +30,9 @@ public class Teleop extends OpMode{
 
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB),
                 hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-        //lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.LID));
-        intake = new Intake(hardwareMap.dcMotor.get(Constants.Intake.PI), hardwareMap.dcMotor.get((Constants.Intake.RO)));
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL), hardwareMap.dcMotor.get(Constants.Climber.PI),
-                hardwareMap.servo.get(Constants.Climber.HK), hardwareMap.servo.get(Constants.Climber.PL));
+        lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.DUMP));
+        intake = new Intake(hardwareMap.servo.get(Constants.Intake.PI), hardwareMap.servo.get((Constants.Intake.RO)),hardwareMap.dcMotor.get((Constants.Intake.SL));
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
         //climb = hardwareMap.dcMotor.get(Constants.Climber.EL, Constants.Climber.PI, Constants.Climber.HK);
         subsystemManager = new SubsystemManager();
         subsystemManager = subsystemManager.add(climb).add(intake);//.add(climb);
