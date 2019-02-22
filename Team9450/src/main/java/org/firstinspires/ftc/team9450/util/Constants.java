@@ -37,7 +37,6 @@ public class Constants {
     }
     public class Climber{
         public static final String EL = "climber";
-
         public static final String PL="pawl";
         public static final double PAWL_IN=0.26;
         public static final double PAWL_OUT=0.45;
