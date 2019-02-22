@@ -1,13 +1,15 @@
-package org.firstinspires.ftc.team9450.tests;
+package org.firstinspires.ftc.team9450.tests.drivetrain;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.team9450.sensors.Gyroscope;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.util.Vector2D;
 
+@TeleOp(name = "Field-Oriented", group = "Drivetrain")
 public class FOD extends OpMode {
     private Drivetrain drive;
     private Gyroscope imu;

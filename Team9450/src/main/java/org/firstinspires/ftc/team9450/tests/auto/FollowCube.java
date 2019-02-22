@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team9450.tests;
+package org.firstinspires.ftc.team9450.tests.auto;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

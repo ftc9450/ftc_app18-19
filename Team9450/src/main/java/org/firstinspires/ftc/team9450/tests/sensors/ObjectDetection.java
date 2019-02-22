@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team9450.tests;
+package org.firstinspires.ftc.team9450.tests.sensors;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.team9450.util.Constants;
 
 import java.util.List;
 
-@TeleOp
+@TeleOp(name = "Mineral Detection", group = "Sensors")
 public class ObjectDetection extends OpMode {
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;

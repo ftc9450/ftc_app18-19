@@ -1,220 +1,55 @@
 package org.firstinspires.ftc.team9450.tests;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-import org.firstinspires.ftc.team9450.sensors.Gyroscope;
-import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
-import org.firstinspires.ftc.team9450.util.Constants;
-import org.firstinspires.ftc.team9450.util.MotionTracker;
 import org.firstinspires.ftc.team9450.util.Pid;
 
 @TeleOp
-public class PidTest extends OpMode {
+public class PIDTest extends OpMode {
+    DcMotor motor;
 
-    private DcMotor lift;
-    private Drivetrain drivetrain;
-    private MotionTracker tracker;
-    private Gyroscope imu;
-    private Pid pid;
-    private AdjustMode mode = AdjustMode.P;
-    private boolean xPressed = false;
-    private boolean yPressed = false;
-    private boolean bPressed = false;
-    private boolean aPressed = false;
-    private boolean rbPressed = false;
-    private boolean lbPressed = false;
-    private double secondsElapsed = 0;
-    private double Tu = 0;
-    private boolean firstOvershoot = true;
-    private boolean inOvershoot = false;
-    private boolean firstDip = false;
-    private double maxPower = 0.25;
-    private double kp = 0.01;
-    private double ti = 0.0;
-    private double td = 0.0;
-    public enum AdjustMode{
-        P,I,D
+    public static final double P = 2.5;
+    public static final double I = 0.1;
+    public static final double D = 0.2;
+
+    PIDFCoefficients pidOrig;
+    PIDFCoefficients pidModified;
+
+    public void init() {
+        motor = hardwareMap.get(DcMotor.class, "left_drive");
+
+
+        // get a reference to the motor controller and cast it as an extended functionality controller.
+        // we assume it's a REV Robotics Expansion Hub (which supports the extended controller functions).
+        DcMotorControllerEx motorControllerEx = (DcMotorControllerEx) motor.getController();
+
+        // get the port number of our configured motor.
+        int motorIndex = ((DcMotorEx) motor).getPortNumber();
+
+        // get the PID coefficients for the RUN_USING_ENCODER  modes.
+        pidOrig = motorControllerEx.getPIDFCoefficients(motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // change coefficients.
+        PIDFCoefficients pidNew = new PIDFCoefficients(P, I, D, 0);
+        motorControllerEx.setPIDFCoefficients(motorIndex, DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
+
+        // re-read coefficients and verify change.
+        pidModified = motorControllerEx.getPIDFCoefficients(motorIndex, DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
-    @Override
-    public void init(){
-        imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-    }
-
-    @Override
-    public void loop(){
-        if(gamepad1.dpad_up){
-            mode = AdjustMode.P;
-        } else if(gamepad1.dpad_left){
-            mode = AdjustMode.I;
-        } else if(gamepad1.dpad_right){
-            mode = AdjustMode.D;
-        } else if(gamepad1.dpad_down){
-            enableAndResetEncoders();
-        }
-
-        if(gamepad1.x){
-            if(!xPressed){
-                switch(mode){
-                    case P:
-                        kp += 0.01;
-                        break;
-                    case I:
-                        ti += 0.01;
-                        break;
-                    case D:
-                        td += 0.01;
-                        break;
-                }
-            }
-            xPressed = true;
-        } else{
-            xPressed = false;
-        }
-        if(gamepad1.y){
-            if(!yPressed) {
-                switch (mode) {
-                    case P:
-                        kp -= 0.01;
-                        break;
-                    case I:
-                        ti -= 0.01;
-                        break;
-                    case D:
-                        td -= 0.01;
-                        break;
-                }
-                yPressed = true;
-            }
-        } else{
-            yPressed = false;
-        }
-        if(gamepad1.b){
-            if(!bPressed) {
-                switch (mode) {
-                    case P:
-                        kp += 0.001;
-                        break;
-                    case I:
-                        ti += 0.001;
-                        break;
-                    case D:
-                        td += 0.001;
-                        break;
-                }
-                bPressed = true;
-            }
-        } else{
-            bPressed = false;
-        }
-        if(gamepad1.a){
-            if(!aPressed) {
-                switch (mode) {
-                    case P:
-                        kp -= 0.001;
-                        break;
-                    case I:
-                        ti -= 0.001;
-                        break;
-                    case D:
-                        td -= 0.001;
-                        break;
-                }
-                aPressed = true;
-            }
-        } else{
-            aPressed = false;
-        }
-        if(gamepad1.right_bumper){
-            if(!rbPressed) {
-                setPosition(1440);
-                rbPressed = true;
-            }
-        } else{
-            rbPressed = false;
-        }
-
-        telemetry.addData("Mode:", mode);
-        telemetry.addData("P:", kp);
-        telemetry.addData("I:", ti);
-        telemetry.addData("D:", td);
-        telemetry.addData("Encoder:", tracker.getYEncoderValue());
-        //telemetry.addData("Tu:", Tu);
+    public void loop() {
+        telemetry.addData("Runtime", "%.03f", getRuntime());
+        telemetry.addData("P,I,D (orig)", "%.04f, %.04f, %.0f",
+                pidOrig.p, pidOrig.i, pidOrig.d);
+        telemetry.addData("P,I,D (modified)", "%.04f, %.04f, %.04f",
+                pidModified.p, pidModified.i, pidModified.d);
         telemetry.update();
-
     }
-
-    public void enableAndResetEncoders(){
-        tracker.enableAndResetEncoders();
-        /*
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        */
-    }
-
-    private void setPosition(int distance){
-        enableAndResetEncoders();
-        double targetDistance = distance;// * Constants.MotionTracker.CLICKS_PER_INCH;
-        pid = new Pid(kp,ti,td,-1,1,-maxPower,maxPower);
-        double power;
-        int currentDistance = 0;
-        secondsElapsed = 0;
-        double previousTime = System.nanoTime();
-        double currentTime;
-        //boolean overshoot = false;
-        while(true){ // to test overshoot amount
-            //while(Math.abs(currentDistance) < Math.abs(targetDistance - Constants.Drivetrain.FB_PID_THRESHOLD)){
-            currentTime = System.nanoTime();
-            currentDistance = tracker.getYEncoderValue();
-            double dt = (currentTime - previousTime) / 1000000; // In seconds
-            /*
-            double error = currentDistance - targetDistance;
-            if(firstOvershoot){ // get period of oscillation
-                if(error > 0) {
-                    if(firstDip){
-                        firstOvershoot = false;
-                    }
-                    inOvershoot = true;
-                    Tu += dt;
-                }else if(inOvershoot){
-                    Tu += dt;
-                    firstDip = true;
-                }
-            }
-            */
-            power = pid.update(targetDistance,currentDistance,dt);
-            double[] signal = new double[]{power*Constants.Drivetrain.FB_LEFT_POWER,power*Constants.Drivetrain.FB_LEFT_POWER,power*Constants.Drivetrain.FB_RIGHT_POWER,power*Constants.Drivetrain.FB_RIGHT_POWER};
-            drivetrain.setPower(signal);
-            secondsElapsed += dt;
-            previousTime = currentTime;
-            tracker.updatePosition();
-            telemetry.update();
-        }
-    }
-
-    /*
-    private void setPosition(int targetDistance){
-        enableAndResetEncoders();
-        pid = new Pid(kp,ti,td,-1,1,-maxPower,maxPower);
-        double power;
-        int currentDistance = 0;
-        secondsElapsed = 0;
-        double previousTime = System.nanoTime();
-        double currentTime;
-        while(Math.abs(currentDistance) < Math.abs(targetDistance - Constants.Lifter.PID_THRESHOLD)){
-            currentTime = System.nanoTime();
-            currentDistance = lift.getCurrentPosition();
-            double dt = (currentTime - previousTime) / 1000000; // In seconds
-            power = pid.update(targetDistance,currentDistance,dt);
-            lift.setPower(power);
-            secondsElapsed += dt;
-            previousTime = currentTime;
-        }
-    }
-    */
-
 }

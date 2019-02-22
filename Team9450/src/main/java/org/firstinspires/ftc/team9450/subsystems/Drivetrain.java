@@ -2,6 +2,7 @@ package org.firstinspires.ftc.team9450.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.team9450.subsystems.Subsystem;
 import org.firstinspires.ftc.team9450.util.Constants;
@@ -38,6 +39,20 @@ public class Drivetrain extends Subsystem {
         this.setState(DrivetrainState.Linear);
     }
 
+    public Drivetrain(HardwareMap map) {
+        leftFront = map.dcMotor.get(Constants.Drivetrain.LF);
+        leftBack = map.dcMotor.get(Constants.Drivetrain.LB);
+        rightFront = map.dcMotor.get(Constants.Drivetrain.RF);
+        rightBack = map.dcMotor.get(Constants.Drivetrain.RB);
+        maxPower=Constants.Drivetrain.HIGH_POWER;
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        maxPower = 1;
+        this.setState(DrivetrainState.Linear);
+    }//uwu
 
     public void setPower(double power) {
         leftFront.setPower(power);
@@ -45,6 +60,7 @@ public class Drivetrain extends Subsystem {
         rightFront.setPower(power);
         rightBack.setPower(power);
     }
+
     public void setPower(double driveSignal[]) {
         double scale = maxPower;
         double diff=Math.abs(rightFront.getPower() - (driveSignal[2] * maxPower));
@@ -56,6 +72,7 @@ public class Drivetrain extends Subsystem {
         rightFront.setPower(driveSignal[2] * scale);
         rightBack.setPower(driveSignal[3] * scale);
     }
+
     public void moveFB(double distance, double power, boolean forward, MotionTracker tracker){ // distance (in inches) and power will always be positive
         tracker.enableAndResetEncoders();
         double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
@@ -85,6 +102,7 @@ public class Drivetrain extends Subsystem {
         setPower(new double[]{0,0,0,0});
         tracker.updatePosition();*/
     }
+
     public void moveLR(int distance, double power, boolean right, MotionTracker tracker){//positive power and distance is move to right
         state = DrivetrainState.Linear;
         int clicks = (int)(distance * Constants.MotionTracker.CLICKS_PER_INCH);
@@ -101,31 +119,15 @@ public class Drivetrain extends Subsystem {
         setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
     }
-    /* Now in auto classes
-    public void pivotClockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn clockwise given degree angle
-        state = DrivetrainState.Turning;
-        float startAngle = imu.getAngle();
-        double[] driveSignal = new double[]{0.3,0.3,-0.3,-0.3};
-        setPower(driveSignal);
-        while(angle - (imu.getAngle() - startAngle + 360) % 360 > 0.1); // TODO: check value
-        setPower(new double[]{0,0,0,0});
-        tracker.updatePosition();
-    }
-    public void pivotCounterclockwise(double angle, Gyroscope imu, MotionTracker tracker){ // Turn counterclockwise given degree angle
-        state = DrivetrainState.Turning;
-        float startAngle = imu.getAngle();
-        double[] driveSignal = new double[]{-0.3,-0.3,0.3,0.3};
-        setPower(driveSignal);
-        while(angle - (startAngle - imu.getAngle() + 360) % 360 > 0.1); // TODO: check value
-        setPower(new double[]{0,0,0,0});
-        tracker.updatePosition();
-    }
-    */
+
     public void setFWPosition(double pos) {
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
     public boolean isClose(DcMotor dcMotor){return Math.abs(dcMotor.getCurrentPosition()-dcMotor.getTargetPosition())<10;}
+
     public boolean isBusy(){return !(isClose(leftFront) || isClose(leftBack) || isClose(rightFront) || isClose(rightBack));}
+
     public void enableAndResetEncoders(){
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -139,21 +141,26 @@ public class Drivetrain extends Subsystem {
 //        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
+
     public void disconnectEncoders(){
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+
     public void setState(DrivetrainState state){
         this.state = state;
     }
+
     public DrivetrainState getState(){
         return state;
     }
+
     public String toString(){
         return String.valueOf((leftFront.getCurrentPosition()+rightFront.getCurrentPosition())/2 );
     }
+
     @Override
     public void stop() {
         leftFront.setPower(0);
@@ -161,8 +168,9 @@ public class Drivetrain extends Subsystem {
         rightFront.setPower(0);
         rightBack.setPower(0);
     }
-    public int[] getPosition() {
-        return new int[]{leftFront.getCurrentPosition(), rightFront.getCurrentPosition()};
+
+    public int getPosition() {
+        return rightBack.getCurrentPosition();
     }
 
     @Override
