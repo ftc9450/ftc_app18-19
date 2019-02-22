@@ -2,11 +2,12 @@ package org.firstinspires.ftc.team9450.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.team9450.util.Constants;
 
-public class Intake extends Subsystem{
-    private DcMotor slider;
+public class Intake {}//extends Subsystem{
+    /*private DcMotor slider;
     private Servo pivot;
     private Servo roller;
     private RollerState rollerState;
@@ -101,4 +102,4 @@ public class Intake extends Subsystem{
                 break;
         }
     }
-}
+}*/

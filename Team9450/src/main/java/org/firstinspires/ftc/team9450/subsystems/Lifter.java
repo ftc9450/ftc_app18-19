@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.team9450.util.Constants;
 
 
-public class Lifter extends Subsystem {
-
+public class Lifter {}//extends Subsystem {
+/*
     private DcMotor extender;
     private Servo dump;
     double secondsElapsed = 0;
@@ -91,3 +91,4 @@ public class Lifter extends Subsystem {
     }
 
 }
+*/

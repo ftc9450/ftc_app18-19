@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.team9450.tests;
+package org.firstinspires.ftc.team9450.tests.sensors;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.team9450.sensors.GoldDetector;
 
-@TeleOp
+@TeleOp(name = "Gold Detector", group = "Sensors")
 public class GoldDetection extends OpMode {
     GoldDetector gold;
     int n;

@@ -13,7 +13,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Gyroscope {
     private BNO055IMU imu;
-    Orientation angles;
+    private Orientation angles;
+    private float init;
 
     public Gyroscope(BNO055IMU imu) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -25,11 +26,16 @@ public class Gyroscope {
         this.imu = imu;
 
         this.imu.initialize(parameters);
+        this.init = 0;
     }
 
     public float getAngle() {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        return AngleUnit.RADIANS.normalize(AngleUnit.RADIANS.fromUnit(angles.angleUnit, angles.firstAngle));
+        return AngleUnit.RADIANS.normalize(AngleUnit.RADIANS.fromUnit(angles.angleUnit, angles.firstAngle)) - init;
+    }
+
+    public void zero() {
+        this.init = this.getAngle();
     }
 
     public String getSystemStatus() {

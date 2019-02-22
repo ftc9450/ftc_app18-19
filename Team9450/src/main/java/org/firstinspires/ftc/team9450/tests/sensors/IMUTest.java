@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team9450.tests;
+package org.firstinspires.ftc.team9450.tests.sensors;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import java.util.Locale;
 
-@TeleOp
+@TeleOp(name = "IMU Test", group = "Sensors")
 public class IMUTest extends LinearOpMode {
     BNO055IMU imu;
     Orientation angles;
