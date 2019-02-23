@@ -6,12 +6,14 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.team9450.sensors.Gyroscope;
 import org.firstinspires.ftc.team9450.subsystems.Climber;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.MotionTracker;
+import org.opencv.core.Mat;
 
 
 /**
@@ -35,8 +37,7 @@ public class AutoCrater extends LinearOpMode {
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
-        /*climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL), hardwareMap.dcMotor.get(Constants.Climber.PI),
-                hardwareMap.servo.get(Constants.Climber.HK),hardwareMap.servo.get(Constants.Climber.PL));*/
+        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
         drivetrain.enableAndResetEncoders();
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
 
@@ -124,7 +125,7 @@ public class AutoCrater extends LinearOpMode {
         */
 
     }
-
+/*
     public void pivotClockwise(double angle){ // Turn clockwise given degree angle
         drivetrain.setState(Drivetrain.DrivetrainState.Turning);
         float startAngle = imu.getAngle();
@@ -145,11 +146,13 @@ public class AutoCrater extends LinearOpMode {
         drivetrain.setPower(new double[]{0,0,0,0});
         tracker.updatePosition();
     }
+
     public void pivotTo(float targetAngle){ // relative to field boundaries
         float currentAngle = tracker.getAbsoluteAngle();
         if(Math.abs(currentAngle - targetAngle) > 180){ // must cross the line theta = 0
             if(currentAngle > targetAngle){
-                pivotClockwise(360 - (currentAngle - targetAngle));            } else if(targetAngle > currentAngle){
+                pivotClockwise(360 - (currentAngle - targetAngle));
+            } else if(targetAngle > currentAngle){
                 pivotCounterclockwise(360 - (targetAngle - currentAngle));
             }
         } else{
@@ -159,6 +162,16 @@ public class AutoCrater extends LinearOpMode {
                 pivotClockwise(targetAngle - currentAngle);
             }
         }
+    }*/
+    public void pivotTo(float targetAngle){
+        double power =0.5;
+        imu.zero();
+        if(targetAngle>0){//ccwise
+            drivetrain.setPower(new double[]{-power, -power, power, power});
+        }else{
+            drivetrain.setPower(new double[]{power, power, -power, -power});
+        }
+        while(opModeIsActive() && Math.abs(imu.getAngle() - targetAngle) > Math.PI/10){}
+        drivetrain.setPower(new double[]{0, 0, 0, 0});
     }
-
 }

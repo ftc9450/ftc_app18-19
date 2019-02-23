@@ -28,8 +28,8 @@ public class Lifter {}//extends Subsystem {
         extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         extender.setDirection(DcMotor.Direction.FORWARD);
         dump = dumper;
-        this.setLidState(LidState.CLOSED);
-        this.setLifterState(LifterState.OFF);
+        //this.setLidState(LidState.CLOSED);
+        //this.setLifterState(LifterState.OFF);
     }
 
     public void enableAndResetEncoders() {
