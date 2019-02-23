@@ -10,7 +10,7 @@ import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.MotionTracker;
 import org.firstinspires.ftc.team9450.util.Vector2D;
 
-@TeleOp(name = "Simple Test", group = "Drivetrain")
+@TeleOp(name = "Drivetrain Test", group = "Drivetrain")
 public class DrivetrainTest extends OpMode {
     private Drivetrain drive;
     //private Gyroscope imu;

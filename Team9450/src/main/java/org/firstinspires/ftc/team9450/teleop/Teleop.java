@@ -30,12 +30,12 @@ public class Teleop extends OpMode{
 
         drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB),
                 hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-        lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.DUMP));
-        intake = new Intake(hardwareMap.servo.get(Constants.Intake.PI), hardwareMap.servo.get((Constants.Intake.RO)),hardwareMap.dcMotor.get((Constants.Intake.SL));
+        //lifter = new Lifter(hardwareMap.dcMotor.get(Constants.Lifter.LIFT), hardwareMap.servo.get(Constants.Lifter.DUMP));
+        //intake = new Intake(hardwareMap.servo.get(Constants.Intake.PI), hardwareMap.servo.get((Constants.Intake.RO)),hardwareMap.dcMotor.get((Constants.Intake.SL)));
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
         //climb = hardwareMap.dcMotor.get(Constants.Climber.EL, Constants.Climber.PI, Constants.Climber.HK);
         subsystemManager = new SubsystemManager();
-        subsystemManager = subsystemManager.add(climb).add(intake);//.add(climb);
+        //subsystemManager = subsystemManager.add(climb).add(intake);//.add(climb);
         rollerIn = false;
         rollerInPressed = false;
         rollerOut = false;
@@ -69,27 +69,27 @@ public class Teleop extends OpMode{
             climb.setElevatorState(Climber.ElevatorState.OFF);
         }
         if (gamepad2.a) {
-            intake.setPivotState(Intake.PivotState.UP);
+            //intake.setPivotState(Intake.PivotState.UP);
         } else if(gamepad2.b){
-            intake.setPivotState(Intake.PivotState.DOWN);
+            //intake.setPivotState(Intake.PivotState.DOWN);
         } else{
-            intake.setPivotState(Intake.PivotState.OFF);
+            //intake.setPivotState(Intake.PivotState.OFF);
         }
 
         if (gamepad2.dpad_up) {
-            intake.setSliderState(Intake.SlideState.IN);
+            //intake.setSliderState(Intake.SlideState.IN);
         } else if (gamepad2.dpad_down) {
-            intake.setSliderState(Intake.SlideState.OUT);
+            //intake.setSliderState(Intake.SlideState.OUT);
         } else {
-            intake.setSliderState(Intake.SlideState.OFF);
+            //intake.setSliderState(Intake.SlideState.OFF);
         }
 
         if (gamepad2.right_trigger > 0.15) {
-            intake.setRollerState(Intake.RollerState.IN);
+            //intake.setRollerState(Intake.RollerState.IN);
         } else if (gamepad2.left_trigger > 0.15) {
-            intake.setRollerState(Intake.RollerState.OUT);
+            //intake.setRollerState(Intake.RollerState.OUT);
         } else {
-            intake.setRollerState(Intake.RollerState.OFF);
+            //intake.setRollerState(Intake.RollerState.OFF);
         }
         /*if(gamepad2.b){ // toggles roller on/off
             if(!rollerInPressed){

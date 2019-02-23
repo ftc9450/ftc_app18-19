@@ -6,7 +6,7 @@ import org.firstinspires.ftc.team9450.subsystems.Climber;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.util.Constants;
 
-public class SamplingTest {
+public class SamplingTest {}/*
     private Drivetrain drive;
     private Climber climb;
     private GoldDetector gold;
@@ -30,4 +30,4 @@ public class SamplingTest {
 
 
 
-}
+}*/

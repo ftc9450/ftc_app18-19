@@ -19,9 +19,11 @@ public class Drivetrain extends Subsystem {
     private DcMotor rightFront;
     private DcMotor rightBack;
     private double maxPower;
+    private int targetPosition;
+    private double targetAngle;
 
     public enum DrivetrainState{
-        Turning, Linear
+        Linear, Turning
     }
 
     public Drivetrain(DcMotor lf, DcMotor lb, DcMotor rf, DcMotor rb) {
@@ -45,11 +47,19 @@ public class Drivetrain extends Subsystem {
         rightFront = map.dcMotor.get(Constants.Drivetrain.RF);
         rightBack = map.dcMotor.get(Constants.Drivetrain.RB);
         maxPower=Constants.Drivetrain.HIGH_POWER;
-        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         maxPower = 1;
         this.setState(DrivetrainState.Linear);
     }//uwu
@@ -103,30 +113,11 @@ public class Drivetrain extends Subsystem {
         tracker.updatePosition();*/
     }
 
-    public void moveLR(int distance, double power, boolean right, MotionTracker tracker){//positive power and distance is move to right
-        state = DrivetrainState.Linear;
-        int clicks = (int)(distance * Constants.MotionTracker.CLICKS_PER_INCH);
-        int initialEncoderValue = tracker.getYEncoderValue();
-        double frontPower = power * Constants.Drivetrain.LR_FRONT_POWER;
-        double rearPower = power * Constants.Drivetrain.LR_REAR_POWER;
-        if(right){
-            setPower(new double[]{frontPower,rearPower,frontPower,rearPower});
-            try{while(tracker.getYEncoderValue() - initialEncoderValue < clicks - Constants.Drivetrain.LR_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
-        } else{
-            setPower(new double[]{-frontPower,-rearPower,-frontPower,-rearPower});
-            try{while(initialEncoderValue - tracker.getYEncoderValue() < clicks - Constants.Drivetrain.LR_THRESHOLD) tracker.updatePosition();}catch(Exception e){}
-        }
-        setPower(new double[]{0,0,0,0});
-        tracker.updatePosition();
-    }
-
     public void setFWPosition(double pos) {
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public boolean isClose(DcMotor dcMotor){return Math.abs(dcMotor.getCurrentPosition()-dcMotor.getTargetPosition())<10;}
-
-    public boolean isBusy(){return !(isClose(leftFront) || isClose(leftBack) || isClose(rightFront) || isClose(rightBack));}
 
     public void enableAndResetEncoders(){
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -170,9 +161,56 @@ public class Drivetrain extends Subsystem {
     }
 
     public int getPosition() {
-        return rightBack.getCurrentPosition();
+        return leftBack.getCurrentPosition();
     }
 
+    public Drivetrain setTargetPosition(int distance) {
+        targetPosition = distance + this.getPosition();
+        return this;
+    }
+
+    public int getTargetPosition() {
+        return targetPosition - this.getPosition();
+    }
+
+    public Drivetrain setTargetAngle(int angle) {
+        targetAngle = angle + getAngle();
+        return this;
+    }
+
+    public double getTargetAngle() {
+        return targetAngle - getAngle();
+    }
+
+    public boolean isBusy() {
+        return Math.abs(this.getPosition() - 10) < 10;
+    }
+
+    public double getAngle() {
+        return 0;
+    }
+
+    //backleft
+    //frontright
     @Override
-    public void loop() { }
+    public void loop() {
+        switch (state) {
+            case Linear:
+                if (isBusy()) {
+                    double error = this.getTargetPosition() - this.getPosition();
+                    this.setPower(1.0 / (1.0 + Math.exp(-error/2500 - 4)));
+                } else {
+                    this.stop();
+                }
+                break;
+            case Turning:
+                double error = Math.abs(this.getTargetAngle() - this.getAngle());
+                if (error > 10) {
+                    double power = 1.0 / (1.0 + Math.exp(-error/2500 - 4));
+                    this.setPower(new double[]{power, power, -power, -power});
+                } else {
+                    this.stop();
+                }
+        }
+    }
 }
