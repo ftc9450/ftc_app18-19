@@ -20,8 +20,7 @@ public class FollowCube extends OpMode {
 
     @Override
     public void init() {
-        drive = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB),
-                hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
+        drive = new Drivetrain(hardwareMap);
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         gold = new GoldDetector(tfodMonitorViewId);
