@@ -25,7 +25,7 @@ public class FOD extends OpMode {
         Vector2D v = new Vector2D();
         v.x = gamepad1.left_stick_x + (gamepad1.dpad_left? -0.5: gamepad1.dpad_right? 0.5:0);
         v.y = -gamepad1.left_stick_y + (gamepad1.dpad_down? -0.5: gamepad1.dpad_up? 0.5:0);
-        v.rotate(imu.getAngle()); // TODO: add 45
+        v.rotate(-Math.toRadians(imu.getAngle())); // TODO: add 45
         float z = gamepad1.right_stick_x + (gamepad1.right_trigger - gamepad1.left_trigger)/2;
         double[] driveSignal = new double[]{0,0,0,0};
         driveSignal[0]= v.x + v.y + z; // up on left stick is -1.

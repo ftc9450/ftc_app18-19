@@ -13,20 +13,19 @@ import org.firstinspires.ftc.team9450.util.Vector2D;
 @TeleOp(name = "Drivetrain Test", group = "Drivetrain")
 public class DrivetrainTest extends OpMode {
     private Drivetrain drive;
-    //private Gyroscope imu;
+    private Gyroscope imu;
     private MotionTracker tracker;
 
     @Override
     public void init() {
-        drive = new Drivetrain(hardwareMap);/*new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF),hardwareMap.dcMotor.get(Constants.Drivetrain.LB),
-                hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));*/
-        //imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
+        drive = new Drivetrain(hardwareMap);
+        imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
     }
 
     @Override
     public void loop() {
         drive.setPower(driveSignal());
-        ///telemetry.addData("angle", imu.getAngle());
+        telemetry.addData("angle", imu.getAngle());
         int pos = drive.getPosition();
         telemetry.addData("position", pos);
     }

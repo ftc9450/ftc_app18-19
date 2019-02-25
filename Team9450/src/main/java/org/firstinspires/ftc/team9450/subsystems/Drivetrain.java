@@ -54,7 +54,11 @@ public class Drivetrain extends Subsystem {
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -114,12 +118,6 @@ public class Drivetrain extends Subsystem {
         tracker.updatePosition();*/
     }
 
-    public void setFWPosition(double pos) {
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public boolean isClose(DcMotor dcMotor){return Math.abs(dcMotor.getCurrentPosition()-dcMotor.getTargetPosition())<10;}
-
     public void enableAndResetEncoders(){
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -162,7 +160,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public int getPosition() {
-        return leftBack.getCurrentPosition();
+        return -leftBack.getCurrentPosition();
     }
 
     public Drivetrain setTargetPosition(int distance) {
@@ -199,7 +197,7 @@ public class Drivetrain extends Subsystem {
             case Linear:
                 if (isBusy()) {
                     double error = this.getTargetPosition() - this.getPosition();
-                    this.setPower(1.0 / (1.0 + Math.exp(-error/2500 - 4)));
+                    this.setPower(1.0 / (1.0 + Math.exp(-error/2500 + 4)));
                 } else {
                     this.stop();
                 }
@@ -207,7 +205,7 @@ public class Drivetrain extends Subsystem {
             case Turning:
                 double error = Math.abs(this.getTargetAngle() - this.getAngle());
                 if (error > 10) {
-                    double power = 1.0 / (1.0 + Math.exp(-error/2500 - 4));
+                    double power = 1.0 / (1.0 + Math.exp(-error/2500 + 4));
                     this.setPower(new double[]{power, power, -power, -power});
                 } else {
                     this.stop();

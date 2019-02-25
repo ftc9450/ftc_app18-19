@@ -9,7 +9,7 @@ import org.firstinspires.ftc.team9450.sensors.Gyroscope;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.util.Constants;
 
-@TeleOp
+@TeleOp(name = "Follow Cube", group = "Auto")
 public class FollowCube extends OpMode {
     private Drivetrain drive;
     private Gyroscope imu;

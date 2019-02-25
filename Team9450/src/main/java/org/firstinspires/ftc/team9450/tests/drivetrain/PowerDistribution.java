@@ -21,12 +21,12 @@ public class PowerDistribution extends OpMode {
         drive = new DcMotor[]{lf, lb, rf, rb};
         for (DcMotor motor:drive) {
             motor.setDirection(DcMotorSimple.Direction.FORWARD);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         drive[0].setDirection(DcMotorSimple.Direction.REVERSE);
         drive[2].setDirection(DcMotorSimple.Direction.REVERSE);
-        drive[3].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lfscale = lbscale = rfscale = rbscale = 1;
         mode = Mode.LF;
         add = 0;
@@ -40,7 +40,7 @@ public class PowerDistribution extends OpMode {
         rf.setPower(rfscale*(-gamepad1.left_stick_x - gamepad1.left_stick_y - r));
         rb.setPower(rbscale*(gamepad1.left_stick_x - gamepad1.left_stick_y - r));
         telemetry.addData("controls", "lf:left, rf:up, rb:right, lb:down");
-        telemetry.addData("position", drive[3].getCurrentPosition());
+        for (int i = 0; i < 4; i++) telemetry.addData("motor "+i+" position", drive[i].getCurrentPosition());
         if (gamepad1.dpad_left) mode = Mode.LF;
         else if (gamepad1.dpad_up) mode = Mode.RF;
         else if (gamepad1.dpad_right) mode = Mode.RB;

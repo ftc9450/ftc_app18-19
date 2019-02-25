@@ -18,7 +18,7 @@ public class Gyroscope {
 
     public Gyroscope(BNO055IMU imu) {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit    = BNO055IMU.AngleUnit.RADIANS;
+        parameters.angleUnit    = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile  = "IMUCalibration.json";
         parameters.loggingEnabled       = true;
         parameters.loggingTag           = "IMU";
@@ -30,8 +30,8 @@ public class Gyroscope {
     }
 
     public float getAngle() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        return AngleUnit.RADIANS.normalize(AngleUnit.RADIANS.fromUnit(angles.angleUnit, angles.firstAngle)) - init;
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle)) - init;
     }
 
     public void zero() {
