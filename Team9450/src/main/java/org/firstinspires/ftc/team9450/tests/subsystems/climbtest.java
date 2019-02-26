@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.team9450.tests.drivetrain;
+package org.firstinspires.ftc.team9450.tests.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.team9450.util.MotionTracker;
 import org.firstinspires.ftc.team9450.subsystems.Climber;
 import org.firstinspires.ftc.team9450.util.Vector2D;
 
-public class climbtest extends OpMode {
+public class climbtest {}/*extends OpMode {
     Climber climb;
     SubsystemManager subsystemManager;
 
@@ -42,3 +42,4 @@ public class climbtest extends OpMode {
 
 
     }
+*/
