@@ -18,20 +18,27 @@ public class StraightPath extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         drive = new Drivetrain(hardwareMap);
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        double TARGET = 3000;
+        double TARGET = 5000;
         double error = TARGET;
         double correction = imu.getAngle()/10;
         double power;
 
+        double maxPower = 0;
+        double maxError = 0;
+        double maxCorrection = 0;
+
         waitForStart();
         while (opModeIsActive() && error > 0) {
             error = TARGET - drive.getPosition();
-            power = 1.0 / (1.0 + Math.exp(-error/2500.0 + 4));
+            power = 0.7;//1.0 / (1.0 + Math.exp(-error/(TARGET) + 4));
             correction = imu.getAngle()/100;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
             telemetry.addData("power", power);
             telemetry.addData("error", error);
             telemetry.addData("correction", correction);
+            if (power > maxPower) maxPower = power;
+            if (error > maxError) maxError = error;
+            if (correction > maxCorrection) maxCorrection = correction;
             telemetry.update();
         }
     }
