@@ -33,6 +33,7 @@ public class StraightPath extends LinearOpMode {
             power = 0.7;//1.0 / (1.0 + Math.exp(-error/(TARGET) + 4));
             OFFSET = 0.08; //TODO: @Tangerine tweak this value to get robot to start moving
             power = 0.6*2.0/(0.5*Math.sqrt(2*Math.PI)) * Math.exp(-((error*3.0/TARGET)-1.5)*((error*3.0/TARGET)-1.5)/(2*0.25)) + OFFSET;
+            power = 0.3;//0.7 / (1.0 + Math.exp(-error/(TARGET) + 4));
             correction = imu.getAngle()/100;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
             telemetry.addData("power", power);
@@ -40,5 +41,7 @@ public class StraightPath extends LinearOpMode {
             telemetry.addData("correction", correction);
             telemetry.update();
         }
+        drive.setPower(new double[]{0,0,0,0});
+        while(opModeIsActive()){}
     }
 }
