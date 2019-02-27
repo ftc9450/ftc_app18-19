@@ -15,5 +15,5 @@ dependencies {
     //implementation files(':libs/util-stream-1.0.18-sources.jar')
     implementation project(':openCVLibrary3')
     implementation project(':DogeCV')
-    implementation files('/Users/dhruv/FTC/ftc_app18-19/libs/commons-math3-3.6.1.jar')
+    implementation files('../libs/commons-math3-3.6.1.jar')
 }

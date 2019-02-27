@@ -22,6 +22,7 @@ public class StraightPath extends LinearOpMode {
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         double TARGET = 1440;
         double error = TARGET;
+        double curvewidth = error/6;
         double correction = imu.getAngle()/100;
         double power;
         double OFFSET;
@@ -31,9 +32,10 @@ public class StraightPath extends LinearOpMode {
         while (opModeIsActive() && error > 0) {
             error = TARGET - drive.getPosition();
             power = 0.7;//1.0 / (1.0 + Math.exp(-error/(TARGET) + 4));
-            OFFSET = 0.08; //TODO: @Tangerine tweak this value to get robot to start moving
-            power = 0.6*2.0/(0.5*Math.sqrt(2*Math.PI)) * Math.exp(-((error*3.0/TARGET)-1.5)*((error*3.0/TARGET)-1.5)/(2*0.25)) + OFFSET;
-            power = 0.3;//0.7 / (1.0 + Math.exp(-error/(TARGET) + 4));
+            OFFSET = 0.3; //TODO: @Tangerine tweak this value to get robot to start moving
+            //power = 0.6*2.0/(0.5*Math.sqrt(2*Math.PI)) * Math.exp(-((error*3.0/TARGET)-1.5)*((error*3.0/TARGET)-1.5)/(2*0.25)) + OFFSET;
+            //power = 0.3;//0.7 / (1.0 + Math.exp(-error/(TARGET) + 4));
+            power = ((100000/(curvewidth*Math.sqrt(2*Math.PI))) * Math.exp(-0.5*error-(TARGET/1)/curvewidth))+0.1;
             correction = imu.getAngle()/100;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
             telemetry.addData("power", power);
