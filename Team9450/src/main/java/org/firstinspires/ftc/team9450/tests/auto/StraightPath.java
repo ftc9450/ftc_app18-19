@@ -21,6 +21,7 @@ public class StraightPath extends LinearOpMode {
         drive = new Drivetrain(hardwareMap);
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         double TARGET = 1440;
+        TARGET-=560-(30*(TARGET/1440));
         double error = TARGET;
         double curvewidth = error/6;
         double correction = imu.getAngle()/100;
@@ -36,7 +37,7 @@ public class StraightPath extends LinearOpMode {
             //power = 0.6*2.0/(0.5*Math.sqrt(2*Math.PI)) * Math.exp(-((error*3.0/TARGET)-1.5)*((error*3.0/TARGET)-1.5)/(2*0.25)) + OFFSET;
             //power = 0.3;//0.7 / (1.0 + Math.exp(-error/(TARGET) + 4));
             //power = ((100000/(curvewidth*Math.sqrt(2*Math.PI))) * Math.exp(-0.5*error-(TARGET/1)/curvewidth))+0.1;
-            power = gauss.value(error) + 0.05;
+            power = (200*gauss.value(error)) + 0.15;
             correction = imu.getAngle()/100;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
             telemetry.addData("power", power);
