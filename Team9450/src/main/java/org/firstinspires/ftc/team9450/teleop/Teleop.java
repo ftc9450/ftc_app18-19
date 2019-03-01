@@ -102,8 +102,9 @@ public class Teleop extends OpMode{
         }
         if(gamepad2.dpad_right){
             lifter.setLidState(Lifter.DumpState.OPEN);
-        }else if(gamepad2.dpad_left){
+        }else if(gamepad2.dpad_left) {
             lifter.setLidState(Lifter.DumpState.CLOSED);
+        }
 
         /*if(gamepad2.b){ // toggles roller on/off
             if(!rollerInPressed){
