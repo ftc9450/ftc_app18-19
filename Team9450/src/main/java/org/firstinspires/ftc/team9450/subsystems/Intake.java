@@ -1,15 +1,16 @@
 package org.firstinspires.ftc.team9450.subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.team9450.util.Constants;
 
-public class Intake {}//extends Subsystem{
-    /*private DcMotor slider;
+public class Intake extends Subsystem{
+    private DcMotor slider;
     private Servo pivot;
-    private Servo roller;
+    private CRServo roller;
     private RollerState rollerState;
     private PivotState pivotState;
     private SlideState slideState;
@@ -23,7 +24,7 @@ public class Intake {}//extends Subsystem{
         IN,OUT,OFF
     }
 
-    public Intake(Servo pivot, Servo roller, DcMotor slider){
+    public Intake(Servo pivot, CRServo roller, DcMotor slider){
         this.roller = roller;
         this.pivot = pivot;
         this.slider = slider;
@@ -42,11 +43,11 @@ public class Intake {}//extends Subsystem{
         slider.setPower(0);
     }
     public void enableAndResetEncoders() {
-        pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void disconnectEncoders() {
-        pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public void setRollerState(RollerState state){
         rollerState = state;
@@ -56,14 +57,6 @@ public class Intake {}//extends Subsystem{
     }
     public void setSliderState(SlideState state){
         slideState = state;
-    }
-
-
-    public void move(){
-        enableAndResetEncoders();
-    }
-    public void vertical(){
-        pivot.setPosition(Constants.Intake.PIVOT_UP);
     }
 
     @Override
@@ -102,4 +95,4 @@ public class Intake {}//extends Subsystem{
                 break;
         }
     }
-}*/
+}
