@@ -17,12 +17,17 @@ public class climbtest extends OpMode{
 
     public void loop(){
         if(gamepad1.dpad_up){
-            climber.setPower(0.3);
+            climber.setPower(0.1);
         }else if(gamepad1.dpad_down){
-            climber.setPower(-0.3);
+            climber.setPower(-0.1);
+        } else {
+            climber.setPower(0);
         }
         telemetry.addData("Position", climber.getCurrentPosition());
         telemetry.update();
+
+
+        // encoder constant 1558
 
     }
 
