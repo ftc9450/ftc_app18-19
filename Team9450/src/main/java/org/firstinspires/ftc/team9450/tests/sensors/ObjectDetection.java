@@ -20,7 +20,7 @@ public class ObjectDetection extends OpMode {
     public void init() {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
         parameters.vuforiaLicenseKey = Constants.Vuforia.KEY;
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
         telemetry.update();
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
@@ -48,11 +48,11 @@ public class ObjectDetection extends OpMode {
                     int silverMineral2X = -1;
                     for (Recognition recognition : updatedRecognitions) {
                         if (recognition.getLabel().equals("Gold Mineral")) {
-                            goldMineralX = (int) recognition.getTop();
+                            goldMineralX = (int) recognition.getBottom();
                         } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getTop();
+                            silverMineral1X = (int) recognition.getBottom();
                         } else {
-                            silverMineral2X = (int) recognition.getTop();
+                            silverMineral2X = (int) recognition.getBottom();
                         }
                     }
                     if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
