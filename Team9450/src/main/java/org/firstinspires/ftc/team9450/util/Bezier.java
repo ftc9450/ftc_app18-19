@@ -24,11 +24,11 @@ public class Bezier {
     }
 
     public double derivativeX(double t){
-        return -3*Math.pow(1.0 - t, 2)*p1[0] - 6*(1.0 - t)*t*a1[0] + 3*Math.pow(1.0 - t, 2)*a1[0] - 3*Math.pow(t, 2)*a2[0] + 6*(1.0 - t)*t*a2[0] + 6*Math.pow(t, 2)*p2[0];
+        return -3*Math.pow(1.0 - t, 2)*p1[0] - 6*(1.0 - t)*t*a1[0] + 3*Math.pow(1.0 - t, 2)*a1[0] - 3*Math.pow(t, 2)*a2[0] + 6*(1.0 - t)*t*a2[0] + 3*Math.pow(t, 2)*p2[0];
     }
 
     public double derivativeY(double t){
-        return -3*Math.pow(1.0 - t, 2)*p1[1] - 6*(1.0 - t)*t*a1[1] + 3*Math.pow(1.0 - t, 2)*a1[1] - 3*Math.pow(t, 2)*a2[1] + 6*(1.0 - t)*t*a2[1] + 6*Math.pow(t, 2)*p2[1];
+        return -3*Math.pow(1.0 - t, 2)*p1[1] - 6*(1.0 - t)*t*a1[1] + 3*Math.pow(1.0 - t, 2)*a1[1] - 3*Math.pow(t, 2)*a2[1] + 6*(1.0 - t)*t*a2[1] + 3*Math.pow(t, 2)*p2[1];
     }
 
     public double length() {
