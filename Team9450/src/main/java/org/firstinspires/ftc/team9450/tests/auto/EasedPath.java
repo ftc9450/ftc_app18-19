@@ -24,18 +24,19 @@ public class EasedPath extends LinearOpMode {
         Bezier bezier = new Bezier(0, 0, 0, 2000, 0, 2000, 1000, 2000);
         double TARGET = bezier.length();
         //TARGET -= 560-(30*(TARGET/1440));
-        double error = TARGET;
+        double error = 1440*3;
         double correction = imu.getAngle()/1000;
         double power;
-        double derivX, derivY;
+        double derivX=1, derivY=0;
         Gaussian gauss = new Gaussian(TARGET/2.0, TARGET/6.0);
 
         waitForStart();
+        int counter = 0;
         while (opModeIsActive() && error > 0) {
             error = TARGET - drive.getPosition();
-            power = 0.4;//(200*gauss.value(error)) + 0.2;
-            derivX = bezier.derivativeX(drive.getPosition()/TARGET);
-            derivY = bezier.derivativeY(drive.getPosition()/TARGET);
+            power = 0.2;//(200*gauss.value(error)) + 0.2;
+            //derivX = bezier.derivativeX(drive.getPosition()/TARGET);
+            //derivY = bezier.derivativeY(drive.getPosition()/TARGET);
             double angle = 0.0;
             if(derivX == 0){
                 if(derivY > 0){
@@ -44,7 +45,7 @@ public class EasedPath extends LinearOpMode {
                     angle = 270.0;
                 }
             } else{
-                angle = Math.toDegrees(Math.atan(derivY/derivX));
+                angle = 0;//Math.toDegrees(Math.atan(derivY/derivX));
             }
             correction = (imu.getAngle() - angle)/1000;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
@@ -53,8 +54,12 @@ public class EasedPath extends LinearOpMode {
             telemetry.addData("error", error);
             telemetry.addData("correction", correction);
             telemetry.update();
+
+            counter += 1;
+            telemetry.addData("Counter", counter);
         }
         telemetry.addLine("done");
+        telemetry.update();
         drive.setPower(new double[]{0,0,0,0});
         while(opModeIsActive()){
             error = TARGET - drive.getPosition();
