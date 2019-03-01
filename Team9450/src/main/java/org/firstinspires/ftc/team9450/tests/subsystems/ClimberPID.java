@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.team9450.tests.subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+@Autonomous
 public class ClimberPID extends LinearOpMode {
 
     // our DC motor.
@@ -18,7 +20,7 @@ public class ClimberPID extends LinearOpMode {
         // get reference to DC motor.
         // since we are using the Expansion Hub,
         // cast this motor to a DcMotorEx object.
-        climber = (DcMotorEx)hardwareMap.get(DcMotor.class, "slider");
+        climber = (DcMotorEx)hardwareMap.get(DcMotor.class, "climber");
 
         // wait for start command.
         waitForStart();
