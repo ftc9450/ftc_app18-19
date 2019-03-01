@@ -61,36 +61,50 @@ public class Teleop extends OpMode{
         }*/
 
 
-        if (gamepad2.x) {
+        if (gamepad1.x) {
             climb.setElevatorState(Climber.ElevatorState.UP);
-        } else if(gamepad2.y){
+        } else if(gamepad1.y){
             climb.setElevatorState(Climber.ElevatorState.DOWN);
         } else{
             climb.setElevatorState(Climber.ElevatorState.OFF);
         }
         if (gamepad2.a) {
-            //intake.setPivotState(Intake.PivotState.UP);
+            intake.setRollerState(Intake.RollerState.IN);
         } else if(gamepad2.b){
-            //intake.setPivotState(Intake.PivotState.DOWN);
+            intake.setRollerState(Intake.RollerState.OUT);
         } else{
-            //intake.setPivotState(Intake.PivotState.OFF);
+            intake.setRollerState(Intake.RollerState.OFF);
         }
 
         if (gamepad2.dpad_up) {
-            //intake.setSliderState(Intake.SlideState.IN);
+            lifter.setExtendState(Lifter.ExtendState.UP);
         } else if (gamepad2.dpad_down) {
-            //intake.setSliderState(Intake.SlideState.OUT);
+            lifter.setExtendState(Lifter.ExtendState.DOWN);
         } else {
-            //intake.setSliderState(Intake.SlideState.OFF);
+            lifter.setExtendState(Lifter.ExtendState.OFF);
+
         }
 
         if (gamepad2.right_trigger > 0.15) {
-            //intake.setRollerState(Intake.RollerState.IN);
+            intake.setPivotState(Intake.PivotState.DOWN);
         } else if (gamepad2.left_trigger > 0.15) {
-            //intake.setRollerState(Intake.RollerState.OUT);
+            intake.setPivotState(Intake.PivotState.UP);
         } else {
-            //intake.setRollerState(Intake.RollerState.OFF);
+            intake.setPivotState(Intake.PivotState.OFF);
         }
+        if(gamepad2.right_bumper){
+            intake.setSliderState(Intake.SlideState.OUT);
+        } else if (gamepad2.left_bumper){
+            intake.setSliderState(Intake.SlideState.IN);
+
+        }else{
+            intake.setSliderState(Intake.SlideState.OFF);
+        }
+        if(gamepad2.dpad_right){
+            lifter.setLidState(Lifter.DumpState.OPEN);
+        }else if(gamepad2.dpad_left){
+            lifter.setLidState(Lifter.DumpState.CLOSED);
+
         /*if(gamepad2.b){ // toggles roller on/off
             if(!rollerInPressed){
                 if(!rollerIn){
