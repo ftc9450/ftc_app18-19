@@ -16,19 +16,19 @@ public class Bezier {
     }
 
     public double valueX(double t) {
-        return Math.pow(1.0 - t, 3)*p1[0] + 3*Math.pow(1.0 - t, 2)*t*(a1[0] + a2[0]) + Math.pow(t, 3)*p2[0];
+        return Math.pow(1.0 - t, 3)*p1[0] + 3*Math.pow(1.0 - t, 2)*t*a1[0] + 3*(1.0 - t)*Math.pow(t, 2)*a2[0] + Math.pow(t, 3)*p2[0];
     }
 
     public double valueY(double t) {
-        return Math.pow(1.0 - t, 3)*p1[1] + 3*Math.pow(1.0 - t, 2)*t*(a1[1] + a2[1]) + Math.pow(t, 3)*p2[1];
+        return Math.pow(1.0 - t, 3)*p1[1] + 3*Math.pow(1.0 - t, 2)*t*a1[1] + 3*(1.0 - t)*Math.pow(t, 2)*a2[1] + Math.pow(t, 3)*p2[1];
     }
 
     public double derivativeX(double t){
-        return 3*Math.pow(1.0 - t, 2)*p1[0] + 6*Math.pow(1.0 - t, 2)*t*(a1[0] + a2[0]) + 3*Math.pow(1.0 - t, 3)*(a1[0] + a2[0]) + 3*Math.pow(t, 2)*p2[0];
+        return -3*Math.pow(1.0 - t, 2)*p1[0] - 6*(1.0 - t)*t*a1[0] + 3*Math.pow(1.0 - t, 2)*a1[0] - 3*Math.pow(t, 2)*a2[0] + 6*(1.0 - t)*t*a2[0] + 6*Math.pow(t, 2)*p2[0];
     }
 
     public double derivativeY(double t){
-        return 3*Math.pow(1.0 - t, 2)*p1[1] + 6*Math.pow(1.0 - t, 2)*t*(a1[1] + a2[1]) + 3*Math.pow(1.0 - t, 3)*(a1[1] + a2[1]) + 3*Math.pow(t, 2)*p2[1];
+        return -3*Math.pow(1.0 - t, 2)*p1[1] - 6*(1.0 - t)*t*a1[1] + 3*Math.pow(1.0 - t, 2)*a1[1] - 3*Math.pow(t, 2)*a2[1] + 6*(1.0 - t)*t*a2[1] + 6*Math.pow(t, 2)*p2[1];
     }
 
     public double length() {
