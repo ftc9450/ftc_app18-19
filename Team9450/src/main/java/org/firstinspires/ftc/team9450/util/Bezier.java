@@ -8,11 +8,11 @@ public class Bezier {
 
     final double RESOLUTION = 1000.0;
 
-    public Bezier(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
-        p1 = new double[]{x1, y1};
-        p2 = new double[]{x2, y2};
-        a1 = new double[]{x3, y3};
-        a2 = new double[]{x4, y4};
+    public Bezier(double px1, double py1, double ax1, double ay1, double px2, double py2, double ax2, double ay2) {
+        p1 = new double[]{px1, py1};
+        p2 = new double[]{px2, py2};
+        a1 = new double[]{ax1, ay1};
+        a2 = new double[]{ax2, ay2};
     }
 
     public double valueX(double t) {

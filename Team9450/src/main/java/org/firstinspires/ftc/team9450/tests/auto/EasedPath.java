@@ -8,11 +8,12 @@ import org.apache.commons.math3.analysis.function.Gaussian;
 import org.apache.commons.math3.special.Erf;
 import org.firstinspires.ftc.team9450.sensors.Gyroscope;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
+import org.firstinspires.ftc.team9450.util.Bezier;
 import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.MotionTracker;
 
-@Autonomous(name = "Straight Path", group = "Auto")
-public class StraightPath extends LinearOpMode {
+@Autonomous(name = "Eased Path", group = "Auto")
+public class EasedPath extends LinearOpMode {
     private Drivetrain drive;
     private Gyroscope imu;
 
@@ -20,31 +21,30 @@ public class StraightPath extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         drive = new Drivetrain(hardwareMap);
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        double TARGET = 1440*5;
+        Bezier bezier = new Bezier(0, 0, 0, 2000, 0, 2000, 1000, 2000);
+        double TARGET = bezier.length();
         //TARGET -= 560-(30*(TARGET/1440));
         double error = TARGET;
-        double curvewidth = error/6;
-        double correction = imu.getAngle()/100;
+        double correction = imu.getAngle()/1000;
         double power;
-        double OFFSET;
+        double derivX, derivY;
         Gaussian gauss = new Gaussian(TARGET/2.0, TARGET/6.0);
 
         waitForStart();
         while (opModeIsActive() && error > 0) {
             error = TARGET - drive.getPosition();
-            power = 0.7;//1.0 / (1.0 + Math.exp(-error/(TARGET) + 4));
-            OFFSET = 0.3; //TODO: @Tangerine tweak this value to get robot to start moving
-            //power = 0.6*2.0/(0.5*Math.sqrt(2*Math.PI)) * Math.exp(-((error*3.0/TARGET)-1.5)*((error*3.0/TARGET)-1.5)/(2*0.25)) + OFFSET;
-            //power = 0.3;//0.7 / (1.0 + Math.exp(-error/(TARGET) + 4));
-            //power = ((100000/(curvewidth*Math.sqrt(2*Math.PI))) * Math.exp(-0.5*error-(TARGET/1)/curvewidth))+0.1;
-            power = (200*gauss.value(error)) + 0.15;
-            correction = imu.getAngle()/100;
+            power = 0.4;//(200*gauss.value(error)) + 0.2;
+            derivX = bezier.derivativeX(drive.getPosition()/TARGET);
+            derivY = bezier.derivativeY(drive.getPosition()/TARGET);
+            correction = (imu.getAngle() - Math.toDegrees(Math.asin(derivY/derivX)))/1000;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
             telemetry.addData("power", power);
+            telemetry.addData("max power", power + correction);
             telemetry.addData("error", error);
             telemetry.addData("correction", correction);
             telemetry.update();
         }
+        telemetry.addLine("done");
         drive.setPower(new double[]{0,0,0,0});
         while(opModeIsActive()){
             error = TARGET - drive.getPosition();
