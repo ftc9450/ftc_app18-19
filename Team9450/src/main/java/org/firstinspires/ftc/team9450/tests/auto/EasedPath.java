@@ -36,7 +36,17 @@ public class EasedPath extends LinearOpMode {
             power = 0.4;//(200*gauss.value(error)) + 0.2;
             derivX = bezier.derivativeX(drive.getPosition()/TARGET);
             derivY = bezier.derivativeY(drive.getPosition()/TARGET);
-            correction = (imu.getAngle() - Math.toDegrees(Math.asin(derivY/derivX)))/1000;
+            double angle = 0.0;
+            if(derivX == 0){
+                if(derivY > 0){
+                    angle = 90.0;
+                } else{
+                    angle = 270.0;
+                }
+            } else{
+                angle = Math.toDegrees(Math.atan(derivY/derivX));
+            }
+            correction = (imu.getAngle() - angle)/1000;
             drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
             telemetry.addData("power", power);
             telemetry.addData("max power", power + correction);
