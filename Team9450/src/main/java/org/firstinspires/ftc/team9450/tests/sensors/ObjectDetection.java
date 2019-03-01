@@ -48,12 +48,11 @@ public class ObjectDetection extends OpMode {
                     int silverMineral2X = -1;
                     for (Recognition recognition : updatedRecognitions) {
                         if (recognition.getLabel().equals("Gold Mineral")) {
-                            goldMineralX = (int) recognition.getLeft();
-                            telemetry.addData("Gold pos", recognition.getLeft());
+                            goldMineralX = (int) recognition.getTop();
                         } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
+                            silverMineral1X = (int) recognition.getTop();
                         } else {
-                            silverMineral2X = (int) recognition.getLeft();
+                            silverMineral2X = (int) recognition.getTop();
                         }
                     }
                     if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
