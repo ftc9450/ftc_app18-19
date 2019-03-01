@@ -87,7 +87,8 @@ public class Drivetrain extends Subsystem {
         rightFront.setPower(driveSignal[2] * scale);
         rightBack.setPower(driveSignal[3] * scale);
     }
-
+    public void moveFB(double distance){}
+    public void pivot(double degrees){}
     public void moveFB(double distance, double power, boolean forward, MotionTracker tracker){ // distance (in inches) and power will always be positive
         tracker.enableAndResetEncoders();
         double leftPower = power * Constants.Drivetrain.FB_LEFT_POWER;
