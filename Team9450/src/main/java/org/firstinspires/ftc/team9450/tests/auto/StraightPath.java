@@ -11,7 +11,7 @@ import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.MotionTracker;
 
-@Autonomous(name = "Curved Path", group = "Auto")
+@Autonomous(name = "Straight Path", group = "Auto")
 public class StraightPath extends LinearOpMode {
     private Drivetrain drive;
     private Gyroscope imu;
@@ -20,7 +20,7 @@ public class StraightPath extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         drive = new Drivetrain(hardwareMap);
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        double TARGET = 1440*3;
+        double TARGET = 1440*4;
         //TARGET -= 560-(30*(TARGET/1440));
         double error = TARGET;
         double curvewidth = error/6;
@@ -44,6 +44,7 @@ public class StraightPath extends LinearOpMode {
         while(opModeIsActive()){
             error = TARGET - drive.getPosition();
             telemetry.addData("error", error);
+            telemetry.update();
         }
     }
 }
