@@ -39,91 +39,43 @@ public class AutoCrater extends LinearOpMode {
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
         climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
         drivetrain.enableAndResetEncoders();
-        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
-
-        // Set up detector
-        detector = new GoldAlignDetector(); // Create detector
-         // Initialize it with the app context and camera
-        detector.useDefaults(); // Set detector to use default settings
-
-        // Optional tuning
-        detector.alignSize = 150; // How wide (in pixels) is the range in which the gold object will be aligned. (Represented by green bars in the preview)
-        detector.alignPosOffset = 0; // How far from center frame to offset this alignment zone.
-        detector.downscale = 0.4; // How much to downscale the input frames
-
-        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
-        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
-        detector.maxAreaScorer.weight = 0.005; //
-
-        detector.ratioScorer.weight = 5; //
-        detector.ratioScorer.perfectRatio = 1.0; // Ratio adjustment
-
-        detector.enable(); // Start the detector!
-
-
-        float angleWhenHanging = tracker.getAbsoluteAngle();
-        waitForStart();
-        //drivetrain.moveFB(24,.3,true,tracker);
-        // lower robot
-
-        /*climb.setClimberState(Climber.ClimberState.UP);
-        climb.loop();
-        Thread.sleep(7000);
-        climb.setClimberState(Climber.ClimberState.OFF);
-        climb.loop();
-        drivetrain.moveLR(10, 0.1,false,tracker);*/
-        drivetrain.moveFB(40, 0.5, true, tracker);
-
-
-        /*
-        tracker.enableAndResetEncoders();
-        //TODO
-        //TODO: CHECK ALL THE VALUES I WILL DIE
-        //TODO
-
-        drivetrain.moveLR(5,0.3,false,tracker);// move out of latch //
-        pivotTo(angleWhenHanging + 5);//correct for difference in angle caused by dropping
-        drivetrain.moveFB(18,.75,true,tracker);// drive forward until at corner of mat with samples
-        //int mineralPosition = -1; // get position of gold sample (0, 1, 2) -> (left, center, right)
-        */
-        Thread.sleep(1000);
-        if(detector.getAligned()){ // middle
-            drivetrain.moveFB(19,.7,true,tracker);// knock off gold mineral
-            Thread.sleep(500);
-            drivetrain.moveFB(19,.7,false,tracker);// return to position
-            Thread.sleep(500);
-        } else{ // after turning left
-            pivotTo(0);
-            Thread.sleep(1000);
-            if(detector.getAligned()){
-                drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
-                Thread.sleep(500);
-                drivetrain.moveFB(26,.7,false,tracker);// return to position //bruh idk just tweak the number until it works, and wont hit anything else i guess
-            }
-            else{ // after turning right
-                pivotTo(90);
-                Thread.sleep(1000);
-                if(detector.getAligned()){
-                    drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
-                    Thread.sleep(500);
-                    drivetrain.moveFB(26,.7,false,tracker);// return to position
-                }
-            }
-        }
-        /*
-        pivotTo(135); // Drive will then drive backwards
-        drivetrain.moveFB(50,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
-        drivetrain.moveFB(26,.7,true,tracker);// knock off gold mineral
-        drivetrain.moveFB(26,.7,false,tracker);// return to position
-        pivotTo(135); // Drive will then drive backwards
-        drivetrain.moveFB(50,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
-        pivotCounterclockwise(Math.abs(initialAngle)); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle
-        drivetrain.moveFB(38,.7,false,tracker);// drive backward until depot
-        // TODO: deposit team marker (from back of robot)
-        // (shouldn't need to) turn left to face crater
-        drivetrain.moveFB(80,.7,true,tracker);// drive forward until parked on crater
-        */
-
+        climb.setElevatorState(Climber.ElevatorState.DOWN);
+        drivetrain.moveFB(4,.5,true,tracker);
+        pivotTo(90);
+        drivetrain.moveFB(15,.5,true,tracker);
+        pivotTo(-90);
+        drivetrain.moveFB(45,.5,true,tracker);
+        pivotTo(-45);
+        drivetrain.moveFB(40,.5,true,tracker);
+        drivetrain.moveFB(40,.5,false,tracker);
+        pivotTo(-135);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-135);
+        drivetrain.moveFB(60,.5,true,tracker);
+        drivetrain.moveFB(4,.5,true,tracker);
+        pivotTo(90);
+        drivetrain.moveFB(15,.5,true,tracker);
+        pivotTo(-90);
+        drivetrain.moveFB(45,.5,true,tracker);
+        pivotTo(-45);
+        drivetrain.moveFB(50,.5,true,tracker);
+        drivetrain.moveFB(50,.5,false,tracker);
+        pivotTo(-135);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-90);
+        pivotTo(10);
+        drivetrain.moveFB(4,.5,true,tracker);
+        pivotTo(90);
+        drivetrain.moveFB(15,.5,true,tracker);
+        pivotTo(-90);
+        drivetrain.moveFB(45,.5,true,tracker);
+        pivotTo(-45);
+        drivetrain.moveFB(50,.5,true,tracker);
+        drivetrain.moveFB(50,.5,false,tracker);
+        pivotTo(-135);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-45);
+        pivotTo(-35);
     }
 /*
     public void pivotClockwise(double angle){ // Turn clockwise given degree angle

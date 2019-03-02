@@ -35,70 +35,58 @@ public class AutoDepot extends LinearOpMode {
         /*climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL),hardwareMap.dcMotor.get(Constants.Climber.PI),
                 hardwareMap.servo.get(Constants.Climber.HK), hardwareMap.servo.get(Constants.Climber.PL));*/
         drivetrain.enableAndResetEncoders();
-        double c=0.05;
-        /*
-        // Setup detector
-        SamplingOrderDetector detector = new SamplingOrderDetector(); // Create the detector
-        detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance()); // Initialize detector with app context and camera
-        detector.useDefaults(); // Set detector to use default settings
-
-        detector.downscale = 0.4; // How much to downscale the input frames
-
-        // Optional tuning
-        detector.areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Can also be PERFECT_AREA
-        //detector.perfectAreaScorer.perfectArea = 10000; // if using PERFECT_AREA scoring
-        detector.maxAreaScorer.weight = 0.001;
-
-        detector.ratioScorer.weight = 15;
-        detector.ratioScorer.perfectRatio = 1.0;
-
-        detector.enable(); // Start detector
-        */
-
-
-        //float angleWhenHanging = tracker.getAbsoluteAngle();
-        waitForStart();
-        //drivetrain.moveFB(24,.3,true,tracker);
-        // lower robot
-        /*climb.setElevatorState(Climber.ElevatorState.OFF);
-        climb.setPawlState(Climber.PawlState.DISENGAGED);
-        climb.loop();
-        climb.setElevatorState(Climber.ElevatorState.UP);
-        climb.loop();
-        while(climb.getPosition()<Constants.Climber.CLIMBED){}
-        climb.setElevatorState(Climber.ElevatorState.OFF);
-        climb.setHookState(Climber.HookState.OPEN);
-        climb.loop();
-        */
-        // pivotTo(angleWhenHanging - 5);//correct for difference in angle caused by dropping
-        drivetrain.moveFB(18,c,true,tracker);// drive forward until at corner of mat with samples
-        int mineralPosition = 1; // placeholder // TODO: get position of gold sample (0, 1, 2) -> (left, center, right)
-        switch(mineralPosition){
-            //pivot to face gold mineral
-            case 0:
-                pivotClockwise(45);
-                break;
-            case 1:
-                // should be aligned
-                break;
-            case 2:
-                pivotCounterclockwise(45);
-                break;
-        }
-        sleep(500);
-        drivetrain.moveFB(26,c,true,tracker);// knock off gold mineral
-        sleep(500);
-        drivetrain.moveFB(26,c,false,tracker);// return to position
-        //pivotCounterclockwise(90);
-        pivot(90, true);
-        /*pivotTo(135); // Drive will then drive backwards
-        drivetrain.moveFB(45,.7,false,tracker);// drive backward to waypoint (on safe auto paths map)
-        pivotClockwise(90 + Math.abs(initialAngle)); // turn left so back is facing depot // TODO: check value, right now it is the same as the initial angle
-        drivetrain.moveFB(38,.7,false,tracker);// drive backward until depot
-        // TODO: deposit team marker (from back of robot)
-        pivotTo(180); // turn left to face crater
-        drivetrain.moveFB(80,.7,true,tracker);// drive forward until parked on crater
-*/
+        climb.setElevatorState(Climber.ElevatorState.DOWN);
+        drivetrain.moveFB(4,.5,true,tracker);
+        pivotTo(90);
+        drivetrain.moveFB(15,.5,true,tracker);
+        pivotTo(100);
+        drivetrain.moveFB(40,.5,false,tracker);
+        pivotTo(-55);
+        drivetrain.moveFB(50,.5,true,tracker);
+        drivetrain.moveFB(55,.5,false,tracker);//dropping off marker
+        pivotTo(45);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-135);
+        pivotTo(55);
+        pivotTo(-100);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-35);
+        drivetrain.moveFB(10,.5,true,tracker);
+        drivetrain.moveFB(4,.5,true,tracker);
+        pivotTo(90);
+        drivetrain.moveFB(15,.5,true,tracker);
+        pivotTo(100);
+        drivetrain.moveFB(40,.5,false,tracker);
+        pivotTo(-55);
+        drivetrain.moveFB(50,.5,true,tracker);
+        drivetrain.moveFB(55,.5,false,tracker);
+        pivotTo(45);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-90);
+        wait(500);
+        pivotTo(90);
+        pivotTo(-100);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-35);
+        drivetrain.moveFB(10,.5,true,tracker);
+        drivetrain.moveFB(4,.5,true,tracker);
+        pivotTo(90);
+        drivetrain.moveFB(15,.5,true,tracker);
+        pivotTo(100);
+        drivetrain.moveFB(40,.5,false,tracker);
+        pivotTo(-55);
+        drivetrain.moveFB(50,.5,true,tracker);
+        drivetrain.moveFB(55,.5,false,tracker);
+        pivotTo(45);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-45);
+        wait(500);
+        pivotTo(-45);
+        wait(500);
+        pivotTo(90);
+        drivetrain.moveFB(50,.5,true,tracker);
+        pivotTo(-35);
+        drivetrain.moveFB(10,.5,true,tracker);
     }
     public void pivotClockwise(int angle){
         drivetrain.setPower(new double[]{0.05,0.05,-0.05,-0.05});
@@ -120,6 +108,17 @@ public class AutoDepot extends LinearOpMode {
         }
         while (opModeIsActive() && Math.abs(imu.getAngle()) < angle - Q) {}
         drivetrain.setPower(0);
+    }
+    public void pivotTo(float targetAngle){
+        double power =0.5;
+        imu.zero();
+        if(targetAngle>0){//ccwise
+            drivetrain.setPower(new double[]{-power, -power, power, power});
+        }else{
+            drivetrain.setPower(new double[]{power, power, -power, -power});
+        }
+        while(opModeIsActive() && Math.abs(imu.getAngle() - targetAngle) > Math.PI/10){}
+        drivetrain.setPower(new double[]{0, 0, 0, 0});
     }
 
 /*
