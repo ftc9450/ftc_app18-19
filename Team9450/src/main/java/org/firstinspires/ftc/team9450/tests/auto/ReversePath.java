@@ -8,13 +8,13 @@ import org.apache.commons.math3.analysis.function.Gaussian;
 import org.apache.commons.math3.special.Erf;
 import org.firstinspires.ftc.team9450.sensors.Gyroscope;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
-import org.firstinspires.ftc.team9450.util.Bezier;
 import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.MotionTracker;
-import org.opencv.core.Mat;
 
-@Autonomous(name = "Curved Path", group = "Auto")
-public class CurvedPath extends LinearOpMode {
+import java.lang.annotation.Target;
+
+@Autonomous(name = "Reverse Path", group = "Auto")
+public class ReversePath extends LinearOpMode {
     private Drivetrain drive;
     private Gyroscope imu;
 
@@ -22,14 +22,11 @@ public class CurvedPath extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         drive = new Drivetrain(hardwareMap);
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
-        double TARGET = 6000;
+        double TARGET = -6000;
         double errorCorrect= 1174*(Math.pow(0.9997, TARGET));
         double error = TARGET;
         double correction = imu.getAngle()/100;
         double power;
-        double angle = 0;
-        double derivX, derivY;
-        Bezier bezier = new Bezier(0, 0, 0, 3000, -2000, 3000, -2000, 3000);
         Gaussian gauss = new Gaussian(TARGET/2.0, TARGET/6.0);
 
         waitForStart();
@@ -38,11 +35,8 @@ public class CurvedPath extends LinearOpMode {
             error=TARGET;
             while (opModeIsActive() && error > 0) {
                 error = TARGET - drive.getPosition();
-                power = (500*gauss.value(error)) + 0.15;
-                derivX = bezier.derivativeX(error/TARGET);
-                derivY = bezier.derivativeY(error/TARGET);
-                angle = Math.toDegrees(Math.atan(derivX/derivY));
-                correction = (angle - imu.getAngle())/100;
+                power = -(500*gauss.value(error)) + 0.15;
+                correction = imu.getAngle()/100;
                 drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
                 telemetry.addData("power", power);
                 telemetry.addData("error", error);
@@ -52,13 +46,8 @@ public class CurvedPath extends LinearOpMode {
         }else{
             while(opModeIsActive() && error > 0){
                 error = TARGET - drive.getPosition();
-                power = 0.2;
-                derivX = bezier.derivativeX(error/TARGET);
-                derivY = bezier.derivativeY(error/TARGET);
-                if (derivY == 0) angle = imu.getAngle()/100;
-                else if (derivY == 0) angle = 0;
-                else angle = Math.toDegrees(Math.atan(derivX/derivY));
-                correction = (angle - imu.getAngle())/100;
+                power = -0.2;
+                correction = imu.getAngle()/100;
                 drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
                 telemetry.addData("power", power);
                 telemetry.addData("error", error);

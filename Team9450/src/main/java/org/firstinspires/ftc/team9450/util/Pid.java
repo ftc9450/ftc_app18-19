@@ -6,6 +6,8 @@ package org.firstinspires.ftc.team9450.util;
  * PID Controller: kp * (e + (integral(e) / ti) + (td * derivative(e))).
  * https://en.wikipedia.org/wiki/PID_controller#Ideal_versus_standard_PID_form
  */
+
+@Deprecated
 public class Pid {
     /**
      * Creates a PID Controller.

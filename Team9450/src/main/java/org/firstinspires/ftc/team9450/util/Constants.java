@@ -20,15 +20,14 @@ public class Constants {
         public static final double FB_RIGHT_POWER = 1.0; // TODO: check value
         public static final double LR_FRONT_POWER = 1.0; // TODO: check value
         public static final double LR_REAR_POWER = 0.9; // TODO: check value
-        public static final double PIVOT_POWER = 0.3;
         public static final String LF = "frontleft";
         public static final String LB = "backleft";
         public static final String RF = "frontright";
         public static final String RB = "backright";
         public static final String[] motors = {LF, LB, RF, RB};
     }
-    public class Lifter{
-        public static final String LIFT = "lifter";
+    public class Elevator{
+        public static final String ELEVATOR = "elevator";
         public static final String DUMP = "dump";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;
@@ -47,8 +46,6 @@ public class Constants {
         public static final int UP = 21000;
         public static final int CLIMBED=10838;
         public static final int DOWN = 0;
-        public static final int POSITION_UP = 1558;
-        public static final int POSITION_DOWN = 0;
     }
     public class Intake{
         public static final String PI = "pivot";

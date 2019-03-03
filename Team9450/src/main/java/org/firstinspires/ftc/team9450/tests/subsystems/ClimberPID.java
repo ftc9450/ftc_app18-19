@@ -38,7 +38,7 @@ public class ClimberPID extends LinearOpMode {
         // display info to user.
         while(opModeIsActive()) {
             if(gamepad1.x){
-                climber.setTargetPosition(5000); //TODO: check
+                climber.setTargetPosition(1558); //TODO: check
                 climber.setPower(0.75);
             }else if(gamepad1.y){
                 climber.setTargetPosition(200); //TODO: check

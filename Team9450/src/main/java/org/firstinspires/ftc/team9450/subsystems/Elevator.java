@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.team9450.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.team9450.util.Constants;
 
 
-public class Lifter extends Subsystem {
+public class Elevator extends Subsystem {
 
     private DcMotor extender;
     private Servo dump;
@@ -23,19 +24,18 @@ public class Lifter extends Subsystem {
     public enum DumpState{
         OPEN,CLOSED
     }
-    public Lifter(DcMotor extend, Servo dumper){
-        extender = extend;
+    public Elevator(HardwareMap map){
+        extender = map.dcMotor.get(Constants.Elevator.ELEVATOR);
         extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         extender.setDirection(DcMotor.Direction.FORWARD);
-        dump = dumper;
-        //this.setLidState(LidState.CLOSED);
-        //this.setLifterState(LifterState.OFF);
+        dump = map.servo.get(Constants.Elevator.DUMP);
     }
 
     public void enableAndResetEncoders() {
         extender.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extender.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
     public void loop() {
         switch(extendState){
             case UP:
@@ -51,10 +51,10 @@ public class Lifter extends Subsystem {
         }
         switch(dumpState){
             case OPEN:
-                dump.setPosition(Constants.Lifter.DUMP_OPEN);
+                dump.setPosition(Constants.Elevator.DUMP_OPEN);
                 break;
             case CLOSED:
-                dump.setPosition(Constants.Lifter.DUMP_CLOSED);
+                dump.setPosition(Constants.Elevator.DUMP_CLOSED);
                 break;
         }
     }
@@ -72,7 +72,7 @@ public class Lifter extends Subsystem {
         secondsElapsed = 0;
         double previousTime = System.nanoTime();
         double currentTime;
-        while(Math.abs(currentDistance) < Math.abs(targetDistance - Constants.Lifter.PID_THRESHOLD)){
+        while(Math.abs(currentDistance) < Math.abs(targetDistance - Constants.Elevator.PID_THRESHOLD)){
             currentTime = System.nanoTime();
             currentDistance = extender.getCurrentPosition();
             double dt = (currentTime - previousTime) / 1000000; // In seconds

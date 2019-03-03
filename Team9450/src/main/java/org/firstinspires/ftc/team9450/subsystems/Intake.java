@@ -3,6 +3,7 @@ package org.firstinspires.ftc.team9450.subsystems;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.team9450.util.Constants;
@@ -24,10 +25,10 @@ public class Intake extends Subsystem{
         IN,OUT,OFF
     }
 
-    public Intake(Servo pivot, CRServo roller, DcMotor slider){
-        this.roller = roller;
-        this.pivot = pivot;
-        this.slider = slider;
+    public Intake(HardwareMap map){
+        roller = map.crservo.get(Constants.Intake.RO);
+        pivot = map.servo.get(Constants.Intake.PI);
+        slider = map.dcMotor.get(Constants.Intake.SL);
 
         enableAndResetEncoders();
         slider.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -35,8 +36,6 @@ public class Intake extends Subsystem{
         this.setPivotState(PivotState.OFF);
         this.setRollerState(RollerState.OFF);
         this.setSliderState(SlideState.OFF);
-
-
     }
 
     public void stop() {
