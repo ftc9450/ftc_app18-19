@@ -23,20 +23,8 @@ public class Climber extends Subsystem{
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.setElevatorState(ElevatorState.OFF);
     }
-
     public void setElevatorState(ElevatorState state){
         elevatorState = state;
-        switch(elevatorState){
-            case UP:
-                elevator.setTargetPosition(Constants.Climber.POSITION_UP);
-                break;
-            case DOWN:
-                elevator.setTargetPosition(Constants.Climber.POSITION_DOWN);
-                break;
-            case OFF:
-                elevator.setPower(0);
-                break;
-        }
     }
 
     public void enableAndResetEncoders() {
@@ -57,6 +45,7 @@ public class Climber extends Subsystem{
                 break;
         }
     }
+<<<<<<< HEAD
 
     public void land(){
         setElevatorState(ElevatorState.UP);
@@ -66,6 +55,8 @@ public class Climber extends Subsystem{
         stop();
     }
 
+=======
+>>>>>>> 14324a78156f9e7265fd9c63080fdd6b340f1f52
     public void stop() {
         elevator.setPower(0);
     }
