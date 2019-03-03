@@ -57,6 +57,17 @@ public class Intake extends Subsystem{
     }
     public void setSliderState(SlideState state){
         slideState = state;
+        switch(slideState){ //TODO: check values of the target positions
+            case IN:
+                slider.setTargetPosition(200);
+                break;
+            case OUT:
+                slider.setTargetPosition(1000);
+                break;
+            case OFF:
+                slider.setPower(0);
+                break;
+        }
     }
 
     @Override
