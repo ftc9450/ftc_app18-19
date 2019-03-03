@@ -48,6 +48,8 @@ public class Teleop extends OpMode{
             climb.setElevatorState(Climber.ElevatorState.UP);
         } else if (gamepad1.b) {
             climb.setElevatorState(Climber.ElevatorState.DOWN);
+        } else {
+            climb.setElevatorState(Climber.ElevatorState.OFF);
         }
 
         if (gamepad2.right_bumper) {
@@ -58,18 +60,18 @@ public class Teleop extends OpMode{
             intake.setSliderState(Intake.SlideState.OFF);
         }
 
-        if (gamepad2.right_trigger > 0.15) {
+        if (gamepad2.a) {
             intake.setRollerState(Intake.RollerState.IN);
-        } else if (gamepad2.left_trigger > 0.15) {
+        } else if (gamepad2.b) {
             intake.setRollerState(Intake.RollerState.OUT);
         } else {
             intake.setRollerState(Intake.RollerState.OFF);
         }
 
-        if (gamepad2.dpad_up) {
-            intake.setPivotState(Intake.PivotState.UP);
-        } else if (gamepad2.dpad_down) {
+        if (gamepad2.right_trigger > 0.15) {
             intake.setPivotState(Intake.PivotState.DOWN);
+        } else if (gamepad2.left_trigger > 0.15) {
+            intake.setPivotState(Intake.PivotState.UP);
         }
 
         subsystemManager.loop();
