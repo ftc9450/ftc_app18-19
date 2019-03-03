@@ -45,7 +45,6 @@ public class Climber extends Subsystem{
                 break;
         }
     }
-<<<<<<< HEAD
 
     public void land(){
         setElevatorState(ElevatorState.UP);
@@ -54,9 +53,6 @@ public class Climber extends Subsystem{
         setElevatorState(ElevatorState.OFF);
         stop();
     }
-
-=======
->>>>>>> 14324a78156f9e7265fd9c63080fdd6b340f1f52
     public void stop() {
         elevator.setPower(0);
     }
