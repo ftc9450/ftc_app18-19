@@ -5,27 +5,33 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import org.apache.commons.math3.analysis.function.Gaussian;
 import org.firstinspires.ftc.team9450.sensors.Gyroscope;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
-import org.firstinspires.ftc.team9450.subsystems.Subsystem;
 
 public class MotionPlanner {
     private Drivetrain drive;
     private Gyroscope imu;
-    double init;
-    double TARGET;
-    double errorCorrect;
-    double error;
-    double correction;
-    double power;
-    Gaussian gauss;
-    boolean a;
+    private double init;
+    private double TARGET;
+    private double errorCorrect;
+    private double error;
+    private double correction;
+    private double power;
+    private Gaussian gauss;
+    private boolean a;
+    private State state;
+
 
     public MotionPlanner(Drivetrain dt, Gyroscope gyro) {
         drive = dt;
         imu = gyro;
-        init = drive.getPosition();
+    }
+
+    public enum State {
+        LINEAR, TURNING
     }
 
     public void moveFB(double distance) {
+        state = State.LINEAR;
+        init = drive.getPosition();
         TARGET = distance;
         errorCorrect= 1174*(Math.pow(0.9997, TARGET));
         error = TARGET;
@@ -36,17 +42,51 @@ public class MotionPlanner {
         error = TARGET;
     }
 
+    public void Pivot(double angle) {
+        state = State.TURNING;
+        TARGET = angle;
+        imu.zero();
+        double pow = Constants.Drivetrain.PIVOT_POWER;
+        if(angle > 0){
+            drivetrain.setPower(new double[]{-pow, -pow, pow, pow});
+        } else {
+            drivetrain.setPower(new double[]{pow, pow, -pow, -pow});
+        }
+        while(opModeIsActive() && Math.abs(imu.getAngle() - angle) > 0){ }
+        drivetrain.setPower(new double[]{0, 0, 0, 0});
+    }
+
     public double loop() {
-        if (a && error > 0) {
-            error = TARGET - drive.getPosition() - init;
-            power = (500*gauss.value(error)) + 0.15;
-            correction = imu.getAngle()/100;
-            drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
-        } else if (error > 0) {
-            error = TARGET - drive.getPosition() - init;
-            power = 0.2;
-            correction = imu.getAngle()/100;
-            drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
+        switch (state) {
+            case LINEAR:
+                if (a && error > 0) {
+                    error = TARGET - drive.getPosition() + init;
+                    power = (500 * gauss.value(error)) + 0.15;
+                    correction = imu.getAngle() / 100;
+                    drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
+                } else if (error > 0) {
+                    error = TARGET - drive.getPosition() + init;
+                    power = 0.2;
+                    correction = imu.getAngle() / 100;
+                    drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
+                } else {
+                    drive.setPower(0);
+                }
+                break;
+
+            case TURNING:
+                if (error > 0 && TARGET > 0) {
+                    error = TARGET - imu.getAngle();
+                    power = Constants.Drivetrain.PIVOT_POWER;
+                    drive.setPower(new double[]{-power, -power, power, power});
+                } else if (error > 0 && TARGET > 0) {
+                    error = imu.getAngle() - TARGET;
+                    power = Constants.Drivetrain.PIVOT_POWER;
+                    drive.setPower(new double[]{power, power, -power, -power});
+                } else {
+                    drive.setPower(0);
+            }
+                break;
         }
         return error;
     }
