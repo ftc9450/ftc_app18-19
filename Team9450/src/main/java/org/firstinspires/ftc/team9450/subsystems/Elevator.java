@@ -82,6 +82,14 @@ public class Elevator extends Subsystem {
     }
     public void setExtendState(ExtendState state){
         extendState = state;
+        switch(extendState){
+            case UP:
+                extender.setTargetPosition(Constants.Elevator.UP_POSITION);
+                break;
+            case DOWN:
+                extender.setPower(Constants.Elevator.DOWN_POSITION);
+                break;
+        }
     }
     public void setLidState(DumpState state){
         dumpState = state;

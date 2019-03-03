@@ -33,6 +33,7 @@ public class Constants {
         public static final double LOW_POWER = 0.25;
         public static final double PID_THRESHOLD = 10;
         public static final int UP_POSITION = 1000; // TODO: check value
+        public static final int DOWN_POSITION = 0; // TODO: check value
         public static final double DUMP_CLOSED = 0.50; // TODO: check value
         public static final double DUMP_OPEN = 0.65; // TODO: check value
     }
