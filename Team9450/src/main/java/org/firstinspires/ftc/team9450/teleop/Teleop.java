@@ -9,7 +9,6 @@ import org.firstinspires.ftc.team9450.subsystems.Elevator;
 import org.firstinspires.ftc.team9450.subsystems.Intake;
 
 import org.firstinspires.ftc.team9450.subsystems.SubsystemManager;
-import org.firstinspires.ftc.team9450.util.Constants;
 import org.firstinspires.ftc.team9450.util.Vector2D;
 
 @TeleOp
@@ -52,17 +51,17 @@ public class Teleop extends OpMode{
             climb.setElevatorState(Climber.ElevatorState.OFF);
         }
 
-        if (gamepad2.right_bumper) {
+        if (gamepad2.b) {
             intake.setSliderState(Intake.SlideState.OUT);
-        } else if (gamepad2.left_bumper) {
+        } else if (gamepad2.a) {
             intake.setSliderState(Intake.SlideState.IN);
         } else {
             intake.setSliderState(Intake.SlideState.OFF);
         }
 
-        if (gamepad2.a) {
+        if (gamepad2.left_bumper) {
             intake.setRollerState(Intake.RollerState.IN);
-        } else if (gamepad2.b) {
+        } else if (gamepad2.right_bumper) {
             intake.setRollerState(Intake.RollerState.OUT);
         } else {
             intake.setRollerState(Intake.RollerState.OFF);
@@ -74,6 +73,18 @@ public class Teleop extends OpMode{
             intake.setPivotState(Intake.PivotState.UP);
         }
 
+        if(gamepad2.dpad_right){
+            elevator.setDumpState(Elevator.DumpState.OUT);
+        }else if(gamepad2.dpad_left){
+            elevator.setDumpState(Elevator.DumpState.IN);
+        } else if (gamepad2.dpad_down) {
+            elevator.setDumpState(Elevator.DumpState.IN);
+            elevator.setExtendState(Elevator.ExtendState.DOWN);
+        }else if(gamepad2.dpad_up){
+            elevator.setExtendState(Elevator.ExtendState.UP);
+        } else{
+            elevator.setExtendState(Elevator.ExtendState.OFF);
+        }
         subsystemManager.loop();
     }
 }

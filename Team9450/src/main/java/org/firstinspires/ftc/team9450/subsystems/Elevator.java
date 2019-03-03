@@ -22,7 +22,7 @@ public class Elevator extends Subsystem {
         UP,DOWN,OFF
     }
     public enum DumpState{
-        OPEN,CLOSED
+        IN, OUT
     }
     public Elevator(HardwareMap map){
         extender = map.dcMotor.get(Constants.Elevator.ELEVATOR);
@@ -50,10 +50,10 @@ public class Elevator extends Subsystem {
                 extender.setPower(0);
         }
         switch(dumpState){
-            case OPEN:
+            case IN:
                 dump.setPosition(Constants.Elevator.DUMP_OPEN);
                 break;
-            case CLOSED:
+            case OUT:
                 dump.setPosition(Constants.Elevator.DUMP_CLOSED);
                 break;
         }
@@ -91,7 +91,7 @@ public class Elevator extends Subsystem {
                 break;
         }
     }
-    public void setLidState(DumpState state){
+    public void setDumpState(DumpState state){
         dumpState = state;
     }
     public String toString(){
