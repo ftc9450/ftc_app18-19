@@ -64,6 +64,7 @@ public class Climber extends Subsystem{
         setElevatorState(ElevatorState.OFF);
         stop();
     }
+
     public void stop() {
         elevator.setPower(0);
     }
