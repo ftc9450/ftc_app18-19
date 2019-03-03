@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.team9450.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.vuforia.EyewearUserCalibrator;
 
@@ -15,13 +16,12 @@ public class Climber extends Subsystem{
         UP,DOWN,OFF
     }
 
-    public Climber(DcMotor elevator){
+    public Climber(HardwareMap map){
+        elevator = map.dcMotor.get(Constants.Climber.EL);
         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         elevator.setDirection(DcMotor.Direction.FORWARD);
         elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.elevator = elevator;
         this.setElevatorState(ElevatorState.OFF);
-
     }
     public void setElevatorState(ElevatorState state){
         elevatorState = state;
@@ -44,8 +44,6 @@ public class Climber extends Subsystem{
                 elevator.setPower(0);
                 break;
         }
-
-
     }
     public void stop() {
         elevator.setPower(0);

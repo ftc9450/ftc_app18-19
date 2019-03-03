@@ -31,7 +31,7 @@ public class CycleDepot extends LinearOpMode {
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         //intake = new Intake();
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
+        climb = new Climber(hardwareMap);
         drivetrain.enableAndResetEncoders();
         double power = 0.05;
 

@@ -12,9 +12,9 @@ public class IntakePID extends LinearOpMode {
     // our DC motor.
     DcMotorEx intake;
 
-    public static final double NEW_P = 2.5;
-    public static final double NEW_I = 0.1;
-    public static final double NEW_D = 0.2;
+    public static double NEW_P = 0;
+    public static final double NEW_I = 0;
+    public static final double NEW_D = 0;
 
     public void runOpMode() {
         // get reference to DC motor.
@@ -38,12 +38,18 @@ public class IntakePID extends LinearOpMode {
         // display info to user.
         while(opModeIsActive()) {
             if(gamepad1.x){
-                intake.setTargetPosition(1000); //TODO: check
+                intake.setTargetPosition(1181); //TODO: check
                 intake.setPower(0.3);
             }else if(gamepad1.y){
-                intake.setTargetPosition(200); //TODO: check
+                intake.setTargetPosition(0); //TODO: check
                 intake.setPower(0.3);
             }
+
+            if (gamepad1.a) NEW_P += 0.01;
+            if (gamepad1.b) NEW_P -= 0.01;
+
+            pidNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, 0);
+            //intake.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
 
             telemetry.addData("Position", intake.getCurrentPosition());
             telemetry.addData("Runtime", "%.03f", getRuntime());

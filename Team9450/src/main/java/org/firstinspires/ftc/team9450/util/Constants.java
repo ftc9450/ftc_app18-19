@@ -26,8 +26,8 @@ public class Constants {
         public static final String RB = "backright";
         public static final String[] motors = {LF, LB, RF, RB};
     }
-    public class Lifter{
-        public static final String LIFT = "lifter";
+    public class Elevator{
+        public static final String ELEVATOR = "elevator";
         public static final String DUMP = "dump";
         public static final double HIGH_POWER = 1;
         public static final double LOW_POWER = 0.25;

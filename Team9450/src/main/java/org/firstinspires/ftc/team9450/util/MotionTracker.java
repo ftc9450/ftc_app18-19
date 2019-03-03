@@ -9,6 +9,7 @@ import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
  * Created by Avi Trost on 12/15/18.
  */
 
+@Deprecated
 public class MotionTracker {
     public double x;
     public double y;
