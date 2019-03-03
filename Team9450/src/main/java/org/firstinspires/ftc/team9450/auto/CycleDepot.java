@@ -9,6 +9,7 @@ import org.firstinspires.ftc.team9450.subsystems.Climber;
 import org.firstinspires.ftc.team9450.subsystems.Drivetrain;
 import org.firstinspires.ftc.team9450.subsystems.Intake;
 import org.firstinspires.ftc.team9450.util.Constants;
+import org.firstinspires.ftc.team9450.util.MotionPlanner;
 import org.firstinspires.ftc.team9450.util.MotionTracker;
 
 
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.team9450.util.MotionTracker;
 @Autonomous
 public class CycleDepot extends LinearOpMode {
 
+    private MotionPlanner mp;
     private Drivetrain drivetrain;
     private Gyroscope imu;
     private MotionTracker tracker;
@@ -27,9 +29,9 @@ public class CycleDepot extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        drivetrain = new Drivetrain(hardwareMap.dcMotor.get(Constants.Drivetrain.LF), hardwareMap.dcMotor.get(Constants.Drivetrain.LB), hardwareMap.dcMotor.get(Constants.Drivetrain.RF), hardwareMap.dcMotor.get(Constants.Drivetrain.RB));
-
+        drivetrain = new Drivetrain(hardwareMap);
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
+        mp = new MotionPlanner(drivetrain, imu);
         //intake = new Intake();
         climb = new Climber(hardwareMap);
         drivetrain.enableAndResetEncoders();
