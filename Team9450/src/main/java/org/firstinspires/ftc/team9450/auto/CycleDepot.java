@@ -82,7 +82,7 @@ public class CycleDepot extends LinearOpMode {
         drivetrain.moveFB(10);
         //intake out
     }
-    public void pivot(double angle){
+    /*public void pivot(double angle){
         double pow = Constants.Drivetrain.PIVOT_POWER;
         if(angle > 0){
             drivetrain.setPower(new double[]{-pow, -pow, pow, pow});
@@ -91,6 +91,10 @@ public class CycleDepot extends LinearOpMode {
         }
         while(opModeIsActive() && Math.abs(imu.getAngle() - angle) > 0){ }
         drivetrain.setPower(new double[]{0, 0, 0, 0});
+    }*/
+
+    public void pivot(double angle) {
+        inta
     }
 
     public void setIntake(Intake.RollerState state){
