@@ -42,18 +42,10 @@ public class MotionPlanner {
         error = TARGET;
     }
 
-    public void Pivot(double angle) {
+    public void pivot(double angle) {
         state = State.TURNING;
         TARGET = angle;
         imu.zero();
-        double pow = Constants.Drivetrain.PIVOT_POWER;
-        if(angle > 0){
-            drivetrain.setPower(new double[]{-pow, -pow, pow, pow});
-        } else {
-            drivetrain.setPower(new double[]{pow, pow, -pow, -pow});
-        }
-        while(opModeIsActive() && Math.abs(imu.getAngle() - angle) > 0){ }
-        drivetrain.setPower(new double[]{0, 0, 0, 0});
     }
 
     public double loop() {
@@ -71,6 +63,7 @@ public class MotionPlanner {
                     drive.setPower(new double[]{power + correction, power + correction, power - correction, power - correction});
                 } else {
                     drive.setPower(0);
+                    return 0;
                 }
                 break;
 
@@ -85,7 +78,8 @@ public class MotionPlanner {
                     drive.setPower(new double[]{power, power, -power, -power});
                 } else {
                     drive.setPower(0);
-            }
+                    return 0;
+                }
                 break;
         }
         return error;
