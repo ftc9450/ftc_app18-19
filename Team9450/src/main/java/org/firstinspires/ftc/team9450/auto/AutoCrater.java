@@ -37,7 +37,7 @@ public class AutoCrater extends LinearOpMode {
 
         imu = new Gyroscope(hardwareMap.get(BNO055IMU.class, "imu"));
         tracker = new MotionTracker(hardwareMap.dcMotor.get(Constants.MotionTracker.FB), hardwareMap.dcMotor.get(Constants.MotionTracker.LR), drivetrain, imu, initialAngle); //TODO: check angle
-        climb = new Climber(hardwareMap.dcMotor.get(Constants.Climber.EL));
+        climb = new Climber(hardwareMap);
         drivetrain.enableAndResetEncoders();
         climb.setElevatorState(Climber.ElevatorState.DOWN);
         drivetrain.moveFB(4,.5,true,tracker);
